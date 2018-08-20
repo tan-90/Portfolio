@@ -1,0 +1,10 @@
+# I use custom icons because I'm like that.
+desktop.ini
+225932421652501546523168188772102361383142302.ico
+10021011011435613172147194212159202514944774.ico
+
+# No relevant vscode settings at the moment.
+.vscode/
+
+# Ignore node_modules
+node_modules/

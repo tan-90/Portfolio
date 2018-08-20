@@ -1,0 +1,45 @@
+{
+  "name": "tan90",
+  "version": "0.1.0",
+  "description": "Personal website to work as code portfolio (and possibly as a blog in the future).",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/tan90/Portfolio.git"
+  },
+  "keywords": [
+    "portfolio",
+    "code",
+    "tan90"
+  ],
+  "author": "tan90",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/tan90/Portfolio/issues"
+  },
+  "homepage": "https://gitlab.com/tan90/Portfolio#README",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.22.1",
+    "webpack": "^4.16.5",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  },
+  "dependencies": {
+    "postcss-loader": "^3.0.0",
+    "react": "^16.4.2",
+    "react-css-modules": "^4.7.6",
+    "react-dom": "^16.4.2"
+  }
+}
