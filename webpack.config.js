@@ -2,7 +2,8 @@ var path = require('path');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var copyPlugin = new CopyWebpackPlugin([
-    './src/index.html'
+    './src/index.html',
+    {from: './src/assets', to: 'assets'}
 ]);
 
 module.exports = {
@@ -48,7 +49,7 @@ module.exports = {
                     },
                     'sass-loader'
                 ]
-            },
+            }
         ]
     },
     plugins: [
