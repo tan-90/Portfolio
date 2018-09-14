@@ -1,5 +1,6 @@
-$defaultColor: whitesmoke;
-$fontSize: 30px;
+@import '../common';
+
+$fontSize: goldenSplit(100vh, 6);
 
 .container {
     padding-top: 2px;
@@ -7,38 +8,63 @@ $fontSize: 30px;
 }
 
 .text {
-    float: right;
+    position: absolute;
+
+    right: $lineWidth * pow($phi, 2) * (1 + $phi);
+    
 
     cursor: pointer;
     
+
     font-family: 'Abel', sans-serif;
     font-size: $fontSize;
     line-height: $fontSize;
-    color: $defaultColor;
+    
+    color: $baseColor;
+
+
+    transition: right .2s;
+}
+
+.textHoverUnselected {    
+    right: $lineWidth * pow($phi, 2) * 2;
+}
+
+.text:hover,
+.textSelected {
+    color: $highlightColor;
 }
 
 .bullet {
     position: relative;
     float: right;
 
-    margin-left: 15px;
-
-    width: 5px;
+    width: $lineWidth;
     height: $fontSize * 0.9;
 
-    right: 5px;
+    right: $lineWidth * (pow($phi, 2) - 1);
 
-    background-color: $defaultColor;
+
+    transition: width .2s, right .2s;
+    
+    
+    background-color: $baseColor;
 }
 
 .bulletHover {
-    width: 8px;
-    right: 2px;
-    margin-left: 12px;
+    width: $lineWidth * $phi;
+    
+    right: $lineWidth * $phi * ($phi - 1);
+
+
+    background-color: $highlightColor;
 }
 
 .bulletSelected {
-    width: 10px;
+    width: $lineWidth * pow($phi, 2);
+
     right: 0px;
-    margin-left: 10px;
+
+    
+    background-color: $highlightColor;
 }

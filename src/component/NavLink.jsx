@@ -36,12 +36,21 @@ export default class NavLink extends React.Component
         this.props.handleClick(event, this.props.name);
     }
 
+    getTextClasses()
+    {
+        return [
+            Style.text,
+            this.props.selected == this.props.name ? Style.textSelected : '',
+            this.state.hover && (this.props.selected != this.props.name) ? Style.textHoverUnselected : ''
+        ].join(' ');
+    }
+
     getBulletClasses()
     {
         return [
             Style.bullet,
             this.state.hover ? Style.bulletHover : '',
-            (this.props.selected == this.props.name) ? Style.bulletSelected : ''
+            this.props.selected == this.props.name ? Style.bulletSelected : ''
         ].join(' ');
     }
 
@@ -54,7 +63,7 @@ export default class NavLink extends React.Component
                     onMouseEnter={this.handleMouseEnter}
                     onMouseLeave={this.handleMouseLeave}
                     onClick={this.handleClick}
-                    className={Style.text}
+                    className={this.getTextClasses()}
                 >
                     {this.props.name}
                 </div>
