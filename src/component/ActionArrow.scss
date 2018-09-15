@@ -1,0 +1,152 @@
+/*
+ * This needs a lot of tweaking.
+ * Current state is just a working version so I can move on.
+ * Will be fixed in the future.
+ */
+
+@import '../common';
+
+$arrowSide: goldenSplit(100vw, 7);
+$arrowDiagonal: $arrowSide * $sqrtTwo;
+
+@mixin container {
+    position: relative;
+}
+
+.containerUpDown {    
+    @include container;
+
+    width: $arrowDiagonal;
+    height: $arrowDiagonal / 2;
+}
+
+.containerLeftRight {    
+    @include container;
+
+    width: $arrowDiagonal / 2;
+    height: $arrowDiagonal;
+}
+
+@mixin trigger {
+    position: absolute;
+
+
+    cursor: pointer;
+
+
+    z-index: 10;
+}
+
+.triggerUp {
+    @include trigger;
+
+    top: 0;
+    right: 0;
+
+    width: $arrowDiagonal;
+    height: $arrowDiagonal / 2;
+}
+
+.triggerDown {
+    @include trigger;
+
+    bottom: 0;
+    right: 0;
+
+    width: $arrowDiagonal;
+    height: $arrowDiagonal / 2;
+}
+
+.triggerLeft {
+    @include trigger;
+
+    bottom: 0;
+    left: 0;
+
+    width: $arrowDiagonal / 2;
+    height: $arrowDiagonal;
+}
+
+.triggerRight {
+    @include trigger;
+
+    bottom: 0;
+    right: 0;
+
+    width: $arrowDiagonal / 2;
+    height: $arrowDiagonal;
+}
+
+@mixin arrow {
+    position: absolute;
+
+    width: $arrowSide;
+    height: $arrowSide;
+
+
+    transform: rotate(45deg);
+}
+
+.arrowUp {
+    @include arrow;
+
+    /*
+     * CSS is weird.
+     * I can't seem to center this any other way.
+     * Using flex would cause the trigger to be missaligned.
+     */
+    top: ($arrowDiagonal - $arrowSide) / 2;
+    left: ($arrowDiagonal - $arrowSide) / 2;
+
+
+    border-top: solid $lineWidth $baseColor;
+    border-left: solid $lineWidth $baseColor;
+}
+
+.arrowDown {
+    @include arrow;
+
+    /*
+     * CSS is weird.
+     * I can't seem to center this any other way.
+     * Using flex would cause the trigger to be missaligned.
+     */
+    top: ($arrowDiagonal - $arrowSide) / 2 - $arrowDiagonal / 2;
+    left: ($arrowDiagonal - $arrowSide) / 2;
+
+
+    border-bottom: solid $lineWidth $baseColor;
+    border-right: solid $lineWidth $baseColor;
+}
+
+.arrowLeft {
+    @include arrow;
+
+    /*
+     * CSS is weird.
+     * I can't seem to center this any other way.
+     * Using flex would cause the trigger to be missaligned.
+     */
+    top: ($arrowDiagonal - $arrowSide) / 2;
+    left: ($arrowDiagonal - $arrowSide) / 2;
+
+
+    border-bottom: solid $lineWidth $baseColor;
+    border-left: solid $lineWidth $baseColor;
+}
+
+.arrowRight {
+    @include arrow;
+    
+    /*
+     * CSS is weird.
+     * I can't seem to center this any other way.
+     * Using flex would cause the trigger to be missaligned.
+     */
+    top: ($arrowDiagonal - $arrowSide) / 2;
+    left: ($arrowDiagonal - $arrowSide) / 2 - $arrowDiagonal / 2;
+
+    
+    border-top: solid $lineWidth $baseColor;
+    border-right: solid $lineWidth $baseColor;
+}
