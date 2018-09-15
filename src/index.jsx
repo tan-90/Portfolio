@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import style from './index.scss'
 
-import NavMenu from './component/NavMenu';
+import Nav from './component/Nav';
 
 class App extends React.Component
 {
@@ -11,7 +11,7 @@ render()
     {
         return (
             <div id="appContainer" className={style.appContainer}>
-                <NavMenu/>
+                <Nav/>
             </div>
         )
     }

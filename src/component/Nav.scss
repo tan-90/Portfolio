@@ -1,0 +1,85 @@
+@import '../common';
+
+$navWidth: inverseGoldenSplit(100vw);
+
+$headerSize: goldenSplit(100vw, 8);
+$headerOffset: goldenSplit($navWidth, 3);
+$headerDiagonal: $headerSize * $sqrtTwo;
+
+.container {
+    width: $navWidth;
+    height: 100vh;
+    
+    right: 0;
+    
+    position: absolute;
+}
+
+.lineHeader {
+    display: inline-block;
+    position: absolute;
+    
+    width: $headerSize;
+    height: $headerSize;
+    
+    right: $headerOffset;
+    top: $headerOffset;
+    
+
+    cursor: pointer;
+
+    
+    border: solid $lineWidth $baseColor;
+
+
+    transform: rotate(45deg);
+
+    transition: width .2s, height .2s, right .2s, top .2s;
+}
+
+.lineTop {
+    display: inline-block;
+    position: absolute;
+    
+    width: $lineWidth;
+
+    right: ($headerOffset + $headerDiagonal / 2) - ($lineWidth * 2); 
+    top: $headerOffset + $headerDiagonal - $lineWidth;
+
+
+    background-color: $baseColor;
+}
+
+.menu {
+    position: absolute;
+
+    right: ($headerOffset + $headerDiagonal / 2) - $lineWidth * (1 + pow($phi, 2));
+    top: goldenSplit(100vh);
+}
+
+.lineBottom {
+    display: inline-block;
+    position: absolute;
+
+    width: $lineWidth;
+
+    right: ($headerOffset + $headerDiagonal / 2) - ($lineWidth * 2);     
+    bottom: 0;
+
+
+    background-color: $baseColor;
+}
+
+.actionUp {
+    position: absolute;
+
+    right: goldenSplit(100vw, 6);
+    bottom: goldenSplit(100vh, 5);
+}
+
+.actionDown {
+    position: absolute;
+
+    right: goldenSplit(100vw, 7);
+    bottom: goldenSplit(100vh, 7);
+}

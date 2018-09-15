@@ -1,7 +1,8 @@
 $baseColor: #dddddd;
-$highlightColor: #efefef;
+$highlightColor: #fafafa;
 
 $phi: 1.61803399;
+$sqrtTwo: 1.4142;
 
 @function pow($number, $exponent)
 {
@@ -27,4 +28,15 @@ $phi: 1.61803399;
     @return $base - goldenSplit($base, $splitCount);
 }
 
-$lineWidth: goldenSplit(100vw, 12);
+$lineWidth: goldenSplit(100vw, 13);
+
+@mixin triangle($size:20px, $color:black)
+{
+    width: 0; 
+    height: 0; 
+
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+
+    border-top: $size solid $color;
+}
