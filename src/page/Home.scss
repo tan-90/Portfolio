@@ -1,5 +1,32 @@
 @import '../common';
 
 .container {
+
+}
+
+.header {
+    position: absolute;
+
+    right: inverseGoldenSplit(goldenSplit(100vw));
+    bottom: inverseGoldenSplit(100vh) * 0.6;
+
+    font-family: 'Abel', sans-serif;
+    font-size: goldenSplit(100vh, 3);
+    font-weight: 100;
     
+    color: $baseColor;
+}
+
+.headerUnderline {
+    position: absolute;
+
+    box-sizing: border-box;
+
+    width: goldenSplit(100vw, 2);
+    height: goldenSplit(100vh, 7);
+
+    bottom: inverseGoldenSplit(100vh) - goldenSplit(100vh, 7);
+
+    border-top: solid $lineWidth $baseColor;
+    border-bottom: solid $lineWidth $baseColor;
 }

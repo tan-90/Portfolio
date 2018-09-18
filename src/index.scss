@@ -1,6 +1,13 @@
-html, body
-{
+html,
+body {
     margin: 0;
+}
 
-    background-color: gray;
+.appContainer {
+    width: 100vw;
+    height: 100vh;
+
+    
+    background: url('/assets/bg.png');
+    background-size: 100% 100%;
 }

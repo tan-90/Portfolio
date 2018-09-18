@@ -3,7 +3,7 @@ import React from 'react';
 import Style from './Nav.scss';
 
 import NavMenu from './NavMenu';
-import ActionArrow from './ActionArrow';
+import Settings from './Settings'
 
 export default class Nav extends React.Component
 {
@@ -35,18 +35,16 @@ export default class Nav extends React.Component
     render()
     {
         let menuSize = this.state.navMenuSize;
-        let directions = ActionArrow.directions;
 
         return (
             <div className={Style.container}>
-                <div className={Style.lineHeader}></div>                
+                <Settings/>          
                 <div
                     style={{
                         bottom: `calc(100vh - ${menuSize ? menuSize.top.toString() : 0}px)`
                     }}
                     className={Style.lineTop}
-                ></div>
-                
+                ></div>                
                 <div className={Style.menu}>
                     <NavMenu
                         sizeCallback={this.navMenuSizeCallback}
@@ -54,7 +52,6 @@ export default class Nav extends React.Component
                         selected={this.props.currentPage}
                     />
                 </div>
-                
                 <div 
                     style={{
                         top: `${menuSize ? menuSize.bottom.toString() : 0}px`

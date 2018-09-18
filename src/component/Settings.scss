@@ -1,0 +1,45 @@
+@import '../common';
+
+.container {
+
+}
+
+.openButton {
+    display: inline-block;
+    position: absolute;
+    
+    width: $settingsSize;
+    height: $settingsSize;
+    
+    right: $settingsOffset;
+    top: $settingsOffset;
+    
+
+    cursor: pointer;
+
+    
+    border: solid $lineWidth $baseColor;
+
+
+    transform: rotate(45deg);
+}
+
+.closeButton {
+    display: inline-block;
+    position: absolute;
+    
+    width: $settingsSize;
+    height: $settingsSize;
+    
+    right: $settingsOffset;
+    top: $settingsOffset;
+    
+
+    cursor: pointer;
+
+    
+    border: solid $lineWidth $baseColor;
+
+
+    transform: rotate(45deg);
+}

@@ -8,7 +8,8 @@ export default class Home extends React.Component
     {
         return(
             <div className={Style.container}>
-                <h1 className={Style.header}>tan90</h1>
+                <h1 className={Style.header}>tan(90</h1>
+                <div className={Style.headerUnderline}></div>
             </div>
         );
     }

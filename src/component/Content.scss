@@ -3,6 +3,6 @@
 .container {
     position: fixed;
 
-    width: goldenSplit(100vw);
+    width: $contentWidth;
     height: 100vh;
 }

@@ -28,15 +28,11 @@ $sqrtTwo: 1.4142;
     @return $base - goldenSplit($base, $splitCount);
 }
 
+
 $lineWidth: goldenSplit(100vw, 13);
 
-@mixin triangle($size:20px, $color:black)
-{
-    width: 0; 
-    height: 0; 
+$contentWidth: goldenSplit(100vw);
+$navWidth: inverseGoldenSplit(100vw);
 
-    border-left: $size solid transparent;
-    border-right: $size solid transparent;
-
-    border-top: $size solid $color;
-}
+$settingsSize: goldenSplit(100vw, 8);
+$settingsOffset: goldenSplit($navWidth, 3);
