@@ -9,22 +9,46 @@ export default class NavMenu extends React.Component
     constructor(props)
     {
         super(props);
-        
+
         this.handleLinkClick = this.handleLinkClick.bind(this);
+        this.handleResize = this.handleResize.bind(this);
+
         this.refCallback = this.refCallback.bind(this);
+    }
+
+    componentDidMount()
+    {
+        window.addEventListener('resize', this.handleResize);
+    }
+
+    componentWillUnmount()
+    {
+        window.removeEventListener('resize', this.handleResize);
     }
 
     handleLinkClick(event, name)
     {
         this.props.handleLinkClick(event, name);
     }
-
-    refCallback(element)
+    
+    handleResize()
     {
-        if(element)
+        this.sizeCallback();
+    }
+    
+    sizeCallback()
+    {
+        if (this.container)
         {
-            this.props.sizeCallback(element.getBoundingClientRect());
+            this.props.sizeCallback(this.container.getBoundingClientRect());
         }
+    }
+
+    refCallback(container)
+    {
+        this.container = container;
+
+        this.sizeCallback();
     }
 
     render()
