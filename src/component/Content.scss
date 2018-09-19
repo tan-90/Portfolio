@@ -1,8 +1,15 @@
 @import '../common';
 
 .container {
-    position: fixed;
+    position: absolute;
 
     width: $contentWidth;
     height: 100vh;
+
+
+    overflow: auto;
+}
+
+.container::-webkit-scrollbar {
+    display: none;
 }

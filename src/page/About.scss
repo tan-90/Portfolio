@@ -1,5 +1,52 @@
 @import '../common';
 
 .container {
+    position: absolute;
     
+    top: $settingsOffset / pow($phi, 2);
+    
+    left: $settingsOffset / pow($phi, 3);
+    right: 0;
+
+
+    margin-bottom: $settingsOffset / ($phi * $phi);
+    margin-right: 4px;
+
+
+    background-color: $backgroundColor;
+}
+
+.header {
+    position: relative;
+
+    margin: goldenSplit(100vh, 6) goldenSplit(100vw, 6) goldenSplit(100vh, 6) goldenSplit(100vw, 6);
+    padding: 0;
+
+
+    text-align: left;
+    
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+    font-size: goldenSplit(100vh, 6);
+    
+    line-height: goldenSplit(100vh, 6);
+    
+    color: $baseColor;
+}
+
+.text {
+    position: relative;
+
+    margin: goldenSplit(100vh, 6) goldenSplit(100vw, 6) goldenSplit(100vh, 6) goldenSplit(100vw, 6);
+    padding: 0;
+
+
+    text-align: left;
+    text-indent: goldenSplit(100vh, 5);
+    
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+    font-size: goldenSplit(100vh, 7);
+    
+    color: $baseColor;
 }
