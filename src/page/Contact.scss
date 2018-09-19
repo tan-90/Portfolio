@@ -1,5 +1,162 @@
 @import '../common';
 
 .container {
+    position: absolute;
     
+    top: $settingsOffset / pow($phi, 2);
+    
+    left: $settingsOffset / pow($phi, 3);
+    right: 0;
+
+
+    margin-bottom: $settingsOffset / ($phi * $phi);
+    margin-right: 4px;
+
+
+    padding-bottom: goldenSplit(100vh, 6);
+
+    background-color: $backgroundColor;
+}
+
+.header {
+    position: relative;
+
+    margin: goldenSplit(100vh, 6) goldenSplit(100vw, 6) goldenSplit(100vh, 6) goldenSplit(100vw, 6);
+    padding: 0;
+
+
+    text-align: left;
+    
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+    font-size: goldenSplit(100vh, 6);
+    
+    line-height: goldenSplit(100vh, 6);
+    
+    color: $baseColor;
+}
+
+.form {
+    margin: goldenSplit(100vh, 6);
+}
+
+%label {
+    display: flex;
+    flex-direction: column;
+    
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+    font-size: goldenSplit(100vh, 8);
+    
+    color: $baseColor;
+}
+
+.labelName {
+    @extend %label;
+
+    flex-grow: 1;
+}
+
+.labelEmail {
+    @extend %label;
+
+    flex-grow: $phi;
+
+    margin-left: goldenSplit(100vw, 10);
+}
+
+.labelMessage {
+    @extend %label;
+
+    margin-bottom: goldenSplit(100vh, 7);
+}
+
+.inputRow {
+    display: flex;
+    flex-direction: row;
+
+    margin-bottom: goldenSplit(100vh, 7);
+}
+
+%input {
+    background-color: $backgroundColor;
+
+    border: solid $lineWidth / $phi $baseColor;
+
+    padding-left: 4px;
+
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+    font-size: goldenSplit(100vh, 7);
+    
+    color: $baseColor;
+}
+
+.inputField {
+    @extend %input;
+
+    height: goldenSplit(100vh, 6);
+}
+
+.inputArea {
+    @extend %input;
+
+    height: goldenSplit(100vh, 3);
+
+    resize: none;
+
+    &:focus {
+        border: solid $lineWidth / $phi $highlightColor;
+
+        outline: none;
+    }
+}
+
+.inputField:focus {
+    border: solid $lineWidth / $phi $highlightColor;
+
+    outline: none;
+}
+
+.inputArea:focus {
+
+}
+
+.inputSubmit {
+    $buttonWidth: 100% - (100% / $phi);
+    margin-left: (100% - $buttonWidth) / 2;
+    
+    width: $buttonWidth;
+    height: goldenSplit(100vh, 6);
+
+
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+    font-size: goldenSplit(100vh, 8);
+    
+
+    border: solid $lineWidth / $phi $baseColor;
+
+
+    color: $baseColor;
+    background-color: $backgroundColor;
+
+
+    cursor: pointer;
+}
+
+.inputSubmit:hover {
+    border: solid $lineWidth / $phi $highlightColor;
+
+
+    color: $highlightColor;
+}
+
+.social {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: +goldenSplit(100vw, 10);
 }

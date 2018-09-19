@@ -1,0 +1,38 @@
+@import '../common';
+
+.container {
+    margin-right: goldenSplit(100vw, 10);
+}
+
+.socialIcon {
+    position: relative;
+    display: block;
+
+    width: goldenSplit(100vh, 6);
+    height: goldenSplit(100vh, 6);
+
+
+    font-size: goldenSplit(100vh, 7);
+    text-decoration: none;
+    text-align: center;
+
+
+    border: solid $lineWidth / $phi $baseColor;
+    
+    i {
+        position: relative;
+        display: block;
+        
+        line-height: goldenSplit(100vh, 6);
+        
+        color: $baseColor;
+    }
+}
+
+.socialIcon:hover {
+    border: solid $lineWidth / $phi $highlightColor;
+}
+
+.socialIcon i:hover {
+    color: $highlightColor;
+}
