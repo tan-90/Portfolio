@@ -9,13 +9,13 @@
      *
      * The text is scaled so it's height machtes this value.
      */
-    $fontSize: goldenSplit(100vh, 6);
+    $fontSize: goldenSplit(100vh, 7);
 
     /*
      * The size for the list bullet.
      * The bullet is always centered relative to the text and the container.
      */
-    $bulletSize: $fontSize;
+    $bulletSize: $fontSize * 1.2;
 
     /*
      * The hover style for the text.

@@ -1,4 +1,17 @@
-.container {
-    display: flex;
-    flex-direction: column;
+@import '../functions';
+
+.NavMenu {
+    /*
+     * I don't really like this, but it looks like it's the best way to do it.
+     * Moving the individual links inside the menu would make a huge mess of repeating code, so it's not an option.
+     * As the classnames get changed by the style loader I can't select the links with & > .NavLink.
+     * Also the :not(:last-child) thing would look better, but is pretty weird and apparently it's selecting recursively in a way I don't understand.
+     */
+    & > div {
+        margin-bottom: goldenSplit(100vh, 11);
+    }
+    
+    :last-child {
+        margin-bottom: 0;
+    }
 }

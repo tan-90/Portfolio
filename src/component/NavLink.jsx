@@ -9,12 +9,19 @@ import Style from './NavLink.scss';
  * 
  * name: The name of the link. Is also what's displayed.
  * active: If set the link gets the "active" style. Which item is active should be controlled by the parent.
+ * handleClick: Called when the links is clicked. Receives the name of the link as argument.
  */
 export default class NavLink extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+    }
+
     render()
     {
         let getClassNames = () => [Style.NavLink, this.props.active ? Style.Active : ''].join(' ');
+        let handleClick = () => this.props.handleClick(this.props.name)
 
         return (
             <div className={getClassNames()}>
@@ -25,7 +32,12 @@ export default class NavLink extends React.Component
                      * Needs it's own span as the style for removing white spaces above and below text uses the ::before and ::after pseudo elements.
                      */
                 }
-                <span className={Style.Name}>{this.props.name}</span>
+                <span
+                    className={Style.Name}
+                    onClick={handleClick}
+                >
+                    {this.props.name}
+                </span>
 
                 {
                     /*
@@ -34,7 +46,10 @@ export default class NavLink extends React.Component
                      * Can't be an ::after of the text as that's already used.
                      */
                 }
-                <div className={Style.Bullet}></div>
+                <div
+                    className={Style.Bullet}
+                    onClick={handleClick}
+                />
             </div>
         );
     }
