@@ -1,0 +1,108 @@
+/**
+ * Helper constant Phi used for golden ratio calculations.
+ * (It makes everything pretty.)
+ *
+ * Refer to: https://en.wikipedia.org/wiki/Golden_ratio
+ */
+$phi: 1.61803399;
+
+/**
+ * Helper constant square root of two used for diagonal calculations.
+ */
+$sqrtTwo: 1.4142;
+
+/**
+ * Defines the base width for all lines.
+ * Line scaling should use $lineWidth * $phi * k for some k. 
+ */
+$lineWidth: 4px;
+
+/**
+ * Defines the color pallete.
+ * Allows setting colors by name.
+ *
+ * Used with the color function from _functions.scss.
+ */
+$colors: (
+    base: #dddddd,
+    highlight: #fafafa,
+
+    background: #444444bb
+);
+
+/**
+ * The z layer definitions.
+ *
+ * Each name corresponds to it's position in the array.
+ * Allows keeping z-index consistency by setting it with names.
+ *
+ * Used with the layer function from _functions.scss.
+ */
+$layers: (
+    /* Because I want to. */
+    oblivion,
+
+    /*
+     * The website background.
+     * Meant to hold a three.js scene.
+     */
+    background,
+
+    /* The actual content. */
+    content,
+    
+    /*
+     * The nav menu and style lines.
+     * Is fixed and never overlaps the content, but should be bellow the settings.
+     */
+    nav,
+    
+    /*
+     * The menu for configuring the background scene.
+     * Opens on top of everything else in the page.
+     */
+    settings
+);
+
+/**
+ * Font metrics.
+ *
+ * Maps a font name to some relevant metrics.
+ * (Because apparently manipulating text the way I want requires some CSS black magic.)
+ *
+ * This is used to remove the white spaces above and below text.
+ * Refer to this article for details: http://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
+ * I used FontForge to get the metrics: https://fontforge.github.io/en-US/
+ *
+ * Brief of what each value means:
+ * em: A kind of container where the characters are drawn.
+ *
+ * ascent: The recomended distance between the baseline and the top of the line.
+ * descent: The recomended distance between the baseline and the bottom of the line.
+ *
+ * capitalHeight: The height of a capital character.
+ * xHeight: The height of a normal character.
+ *
+ * top: The minimum distance between a character and the top of the line.
+ * bottom: The maximum distance between a character and the bottom of the line.
+ */
+$fontMetrics: (
+    Abel: (
+        em: 2048,
+
+        ascent: 2006,
+        descent: 604,
+        
+        capitalHeight: 1434,
+        xHeight: 1044,
+
+        /*
+         * top and bottom values should be given by the font.
+         *
+         * Apparently FontForge does not show this.
+         * I don't need it at the moment and it's not easy to find, so it's null for now.
+         */
+        top: null,
+        bottom: null
+    )
+);
