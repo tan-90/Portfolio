@@ -1,59 +1,105 @@
 @import '../common';
+@import '../functions';
 
-$settingsDiagonal: $settingsSize * $sqrtTwo;
+.Nav {
+    $navWidth: 100vw - goldenSplit(100vw);
 
-.container {
+    /*
+     * The size of the settings button.
+     * This should be a global, but since it uses a function it can't be in the config file without circular dependencies.
+     *
+     * (sass I'm looking at you.)
+     */
+    $settingsSize: goldenSplit(100vw, 8);
+    
+    /*
+     * The distance between the settings button to the top and right.
+     * Used to position the lines and the menu.
+     */
+    $offset: goldenSplit($navWidth, 3);
+    
+    
+    /*
+     * The nav should be fixed at the right, and it's width should correspond to a golden split of the total windows width.
+     * As it doesn't have a border, the golden split is more visible by the content width, but the nav width is still set for good measure.
+     */
+    display: block;
+    position: fixed;
+    z-index: layerMap(nav);
+
+    top: 0;
+    right: 0;
+
     width: $navWidth;
     height: 100vh;
+
+    .Settings {
+        display: inline-block;
+        position: absolute;
+
+        /* The settings button offset determines the position of the style lines and the menu. */
+        top: $offset;
+        right: $offset;
+
+        /*
+         * Acount for the line width as when you rotate an element, it's container doesn't scale to fit the border.
+         * Web is weird.
+         *
+         * The width should be of the diagonal of a square of side $lineWidth, as it's rotated 45deg.
+         */
+        margin: $lineWidth * $sqrtTwo;
+    }
     
-    right: 0;
+    .NavMenu {
+        position: relative;
+
+        top: goldenSplit(100vh);
+
+        /* Align the right of the menu with the center of the rotated settings button. */
+        right: $offset + $settingsSize * $sqrtTwo / 2;
+        /* Move back the bullet expansion width to line up the menu with the style line. */
+        margin-right: - ($lineWidth * pow($phi, 2) - $lineWidth);
+    }
+
+    /*
+     * Base class for the style lines on the nav.
+     */
+    %line {
+        display: inline-block;
+        position: absolute;
     
-    position: absolute;
-}
-
-.lineTop {
-    display: inline-block;
-    position: absolute;
+        width: $lineWidth;
+        /* Align the right of the menu with the center of the rotated settings button. */
+        right: $offset + $settingsSize * $sqrtTwo / 2;
+        
+        background-color: colorMap(base);
+    }
     
-    width: $lineWidth;
+    .TopLine {
+        @extend %line;
 
-    right: ($settingsOffset + $settingsDiagonal / 2) - ($lineWidth * 2); 
-    top: $settingsOffset + $settingsDiagonal - $lineWidth;
+        /* Align the top of the line with the bottom of the rotated settings button. */
+        top: $offset + $settingsSize * $sqrtTwo;
+        
+        /*
+         * The bottom property needs to know the size and position of the menu.
+         * It can only be done (avoiding hacky solutions) with Javascript.
+         * Has the value set as an inline style in Nav.jsx
+         */
 
+        /* Acount for the line width as when you rotate an element, it's container doesn't scale to fit the border. */
+        margin-top: $lineWidth / 2;
+    }
 
-    background-color: $baseColor;
-}
-
-.menu {
-    position: absolute;
-
-    right: ($settingsOffset + $settingsDiagonal / 2) - $lineWidth * (1 + pow($phi, 2));
-    top: goldenSplit(100vh);
-}
-
-.lineBottom {
-    display: inline-block;
-    position: absolute;
-
-    width: $lineWidth;
-
-    right: ($settingsOffset + $settingsDiagonal / 2) - ($lineWidth * 2);     
-    bottom: 0;
-
-
-    background-color: $baseColor;
-}
-
-.actionUp {
-    position: absolute;
-
-    right: goldenSplit(100vw, 6);
-    bottom: goldenSplit(100vh, 5);
-}
-
-.actionDown {
-    position: absolute;
-
-    right: goldenSplit(100vw, 7);
-    bottom: goldenSplit(100vh, 7);
+    .BottomLine {
+        @extend %line;
+        /*
+         * The top property needs to know the size and position of the menu.
+         * It can only be done (avoiding hacky solutions) with Javascript.
+         * Has the value set as an inline style in Nav.jsx
+         */
+        
+        /* Make the bottom line extend to the bottom of the screen. */
+        bottom: 0;
+    }    
 }

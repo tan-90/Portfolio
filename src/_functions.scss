@@ -23,11 +23,11 @@
  *
  * Uses the $layers from _config.scss.
  */
-@function layer($name)
+@function layerMap($name)
 {
     @if index($layers, $name)
     {
-        @return (length($layers) - index($layers, $name)) + 1;
+        @return index($layers, $name) + 1;
     }
     @else
     {

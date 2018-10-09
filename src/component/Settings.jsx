@@ -2,47 +2,18 @@ import React from 'react';
 
 import Style from './Settings.scss';
 
+/**
+ * A placeholder Settings button.
+ * Should be responsible for controling the background animation.
+ * 
+ * For now it just renders a rotated div to hold the border.
+ */
 export default class Settings extends React.Component
 {
-    constructor(props)
-    {
-        super(props);
-
-        this.state = {
-            open: false
-        };
-
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleClick(event)
-    {
-        this.setState(
-            (state, props) => ({
-                open: !state.open
-            })
-        );
-    }
-
-    getButtonClasses()
-    {
-        return [
-            this.state.open ? Style.closeButton : Style.openButton
-        ].join(' ');
-    }
-
     render()
     {
         return (
-            <div className={Style.container}>
-                <div
-                    className={this.getButtonClasses()}
-                    onClick={this.handleClick}
-                ></div>
-                {this.state.open ? (
-                    <div></div>
-                ) : (null)}
-            </div>
+            <div className={Style.Settings}/>
         )
     }
 }

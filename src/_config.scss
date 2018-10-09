@@ -13,9 +13,12 @@ $sqrtTwo: 1.4142;
 
 /**
  * Defines the base width for all lines.
- * Line scaling should use $lineWidth * $phi * k for some k. 
+ * Line scaling should use $lineWidth * $phi * k for some k.
+ *
+ * Scaling the window makes positioning act really weird on transformed elements if the unit is set to pixels.
+ * TODO find out a better way to calculate the lineWidth in vw units.
  */
-$lineWidth: 4px;
+$lineWidth: 0.2vw;
 
 /**
  * Defines the color pallete.

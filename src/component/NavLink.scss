@@ -15,7 +15,7 @@
      * The size for the list bullet.
      * The bullet is always centered relative to the text and the container.
      */
-    $bulletSize: $fontSize * 1.2;
+    $bulletSize: $fontSize * 1.3;
 
     /*
      * The hover style for the text.
@@ -45,6 +45,18 @@
     position: relative;
     z-index: layerMap(nav);
 
+    /*
+     * The container simply refuses to scale to fit the content.
+     * I assumed it should, but maybe I'm missing something as there's an white space below.
+     * So just set the height. Not that it's bad practice or anything, just seems wrong because I didn't think it was necessary.
+     */
+    @if  $bulletSize > $fontSize {
+        height: $bulletSize;
+    }
+    @else {
+        height: $fontSize;
+    }
+    
     text-align: right;
 
     * {
@@ -71,8 +83,6 @@
         }
 
         font-family: 'Abel', sans-serif;
-
-
         color: colorMap(base);
 
         &:hover {
