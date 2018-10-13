@@ -3,17 +3,28 @@ import React from 'react';
 import Style from './Contact.scss';
 import SocialIcon from '../component/SocialIcon';
 
+/**
+ * The content of the contact page.
+ */
 export default class Contact extends React.Component
 {
     constructor(props)
     {
         super(props);
 
+        /*
+         * The input values are saved on the state as they change.
+         * It's the react docs way of doing forms.
+         */
         this.state = {
 
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        
+        /*
+         * Needed for keeping track of the input values.
+         */
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
@@ -22,6 +33,10 @@ export default class Contact extends React.Component
 
     }
 
+    /*
+     * Saves the input values as they change.
+     * Ensures the parent component has access to the values of the child inputs.
+     */
     handleInputChange(event)
     {
 
@@ -30,83 +45,63 @@ export default class Contact extends React.Component
     render()
     {
         return(
-            <div className={Style.container}>
-                <h1 className={Style.header}>CONTACT</h1>
-                <form
-                    className={Style.form}
-                    onSubmit={this.handleSubmit}
-                >
-                    <div className={Style.inputRow}>
-                        <label className={Style.labelName}>
+            <div className={Style.Contact}>
+                <form>
+                    {
+                        /*
+                         * The name and email inputs are in the same line.
+                         * The container div is used to group them up and handle position and scale. 
+                         */
+                    }
+                    <div className={Style.Row}>
+                        <label className={Style.NameLabel}>
                             NAME
                             <input
-                                className={Style.inputField}
+                                className={Style.Input}
+                                type='text'
                                 name='name'
                                 spellCheck={false}
                                 onChange={this.handleInputChange}
                             />
                         </label>
-                        <label className={Style.labelEmail}>
+
+                        <label className={Style.EmailLabel}>
                             EMAIL
                             <input
-                                className={Style.inputField}
-                                name='email'
+                                className={Style.Input}
+                                type='text'
+                                name='name'
                                 spellCheck={false}
                                 onChange={this.handleInputChange}
                             />
                         </label>
                     </div>
-
-                    <div>
-                        <label className={Style.labelMessage}>
-                            MESSAGE
-                            <textarea
-                                className={Style.inputArea}
-                                name='message'
-                                onChange={this.handleInputChange}
-                            />
-                        </label>
-                    </div>
-
-                    <div className={Style.submitRow}>
-                        <input
-                            className={Style.inputSubmit}
-                            type='submit'
-                            value='SEND MESSAGE'
+                    
+                    <label className={Style.MessageLabel}>
+                        MESSAGE
+                        <textarea
+                            className={Style.MessageTextarea}
+                            name='message'
+                            onChange={this.handleInputChange}
                         />
+                    </label>
+
+                    <input
+                        className={Style.SubmitButton}
+                        type='submit'
+                        value='SEND MESSAGE'
+                    />
+
+                    {
+                        /*
+                         * The social bar container.
+                         * Used to position and space the social icons.
+                         */
+                    }
+                    <div className={Style.Social}>
+                        
                     </div>
                 </form>
-                
-                <div className={Style.social}>
-                    <SocialIcon
-                        icon='fab fa-gitlab'
-                        link='#'
-                    />
-                    <SocialIcon
-                        icon='fab fa-github'
-                        link='#'
-                    />
-                    <SocialIcon
-                        icon='fab fa-facebook-f'
-                        link='#'
-                    />
-                    <SocialIcon
-                        icon='fab fa-twitter'
-                        link='#'
-                    />
-                    <SocialIcon
-                        icon='fab fa-instagram'
-                        link='#'
-                    />
-                    <SocialIcon
-                        icon='fab fa-youtube'
-                        link='#'
-                    />
-                    <SocialIcon
-                        icon='fab fa-twitch' 
-                        link='#'
-                    />
-                </div>
             </div>
         );
     }

@@ -1,162 +1,181 @@
-@import '../common';
+@import '../config';
+@import '../functions';
 
-.container {
-    position: absolute;
-    
-    top: $settingsOffset / pow($phi, 2);
-    
-    left: $settingsOffset / pow($phi, 3);
-    right: 0;
+.Contact {
+    /*
+     * Defines the spacing between input elements.
+     *
+     * It's just the bottom margin of the inputs.
+     */
+    $inputSpacing: goldenSplit(100vh, 7);
 
+    /*
+     * Defines the input field border width.
+     *
+     * The border used on the nav is a bit too thick, so we just golden split it.
+     * It might be too thin now, but it probably won't matter when I make this responsive.
+     */
+     $borderWidth: goldenSplit($lineWidth);
 
-    margin-bottom: $settingsOffset / ($phi * $phi);
-    margin-right: 4px;
+     /*
+      * The inputs are childs of the labels (that's how react doc does it).
+      * This means I only need a few tweaks on input styling.
+      * So just style them all at the same time and adjusts when needed.
+      */
+    .Input {
+        display: inline-block;
+        position: relative;
 
+        font-family: 'Abel', sans-serif;
+        font-weight: 100;
+        font-size: goldenSplit(100vh, 7);
 
-    padding-bottom: goldenSplit(100vh, 6);
+        height: goldenSplit(100vh, 6);
 
-    background-color: $backgroundColor;
-}
+        /*
+         * Give the text a bit of spacing to the border.
+         */
+        padding-left: 5px;
 
-.header {
-    position: relative;
+        color: colorMap(base);
+        /*
+         * I want to see just the border.
+         */
+        background-color: colorMap(background);
 
-    margin: goldenSplit(100vh, 6) goldenSplit(100vw, 6) goldenSplit(100vh, 6) goldenSplit(100vw, 6);
-    padding: 0;
+        border: solid $borderWidth colorMap(base);
 
+        /*
+         * The focus outline is replaced with a highlight color border.
+         */
+        &:focus {
+            /*
+             * Can't really decide if I want to highlight the text on focus.
+             * I think I like it, but this could change.
+             */
+            color: colorMap(highlight);
+            
+            border: solid $borderWidth colorMap(highlight);
 
-    text-align: left;
-    
-    font-family: 'Abel', sans-serif;
-    font-weight: 100;
-    font-size: goldenSplit(100vh, 6);
-    
-    line-height: goldenSplit(100vh, 6);
-    
-    color: $baseColor;
-}
-
-.form {
-    margin: goldenSplit(100vh, 6);
-}
-
-%label {
-    display: flex;
-    flex-direction: column;
-    
-    font-family: 'Abel', sans-serif;
-    font-weight: 100;
-    font-size: goldenSplit(100vh, 8);
-    
-    color: $baseColor;
-}
-
-.labelName {
-    @extend %label;
-
-    flex-grow: 1;
-}
-
-.labelEmail {
-    @extend %label;
-
-    flex-grow: $phi;
-
-    margin-left: goldenSplit(100vw, 10);
-}
-
-.labelMessage {
-    @extend %label;
-
-    margin-bottom: goldenSplit(100vh, 7);
-}
-
-.inputRow {
-    display: flex;
-    flex-direction: row;
-
-    margin-bottom: goldenSplit(100vh, 7);
-}
-
-%input {
-    background-color: $backgroundColor;
-
-    border: solid $lineWidth / $phi $baseColor;
-
-    padding-left: 4px;
-
-    font-family: 'Abel', sans-serif;
-    font-weight: 100;
-    font-size: goldenSplit(100vh, 7);
-    
-    color: $baseColor;
-}
-
-.inputField {
-    @extend %input;
-
-    height: goldenSplit(100vh, 6);
-}
-
-.inputArea {
-    @extend %input;
-
-    height: goldenSplit(100vh, 3);
-
-    resize: none;
-
-    &:focus {
-        border: solid $lineWidth / $phi $highlightColor;
-
-        outline: none;
+            outline: none;
+        }
     }
-}
 
-.inputField:focus {
-    border: solid $lineWidth / $phi $highlightColor;
+    /*
+     * The textarea and button inputs need some tweaking.
+     */
+    .MessageTextarea {
+        @extend .Input;
 
-    outline: none;
-}
+        /*
+         * Override the height.
+         */
+        height: goldenSplit(100vh, 3);
+        
+        /*
+         * Why is free resizing even a thing?
+         */
+        resize: none;
+    }
 
-.inputArea:focus {
+    /*
+     * The button and textarea inputs need some tweaking.
+     */
+    .SubmitButton {
+        @extend .Input;
+        
+        /*
+         * Centering things is weird.
+         * Save the button width to calculate the margin later.
+         */
+        $buttonWidth: 100% - goldenSplit(100%);
+        
+        width: $buttonWidth;
 
-}
+        margin-left: (100% - $buttonWidth) / 2;
+        margin-bottom: $inputSpacing;
 
-.inputSubmit {
-    $buttonWidth: 100% - (100% / $phi);
-    margin-left: (100% - $buttonWidth) / 2;
-    
-    width: $buttonWidth;
-    height: goldenSplit(100vh, 6);
+        cursor: pointer;
 
+        /*
+         * Since the base class only covers focus, we need some hover feedback.
+         */
+        &:hover {
+            color: colorMap(highlight);
+            
+            border: solid $borderWidth colorMap(highlight);
+        }
+    }
 
-    font-family: 'Abel', sans-serif;
-    font-weight: 100;
-    font-size: goldenSplit(100vh, 8);
-    
+    /*
+     * Despite being called Row, this is not a bootstrap like row.
+     * It just holds the name and email fields, as they're on the same row.
+     */
+    .Row {
+        display: flex;
+        flex-direction: row;
 
-    border: solid $lineWidth / $phi $baseColor;
+        margin-bottom: $inputSpacing;
+    }
 
+    /*
+     * The react docs put the labelled element inside of the label.
+     * I'm following that, so the label class needs to position the label and the input.
+     * Use flex to display them as a column.
+     */
+    %Label {
+        display: flex;
+        flex-direction: column;
+        
+        font-family: 'Abel', sans-serif;
+        font-weight: 100;
+        font-size: goldenSplit(100vh, 8);
+        
+        color: colorMap(base);
+    }
 
-    color: $baseColor;
-    background-color: $backgroundColor;
+    .NameLabel {
+        @extend %Label;
 
+        /*
+         * You guessed it, I'm golden splitting the space for the name and email fields.
+         */
+        flex-grow: 1;
 
-    cursor: pointer;
-}
+        /*
+         * The margin is evenly divided between the two fields.
+         * This is done mainly to keep the sizes as close to the golden ratio as possible.
+         * It's not even noticeable, but allows me to draw Fibonacci spirals over my pages.
+         */
+        margin-right: goldenSplit(100vw, 10) / 2;
+    }
 
-.inputSubmit:hover {
-    border: solid $lineWidth / $phi $highlightColor;
+    .EmailLabel {
+        @extend %Label;
+        
+        /*
+         * You guessed it, I'm golden splitting the space for the name and email fields.
+         */
+        flex-grow: $phi;
+        
+        /*
+         * The margin is evenly divided between the two fields.
+         * This is done mainly to keep the sizes as close to the golden ratio as possible.
+         * It's not even noticeable, but allows me to draw Fibonacci spirals over my pages.
+         */
+        margin-left: goldenSplit(100vw, 10) / 2;
+    }
 
+    .MessageLabel {
+        @extend %Label;
 
-    color: $highlightColor;
-}
+        margin-bottom: $inputSpacing;
+    }
 
-.social {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    margin-left: +goldenSplit(100vw, 10);
+    /*
+     * The container of the social bar.
+     */
+    .Social {
+        margin-top: $inputSpacing;
+    }
 }
