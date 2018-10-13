@@ -2,6 +2,9 @@ import React from 'react';
 
 import Style from './About.scss';
 
+/**
+ * The content of the about page.
+ */
 export default class About extends React.Component
 {
     render()
