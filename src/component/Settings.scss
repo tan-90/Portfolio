@@ -16,6 +16,11 @@
      */
     $offset: goldenSplit(100vw - goldenSplit(100vw), 3);
 
+    /*
+     * The delay of the settings button opening animation.
+     */
+    $openDelay: .5s;
+
     
     display: inline-block;
     position: relative;
@@ -26,6 +31,8 @@
 
     transform: rotate(45deg);
 
+    transition: width $openDelay, height $openDelay, margin $openDelay;
+
     cursor: pointer;
 
     /*
@@ -34,4 +41,14 @@
      * This is taken into acount with a $lineWidth * $sqrtTwo when positioning the button in the nav.
      */
     border: solid $lineWidth colorMap(base);
+
+    background-color: colorMap(backgroundOpaque);
+
+    &.Open {
+        width: goldenSplit(100vw, 2);
+        height: goldenSplit(100vw, 2);
+
+        margin-top: -20vw;
+        margin-right: -20vw;
+    }
 }

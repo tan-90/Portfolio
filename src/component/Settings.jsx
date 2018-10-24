@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Style from './Settings.scss';
+import { debug } from 'util';
 
 /**
  * A placeholder Settings button.
@@ -10,10 +11,31 @@ import Style from './Settings.scss';
  */
 export default class Settings extends React.Component
 {
+    constructor(props)
+    {
+        super(props);
+
+        this.state = {
+            open: false
+        };
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick()
+    {
+        this.setState(state => ({open: !state.open}));
+    }
+
     render()
     {
+        let getClassNames = () => [Style.Settings, this.state.open ? Style.Open : ''].join(' ');
+
         return (
-            <div className={Style.Settings}/>
+            <div
+                className={getClassNames()}
+                onClick={this.handleClick}
+            />
         )
     }
 }
