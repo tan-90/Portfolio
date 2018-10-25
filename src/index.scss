@@ -1,13 +1,18 @@
+/*
+ * Set global styling.
+ */
 html,
 body {
     margin: 0;
+    /*
+     * Scrollbars look horrible.
+     * I plan to implement some nice scroll indicator in the future.
+     */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
-.appContainer {
-    width: 100vw;
-    height: 100vh;
+.App {
 
-    
-    background: url('/assets/bg.png');
-    background-size: 100% 100%;
 }

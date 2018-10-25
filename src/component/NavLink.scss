@@ -1,70 +1,172 @@
-@import '../common';
+@import '../config';
+@import '../functions';
+@import '../mixins';
 
-$fontSize: goldenSplit(100vh, 6);
+.NavLink {
+    /*
+     * The size for the link text.
+     * Not an actual font size as it's use with the sizedText mixin.
+     *
+     * The text is scaled so it's height machtes this value.
+     */
+    $fontSize: goldenSplit(100vh, 7);
 
-.container {
-    padding-top: 2px;
-    padding-bottom: 2px;
-}
+    /*
+     * The size for the list bullet.
+     * The bullet is always centered relative to the text and the container.
+     */
+    $bulletSize: $fontSize * 1.3;
 
-.text {
-    position: absolute;
+    /*
+     * The hover style for the text.
+     * As it's applied when either the text or the bullet are hovered, it's turned into a reusable mixin.
+     */
+    @mixin textHover
+    {
+        color: colorMap(highlight);
+    }
 
-    right: $lineWidth * pow($phi, 2) * (1 + $phi);
-    
+    /*
+     * The hover style for the bullet.
+     * As it's applied when either the text or the bullet are hovered, it's turned into a reusable mixin.
+     */
+    @mixin bulletHover
+    {
+        width: $lineWidth * $phi;
 
-    cursor: pointer;
-    
+        margin-left: $lineWidth * pow($phi, 2);
+        margin-right: $lineWidth * pow($phi, 2) - $lineWidth * $phi;
 
-    font-family: 'Abel', sans-serif;
-    font-size: $fontSize;
-    line-height: $fontSize;
-    
-    color: $baseColor;
+        background-color: colorMap(highlight);
+    }
 
 
-    transition: right .2s;
-}
-
-.textHoverUnselected {    
-    right: $lineWidth * pow($phi, 2) * 2;
-}
-
-.text:hover,
-.textSelected {
-    color: $highlightColor;
-}
-
-.bullet {
+    display: block;
     position: relative;
-    float: right;
+    z-index: layerMap(nav);
 
-    width: $lineWidth;
-    height: $fontSize * 0.9;
-
-    right: $lineWidth * (pow($phi, 2) - 1);
-
-
-    transition: width .2s, right .2s;
+    /*
+     * The container simply refuses to scale to fit the content.
+     * I assumed it should, but maybe I'm missing something as there's an white space below.
+     * So just set the height. Not that it's bad practice or anything, just seems wrong because I didn't think it was necessary.
+     */
+    @if  $bulletSize > $fontSize {
+        height: $bulletSize;
+    }
+    @else {
+        height: $fontSize;
+    }
     
-    
-    background-color: $baseColor;
-}
+    text-align: right;
 
-.bulletHover {
-    width: $lineWidth * $phi;
-    
-    right: $lineWidth * $phi * ($phi - 1);
+    * {
+        display: inline-block;
+        position: relative;
 
+        /* Both the text and the bullet should be clickable. */
+        cursor: pointer;
+    }
 
-    background-color: $highlightColor;
-}
+    /* The link text. */
+    .Name {
+        /*
+         * Size the text so the height matches the given size.
+         * Also removes white spaces above and below the text.
+         *
+         * Uses both ::before and ::after, so the list bullet needs it's own element.
+         */
+        @include sizedText(Abel, $fontSize);
 
-.bulletSelected {
-    width: $lineWidth * pow($phi, 2);
+        /* Ensure the text is centered relative to the bullet when it's smaller. */
+        @if  $bulletSize > $fontSize {
+            transform: translateY(-($bulletSize - $fontSize) / 2);
+        }
 
-    right: 0px;
+        font-family: 'Abel', sans-serif;
+        color: colorMap(base);
 
-    
-    background-color: $highlightColor;
+        &:hover {
+            @include textHover;
+
+            & ~ .Bullet {
+                @include bulletHover;
+            }
+        }
+    }
+
+    /* The list bullet line segment thingy. */
+    .Bullet {
+        width: $lineWidth;
+        height: $bulletSize;
+
+        /* Ensure the bullet is centered relative to the text when it's smaller. */
+        @if $fontSize > $bulletSize {
+            margin-top: ($fontSize - $bulletSize) / 2;
+            margin-bottom: ($fontSize - $bulletSize) / 2;
+        }
+
+        margin-left: $lineWidth * pow($phi, 3);
+        margin-right: $lineWidth * pow($phi, 2) - $lineWidth;
+
+        transition: width .2s, margin .2s;
+
+        background-color: colorMap(base);
+
+        /* Make the bullet hover area bigger. */
+        &::after {
+            content: '';
+
+            position: absolute;
+            display: block;
+
+            height: $bulletSize;
+            width: $lineWidth * pow($phi, 3);
+
+            left: -$lineWidth * $phi;
+        }
+
+        &:hover {
+            @include bulletHover;
+
+            /*
+             * CSS does not allow selecting previous siblings.
+             * Support is being discussed.
+             *
+             * It's not worth it using js just to select the text on hovering the bullets as it's such a minor thing.
+             * For now hovering the bullets just selects the bullets.
+             *
+             * TODO Select the text and apply the textHover mixin.
+             */
+        }
+    }
+
+    /*
+     * Override every other style when the link is active.
+     */
+    &.Active {
+        /*
+         * CSS does not allow selecting previous siblings.
+         * Support is being discussed.
+         *
+         * It's not worth it using js just to select the text on hovering the bullets as it's such a minor thing.
+         * For now hovering the bullets just selects the bullets.
+         *
+         * TODO Also select the text when the bullet is hovered.
+         */
+        .Name,
+        .Name:hover {
+            color: colorMap(highlight);
+        }
+
+        .Bullet,
+        .Bullet:hover,
+        .Name:hover ~ .Bullet {
+            width: $lineWidth * pow($phi, 2);
+
+            margin-left: $lineWidth * pow($phi, 2);
+            margin-right: 0;
+
+            background-color: colorMap(highlight);
+        }
+    }
 }

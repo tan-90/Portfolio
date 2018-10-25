@@ -2,71 +2,54 @@ import React from 'react';
 
 import Style from './NavLink.scss';
 
+/**
+ * A link for the nav menu.
+ * Reacts to hover with a custom "list bullet".
+ * Can react to clicks.
+ * 
+ * name: The name of the link. Is also what's displayed.
+ * active: If set the link gets the "active" style. Which item is active should be controlled by the parent.
+ * handleClick: Called when the links is clicked. Receives the name of the link as argument.
+ */
 export default class NavLink extends React.Component
 {
     constructor(props)
     {
         super(props);
-
-        this.state = {
-            hover: false
-        };
-
-        this.handleMouseEnter = this.handleMouseEnter.bind(this);
-        this.handleMouseLeave = this.handleMouseLeave.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-    }
-
-    handleMouseEnter(event)
-    {
-        this.setState({
-            hover: true
-        });
-    }
-
-    handleMouseLeave(event)
-    {
-        this.setState({
-            hover: false
-        });
-    }
-
-    handleClick(event)
-    {
-        this.props.handleClick(event, this.props.name);
-    }
-
-    getTextClasses()
-    {
-        return [
-            Style.text,
-            this.props.selected == this.props.name ? Style.textSelected : '',
-            this.state.hover && (this.props.selected != this.props.name) ? Style.textHoverUnselected : ''
-        ].join(' ');
-    }
-
-    getBulletClasses()
-    {
-        return [
-            Style.bullet,
-            this.state.hover ? Style.bulletHover : '',
-            this.props.selected == this.props.name ? Style.bulletSelected : ''
-        ].join(' ');
     }
 
     render()
     {
+        let getClassNames = () => [Style.NavLink, this.props.active ? Style.Active : ''].join(' ');
+        let handleClick = () => this.props.handleClick(this.props.name)
+
         return (
-            <div className={Style.container}>
-                <div className={this.getBulletClasses()}></div>
-                <div 
-                    onMouseEnter={this.handleMouseEnter}
-                    onMouseLeave={this.handleMouseLeave}
-                    onClick={this.handleClick}
-                    className={this.getTextClasses()}
+            <div className={getClassNames()}>
+                {
+                    /*
+                     * The display name of the link.
+                     *
+                     * Needs it's own span as the style for removing white spaces above and below text uses the ::before and ::after pseudo elements.
+                     */
+                }
+                <span
+                    className={Style.Name}
+                    onClick={handleClick}
                 >
                     {this.props.name}
-                </div>
+                </span>
+
+                {
+                    /*
+                     * The list bullet displayed to the right of the link.
+                     * 
+                     * Can't be an ::after of the text as that's already used.
+                     */
+                }
+                <div
+                    className={Style.Bullet}
+                    onClick={handleClick}
+                />
             </div>
         );
     }

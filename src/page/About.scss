@@ -1,52 +1,30 @@
-@import '../common';
+@import '../functions';
+@import '../mixins';
 
-.container {
-    position: absolute;
-    
-    top: $settingsOffset / pow($phi, 2);
-    
-    left: $settingsOffset / pow($phi, 3);
-    right: 0;
-
-
-    margin-bottom: $settingsOffset / ($phi * $phi);
-    margin-right: 4px;
-
-
-    background-color: $backgroundColor;
-}
-
-.header {
+.About {
     position: relative;
+    z-index: layerMap(content);
 
-    margin: goldenSplit(100vh, 6) goldenSplit(100vw, 6) goldenSplit(100vh, 6) goldenSplit(100vw, 6);
-    padding: 0;
+    .Text {
+        position: relative;
 
+        font-family: 'Abel', sans-serif;
+        font-weight: 100;
+        font-size: goldenSplit(100vh, 7);
 
-    text-align: left;
-    
-    font-family: 'Abel', sans-serif;
-    font-weight: 100;
-    font-size: goldenSplit(100vh, 6);
-    
-    line-height: goldenSplit(100vh, 6);
-    
-    color: $baseColor;
-}
-
-.text {
-    position: relative;
-
-    margin: goldenSplit(100vh, 6) goldenSplit(100vw, 6) goldenSplit(100vh, 6) goldenSplit(100vw, 6);
-    padding: 0;
-
-
-    text-align: left;
-    text-indent: goldenSplit(100vh, 5);
-    
-    font-family: 'Abel', sans-serif;
-    font-weight: 100;
-    font-size: goldenSplit(100vh, 7);
-    
-    color: $baseColor;
+        /*
+         * Never justify text on the web.
+         * 
+         * Refer to: https://designforhackers.com/blog/justify-text-html-css/
+         */
+        text-align: left;
+        
+        /*
+         * Fancy!
+         */
+        text-indent: goldenSplit(100vw, 7);
+        
+        
+        color: colorMap(base);
+    }
 }
