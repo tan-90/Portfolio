@@ -17,6 +17,18 @@
      */
      $borderWidth: goldenSplit($lineWidth);
 
+    form {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        /*
+         * Center everything that's inside the form.
+         * This has to be done to allow centering the social bar, as it's size is unkown.
+        */
+        text-align: center;
+    }
+
      /*
       * The inputs are childs of the labels (that's how react doc does it).
       * This means I only need a few tweaks on input styling.
@@ -84,15 +96,15 @@
     .SubmitButton {
         @extend .Input;
         
-        /*
-         * Centering things is weird.
-         * Save the button width to calculate the margin later.
-         */
-        $buttonWidth: 100% - goldenSplit(100%);
-        
-        width: $buttonWidth;
+        width:  100% - goldenSplit(100%);
 
-        margin-left: (100% - $buttonWidth) / 2;
+        /*
+         * As this has a set width, it won't be centered just by the text align.
+         * Auto margins on the left and right ensure it's centered.
+         */
+        margin-left: auto;
+        margin-right: auto;
+
         margin-bottom: $inputSpacing;
 
         cursor: pointer;
@@ -126,6 +138,11 @@
     %Label {
         display: flex;
         flex-direction: column;
+
+        /*
+         * Since I had to set text-align to center on the form so the social bar could be centered, I reset it here.
+         */
+        text-align: left;
         
         font-family: 'Abel', sans-serif;
         font-weight: 100;
@@ -176,6 +193,15 @@
      * The container of the social bar.
      */
     .Social {
-        margin-top: $inputSpacing;
+        margin-top: $inputSpacing * ($phi - 1);
+
+        /*
+         * Select the SocialIcon elements.
+         * This feels wrong as we can't be sure the Social Icons will be divs, but I'm not aware of any other way that works with modularized css.
+         * div ~ div ensures we only select the divs that are siblings of divs, avoiding an extra margin on the first icon.
+         */
+        & > div ~ div {
+            margin-left: goldenSplit(100vw, 10);
+        }
     }
 }

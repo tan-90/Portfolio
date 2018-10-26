@@ -99,7 +99,34 @@ export default class Contact extends React.Component
                          */
                     }
                     <div className={Style.Social}>
-                        
+                        <SocialIcon
+                            icon='fab fa-gitlab'
+                            link='#'
+                        />
+                        <SocialIcon
+                            icon='fab fa-github'
+                            link='#'
+                        />
+                        <SocialIcon
+                            icon='fab fa-facebook-f'
+                            link='#'
+                        />
+                        <SocialIcon
+                            icon='fab fa-twitter'
+                            link='#'
+                        />
+                        <SocialIcon
+                            icon='fab fa-instagram'
+                            link='#'
+                        />
+                        <SocialIcon
+                            icon='fab fa-youtube'
+                            link='#'
+                        />
+                        <SocialIcon
+                            icon='fab fa-twitch'
+                            link='#'
+                        />
                     </div>
                 </form>
             </div>
