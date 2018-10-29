@@ -2,7 +2,7 @@
 @import '../functions';
 
 .Nav {
-    $navWidth: 100vw - goldenSplit(100vw);
+    //$navWidth: 100vw - goldenSplit(100vw);
 
     /*
      * The size of the settings button.
@@ -17,6 +17,12 @@
      * Used to position the lines and the menu.
      */
     $offset: goldenSplit($navWidth, 3);
+
+    /*
+     * Same as the offset but used in other view modes.
+     * The view and blog modes need more free space, so the offset is smaller.
+     */
+    $reducedOffset: goldenSplit($navWidth, 5);
     
     
     /*
@@ -48,6 +54,12 @@
          * The width should be of the diagonal of a square of side $lineWidth, as it's rotated 45deg.
          */
         margin: $lineWidth * $sqrtTwo;
+
+        
+        @at-root.View .Settings {
+            top: $reducedOffset;
+            right: $reducedOffset;
+        }
     }
     
     .NavMenu {
@@ -59,12 +71,16 @@
         right: $offset + $settingsSize * $sqrtTwo / 2;
         /* Move back the bullet expansion width to line up the menu with the style line. */
         margin-right: - ($lineWidth * pow($phi, 2) - $lineWidth);
+
+        @at-root.View .NavMenu {
+            display: none;
+        }
     }
 
     /*
      * Base class for the style lines on the nav.
      */
-    %line {
+    .Line {
         display: inline-block;
         position: absolute;
     
@@ -76,7 +92,7 @@
     }
     
     .TopLine {
-        @extend %line;
+        @extend .Line;
 
         /* Align the top of the line with the bottom of the rotated settings button. */
         top: $offset + $settingsSize * $sqrtTwo;
@@ -89,10 +105,15 @@
 
         /* Acount for the line width as when you rotate an element, it's container doesn't scale to fit the border. */
         margin-top: $lineWidth / 2;
+
+        @at-root.View .TopLine {
+            top: $reducedOffset + $settingsSize * $sqrtTwo;
+            right: $reducedOffset + $settingsSize * $sqrtTwo / 2;
+        }
     }
 
     .BottomLine {
-        @extend %line;
+        @extend .Line;
         /*
          * The top property needs to know the size and position of the menu.
          * It can only be done (avoiding hacky solutions) with Javascript.
@@ -101,5 +122,11 @@
         
         /* Make the bottom line extend to the bottom of the screen. */
         bottom: 0;
-    }    
+
+        @at-root.View .BottomLine {
+            display: none;
+        }
+    }
+
+
 }

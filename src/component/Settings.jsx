@@ -19,12 +19,39 @@ export default class Settings extends React.Component
             open: false
         };
 
+        /**
+         * Holds all the currently defined settings.
+         */
+        this.currentSettings = {
+            forcingView: false
+        };
+
         this.handleClick = this.handleClick.bind(this);
     }
-
+    
     handleClick()
     {
-        this.setState(state => ({open: !state.open}));
+        /*
+         * This is placeholder code.
+         * I wanted this system in place to see how it would look.
+         * It's gonna be done properly once the actual website content is in place.
+         */
+        if (!this.state.open)
+        {
+            this.setState(state => ({
+                open: !state.open
+            }));
+            this.currentSettings.forcingView = true;
+        }
+        else
+        {
+            this.setState(state => ({
+                open: !state.open
+            }));
+            this.currentSettings.forcingView = false;
+        }
+
+        this.props.changeCallback(this.currentSettings);
     }
 
     render()

@@ -2,6 +2,7 @@ import React from 'react';
 
 import Style from './Nav.scss';
 
+import App from '../index';
 import NavMenu from './NavMenu';
 import Settings from './Settings'
 
@@ -37,13 +38,26 @@ export default class Nav extends React.Component
             menuRect: null
         };
     }
-    
+
     render()
     {
         let menuSize = this.state.menuRect;
 
+        let {website, blog, view} = App.modes;
+        /*
+         * The style of the nav depends on the current display mode.
+         * Each of the modes has it's own set of classes.
+         * 
+         * They all share the common base class and the extra ones make a few tweaks.
+         */
+        let classes = {
+            website: [Style.Nav, Style.Website].join(' '),
+            blog: [Style.Nav, Style.Blog].join(' '),
+            view: [Style.Nav, Style.View].join(' ')
+        }
+ 
         return (
-            <div className={Style.Nav}>
+            <div className={classes[this.props.mode]}>
                 {
                     /* Since I have to position components and each one has their own stylesheet,
                      * they need to be inside selectable containers.
@@ -51,7 +65,7 @@ export default class Nav extends React.Component
                 }
 
                 <div className={Style.Settings}>
-                    <Settings/>
+                    <Settings changeCallback={this.props.handleSettingsChange}/>
                 </div>
                 
                 {
@@ -64,7 +78,7 @@ export default class Nav extends React.Component
                 <div
                     className={Style.TopLine}
                     style={{
-                        bottom: `calc(100vh - ${menuSize ? (menuSize.top - this.lineSpacing).toString() : 0}px)`
+                        bottom: this.props.mode == App.modes.view ? '0px' : `calc(100vh - ${menuSize ? (menuSize.top - this.lineSpacing).toString() : 0}px)`
                     }}
                 />
 
