@@ -53,7 +53,7 @@ export default class App extends React.Component
             about: 'ABOUT',
             projects: 'PROJECTS',
             contact: 'CONTACT',
-            blog: 'BLOG'
+            // blog: 'BLOG'
         }
     }
 

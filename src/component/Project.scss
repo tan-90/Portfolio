@@ -1,0 +1,88 @@
+@import '../functions';
+@import '../mixins';
+
+.Project {
+    /*
+     * Quickly setup the font family and weight.
+     * I can't set the font at the * selector as that messes up font awesome icons.
+     */
+    @mixin font {
+        font-family: 'Abel', sans-serif;
+        font-weight: 100;
+    }
+
+    position: relative;
+    z-index: layerMap(content);
+
+    * {
+        color: colorMap(base);
+    }
+
+    .Header {
+        .Name {
+            @include font;
+
+            font-size: goldenSplit(100vh, 6);    
+        }
+        
+        .Icon {
+            font-size: goldenSplit(100vh, 7);
+
+            margin-left: goldenSplit(100vw, 9);
+        }
+
+        .Description {
+            @include font;
+
+            @include sizedText(Abel, goldenSplit(100vh, 8));    
+        }
+
+        /*
+         * Style the horizontal line before the project header.
+         */
+        &::after {
+            content: '';
+
+            position: absolute;
+            display: block;
+
+            width: goldenSplit(100%);
+
+            border-bottom: solid goldenSplit($lineWidth) colorMap(base);
+        }
+
+        /* Add a bit of spacing after the header. */
+        margin-bottom: goldenSplit(100vh, 5);
+    }
+
+    /*
+     * The style of the rendered markdown project body.
+     */
+    .Body {
+        * {
+            /*
+             * Set the font for everything as there's no icons in the project body.
+             */
+            @include font;
+        }
+
+        p {
+            /* Indents look lovely. */
+            text-indent: goldenSplit(100vw, 7);
+            font-size: goldenSplit(100vh, 7);
+        }
+
+        h1 {
+            font-size: goldenSplit(100vh, 7) * 1.3;
+        }
+
+        h2, h3, h4 {
+            text-transform: uppercase;
+            font-size: goldenSplit(100vh, 7) * 1.2;
+        }
+
+        img {
+            width: 100%
+        }
+    }
+}

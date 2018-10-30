@@ -24,13 +24,14 @@
 
 
     position: absolute;
+    display: inline-block;
     z-index: layerMap(content);
 
     /*
      * The right of the content container golden splits the page.
      * Since there's a border on the left, it needs to be subtracted. 
      */
-    width: goldenSplit(100vw) - $borderOffset;
+    width: goldenSplit(100vw) - $borderOffset - $padding * 2;
 
     margin-top: $topOffset;
     margin-bottom: $borderOffset;

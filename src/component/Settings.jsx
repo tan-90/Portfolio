@@ -36,22 +36,22 @@ export default class Settings extends React.Component
          * I wanted this system in place to see how it would look.
          * It's gonna be done properly once the actual website content is in place.
          */
-        if (!this.state.open)
-        {
-            this.setState(state => ({
-                open: !state.open
-            }));
-            this.currentSettings.forcingView = true;
-        }
-        else
-        {
-            this.setState(state => ({
-                open: !state.open
-            }));
-            this.currentSettings.forcingView = false;
-        }
+        // if (!this.state.open)
+        // {
+        //     this.setState(state => ({
+        //         open: !state.open
+        //     }));
+        //     this.currentSettings.forcingView = true;
+        // }
+        // else
+        // {
+        //     this.setState(state => ({
+        //         open: !state.open
+        //     }));
+        //     this.currentSettings.forcingView = false;
+        // }
 
-        this.props.changeCallback(this.currentSettings);
+        // this.props.changeCallback(this.currentSettings);
     }
 
     render()

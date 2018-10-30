@@ -62,6 +62,12 @@ $layers: (
     nav,
     
     /*
+     * The project navigation arrows.
+     * It overlaps with the nav area and should be rendered on top of it.
+     */
+    projectNav,
+
+    /*
      * The menu for configuring the background scene.
      * Opens on top of everything else in the page.
      */

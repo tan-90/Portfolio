@@ -1,8 +1,8 @@
-@import '../common';
+@import '../config';
 @import '../functions';
 
 .Nav {
-    //$navWidth: 100vw - goldenSplit(100vw);
+    $navWidth: 100vw - goldenSplit(100vw);
 
     /*
      * The size of the settings button.
