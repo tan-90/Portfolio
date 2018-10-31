@@ -1,9 +1,13 @@
+@import './functions';
+
 /*
  * Set global styling.
  */
 html,
 body {
     margin: 0;
+
+    background-color: lighten(colorMap(backgroundOpaque), 20%);
     /*
      * Scrollbars look horrible.
      * I plan to implement some nice scroll indicator in the future.

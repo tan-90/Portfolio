@@ -1,7 +1,7 @@
 @import '../config';
 @import '../functions';
 
-.Background {
+.Background canvas {
     position: fixed;
     z-index: layerMap(background);
 
@@ -11,6 +11,8 @@
     top: 0;
     left: 0;
 
-    background: url('/assets/bg.png');
-    background-size: 100% 100%;
+    opacity: 0.9;
+
+    // background: url('/assets/bg.png');
+    // background-size: 100% 100%;
 }

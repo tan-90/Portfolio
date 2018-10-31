@@ -7,10 +7,24 @@ var copyPlugin = new CopyWebpackPlugin([
 ]);
 
 module.exports = {
-    entry: './src/index.jsx',
+    // entry: {
+    //     a: "./a",
+    //     b: "./b",
+    //     c: ["./c", "./d"]
+    // },
+    // output: {
+    //     path: path.join(__dirname, "dist"),
+    //     filename: "[name].entry.js"
+    // }
+
+    entry: {
+        react: './src/index.jsx',
+        threejs: './src/threejs/main.js'
+    },
+    
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
+        filename: '[name].entry.js',
         publicPath: '/'
     },
     resolve: {

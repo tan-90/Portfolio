@@ -13,7 +13,11 @@ export default class Background extends React.Component
     render()
     {
         return (
-            <div className={Style.Background}></div>
+            <div
+                id='backgroundHolder'
+                className={Style.Background}
+            >
+            </div>
         );
     }
 }
