@@ -8,3 +8,6 @@ desktop.ini
 
 # Ignore node_modules
 node_modules/
+
+# Ignore mailer authentication keys.
+server/auth.js
