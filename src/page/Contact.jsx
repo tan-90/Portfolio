@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Style from './Contact.scss';
+
 import SocialIcon from '../component/SocialIcon';
 
 /**
@@ -19,7 +20,11 @@ export default class Contact extends React.Component
         this.state = {
             name: '',
             email: '',
-            message: ''
+            message: '',
+            /*
+             * Whether or not we're trying to send a message.
+             */
+            sending: false 
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,7 +37,14 @@ export default class Contact extends React.Component
 
     handleSubmit(event)
     {
+        /*
+         * Prevent the page from reloading.
+         */
         event.preventDefault();
+
+        this.setState({
+            sending: true
+        });
 
         fetch('http://localhost:3000/mail', {
                 method: 'post',
@@ -46,15 +58,26 @@ export default class Contact extends React.Component
                 })
             })
             .then(response => {
-                /*
-                 * TODO only clear the form on success.
-                 * Send feedback to the user.
-                 */
-                console.log(response);
+
+                if (response.ok)
+                {
+                    alert('Message sent. Thank you!');
+
+                    /*
+                     * We only clear the form if the message was successfully sent.
+                     */
+                    this.setState({
+                        name: '',
+                        email: '',
+                        message: '',
+                        sending: false
+                    });
+                }
+            })
+            .catch(() => {
+                alert('Sorry, there was a problem. Try again later.');
                 this.setState({
-                    name: '',
-                    email: '',
-                    message: ''
+                    sending: false
                 });
             });
     }
@@ -93,6 +116,7 @@ export default class Contact extends React.Component
                                 spellCheck={false}
                                 onChange={this.handleInputChange}
                                 required={true}
+                                disabled={this.state.sending}
                             />
                         </label>
 
@@ -106,6 +130,7 @@ export default class Contact extends React.Component
                                 spellCheck={false}
                                 onChange={this.handleInputChange}
                                 required={true}
+                                disabled={this.state.sending}
                             />
                         </label>
                     </div>
@@ -118,6 +143,7 @@ export default class Contact extends React.Component
                             value={this.state.message}
                             onChange={this.handleInputChange}
                             required={true}
+                            disabled={this.state.sending}
                         />
                     </label>
 
@@ -130,9 +156,9 @@ export default class Contact extends React.Component
 
                 {
                     /*
-                        * The social bar container.
-                        * Used to position and space the social icons.
-                        */
+                     * The social bar container.
+                     * Used to position and space the social icons.
+                     */
                 }
                 <div className={Style.Social}>
                     <SocialIcon
