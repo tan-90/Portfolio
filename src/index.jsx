@@ -123,6 +123,10 @@ export default class App extends React.Component
                  */
                 content = null;
             }
+            else if (this.state.currentPage == App.pages.home)
+            {
+                content = <h1 className={Style.Logo}>tan(90</h1>;
+            }
             else if (this.state.currentPage == App.pages.about)
             {
                 content = <Content header={App.pages.about} page={<About/>} />

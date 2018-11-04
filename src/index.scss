@@ -1,3 +1,6 @@
+@import './functions';
+@import './mixins';
+
 /*
  * Set global styling.
  */
@@ -15,4 +18,48 @@ body {
 
 .App {
 
+}
+
+.Logo {
+    text-align: right;
+    position: absolute;    
+    z-index: layerMap(content);
+
+    
+    @include sizedText(Abel, goldenSplit(100vw, 5));
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+    
+    /*
+     * This is >>VERY PAINFULLY<< missaligned.
+     * The spacing between the bottom lines roughly matches the size of a navlink.
+     * The lines should be aligned so as to continue to the right and match the top and bottom of the word home.
+     * CSS seems very painful for this kind of design, so I'm leaving it as is.
+     * I might change to rendering this with threejs at some point.
+     */
+    bottom: goldenSplit(100vh, 3);
+    right: goldenSplit(100vw);
+
+    color: colorMap(base);
+
+    /*
+     * Create and style the element for the two lines below the logo.
+     * Again, the alignment isn't as great as I wanted it to be.
+     * Also might be rendered with threejs at some point.
+     */
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+
+        width: 100vw - goldenSplit(100vw);
+        height: goldenSplit(100vh, 7);
+
+        right: 0;
+
+        margin-top: goldenSplit(100vw, 10);
+
+        border-top: solid $lineWidth colorMap(base);
+        border-bottom: solid $lineWidth colorMap(base);
+    }
 }
