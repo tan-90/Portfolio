@@ -151,6 +151,7 @@ export default class Contact extends React.Component
                         className={Style.SubmitButton}
                         type='submit'
                         value='SEND MESSAGE'
+                        disabled={this.state.sending}
                     />
                 </form>
 
