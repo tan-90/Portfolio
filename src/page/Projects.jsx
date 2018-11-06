@@ -63,11 +63,12 @@ export default class Projects extends React.Component
          * bodyUrl: URL to a raw markdown file.
          * labUrl: The URL to a GitLab repository. Used for rendering the linked icon. Can be null so no icon is rendered.
          * hubUrl: The URL to a GitLab repository. Used for rendering the linked icon. Can be null so no icon is rendered.
+         * 
+         * At some point I'll make this fetch it all from a JSON GIST so I don't have to change the website source when adding projects.
          */
-
         data.push({
             name: 'Some text project',
-            description: 'I want to test the custom projects. This shold get the raw data from a pastebin and render it.',
+            description: 'I want to test the custom projects. This shold get the raw data from a GIST and render it.',
             bodyUrl: 'https://gist.githubusercontent.com/tan-90/67e7beb588791b072b99c446e30baf35/raw/efab8bc7738d3ca4893b140bbbf752af8b308f31/NeuralNetworks.md'
         });
 
@@ -91,29 +92,32 @@ export default class Projects extends React.Component
     }
 
     render()
-    {
+    {        
         let projects = this.state.projects;
-        
+
         /*
          * Project starts as null while data is fetched.
          * This should be replaced with a preloader that eventually reports an error if no data could be fetched.
          */
-        let project = null;
+        let components = null;
         if (!projects.error && projects.data)
         {
-            let data = projects.data[this.state.current];
-
             /*
-             * Render the component for the currently selected project if there was no error.
+             * Render the components if there was no error.
+             * All components should be put in a list so all the data is fetched and ready to use.
+             * This ensures data is only fetched once at the expense of keeping multiple components alive.
              */
-            project = <Project
-                key={this.state.current}
-                name={data.name}
-                description={data.description}
-                bodyUrl={data.bodyUrl}
-                labUrl={data.labUrl}
-                hubUrl={data.hubUrl}
-            />
+            components = projects.data.map((value, index) => 
+                <Project
+                    key={index}
+                    active={this.state.current == index}
+                    name={value.name}
+                    description={value.description}
+                    bodyUrl={value.bodyUrl}
+                    labUrl={value.labUrl}
+                    hubUrl={value.hubUrl}
+                />
+            );
         }
 
         return (
@@ -131,8 +135,7 @@ export default class Projects extends React.Component
                     null
                 }
                 
-                
-                {project}    
+                {components || <p>Loading...</p>}
                 
                 {
                     /*

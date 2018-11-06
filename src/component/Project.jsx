@@ -23,11 +23,11 @@ export default class Project extends React.Component
             }
         }
     }
-
+    
     componentDidMount()
     {
         const url = this.props.bodyUrl;
-
+    
         fetch(url)
             .then(response => response.text())
             .then(data => this.setState({
@@ -60,60 +60,65 @@ export default class Project extends React.Component
     render()
     {
         let body = this.state.body;
-        return (
-            <div className={Style.Project}>
-                <div className={Style.Header}>
-                    <h1>
-                        <span className={Style.Name}>
-                            {this.props.name}
-                        </span>
 
-                        {
-                            this.props.labUrl ?
-                            <a
-                                className={Style.Icon}
-                                href={this.props.labUrl}
-                                target='_blank'
-                            >
-                                <i className={'fab fa-gitlab'}/>
-                            </a> :
-                            null
-                        }
-
-                        {
-                            this.props.hubUrl ?
-                            <a
-                                className={Style.Icon}
-                                href={this.props.hubUrl}
-                                target='_blank'
-                            >
-                                <i className={'fab fa-github'}/>
-                            </a> :
-                            null
-                        }
-                    </h1>
+        let content = <div className={Style.Project}>
+            <div className={Style.Header}>
+                <h1>
+                    <span className={Style.Name}>
+                        {this.props.name}
+                    </span>
                     
-                    <p className={Style.Description}>
-                        {this.props.description}
-                    </p>
-                </div>
-
-                <ReactMarkdown
-                    className={Style.Body}
-                    source={
-                        !body.error && body.data ?
-                            body.data == '{"message":"404 File Not Found"}' ?
-                            'No information about this yet.' :
-                            body.data :
-                        'Loading...'
+                    {
+                        this.props.labUrl ?
+                        <a
+                            className={Style.Icon}
+                            href={this.props.labUrl}
+                            target='_blank'
+                        >
+                            <i className={'fab fa-gitlab'} />
+                        </a> :
+                        null
                     }
-                    renderers={{
-                        paragraph: this.renderParagraph,
-                        /* Change target to _blank for all rendered links. */
-                        link: props => <a href={props.href} target='_blank'>{props.children}</a>
-                    }}
-                />
+                    {
+                        this.props.hubUrl ?
+                        <a
+                            className={Style.Icon}
+                            href={this.props.hubUrl}
+                            target='_blank'
+                        >
+                            <i className={'fab fa-github'} />
+                        </a> :
+                        null
+                    }
+                </h1>
+
+                <p className={Style.Description}>
+                    {this.props.description}
+                </p>
             </div>
-        )
+
+            <ReactMarkdown
+                className={Style.Body}
+                source={
+                    !body.error && body.data ?
+                    body.data :
+                    'Loading...'
+                }
+                renderers={{
+                    paragraph: this.renderParagraph,
+                    /* Change target to _blank for all rendered links. */
+                    link: props => <a href={props.href} target='_blank'>{props.children}</a>
+                }}
+            />
+        </div>;
+
+        return (
+            /*
+             * The component should always exist as every time it's mounted it needs to fetch data.
+             * As it shouldn't always be displayed, we render it conditionally.
+             * This ensures the data is fetched once and never lost as the component won't die, it just stays hidden when inactive.
+             */
+            this.props.active ? content : null
+        );
     }
 }

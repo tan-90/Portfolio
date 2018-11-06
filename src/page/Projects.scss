@@ -4,6 +4,16 @@
     position: relative;
     width: 100%;
 
+    p {
+        color: colorMap(base);
+
+        font-family: 'Abel', sans-serif;
+        font-weight: 100;
+
+        text-indent: goldenSplit(100vw, 7);
+        font-size: goldenSplit(100vh, 7);
+    }
+
     /* Style the arrows to move between different projects. */
     %Arrow {
         /* The arrows are fixed for easier navigation. */
