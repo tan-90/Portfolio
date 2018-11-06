@@ -42,12 +42,19 @@ module.exports = {
                     {
                         loader: 'css-loader',
                         options: {
+                            url: false,
                             modules: true,
                             importLoaders: 1,
                             localIdentName: '[name]__[local]___[hash:base64:5]'
                         }
                     },
-                    'sass-loader'
+                    'resolve-url-loader',
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true
+                        }
+                    }
                 ]
             }
         ]

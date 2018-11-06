@@ -190,6 +190,10 @@ export default class Contact extends React.Component
                         icon='fab fa-twitch'
                         link='#'
                     />
+                    <SocialIcon
+                        icon='fab fa-linkedin'
+                        link='#'
+                    />
                 </div>
             </div>
         );

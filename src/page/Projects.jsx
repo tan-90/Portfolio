@@ -3,6 +3,7 @@ import React from 'react';
 import Style from './Projects.scss';
 
 import Project from '../component/Project';
+import { smoothScroll } from '../helper'; 
 
 /**
  * The projects content page.
@@ -84,6 +85,7 @@ export default class Projects extends React.Component
 
     handleChange(offset)
     {
+        smoothScroll(0);
         /*
          * The arrows dissapear when on either edge of the list.
          * That ensures we can just add the offset without any sanity checks.
