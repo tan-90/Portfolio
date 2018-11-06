@@ -27,11 +27,11 @@ $lineWidth: 0.2vw;
  * Used with the color function from _functions.scss.
  */
 $colors: (
-    base: #dddddd,
-    highlight: #fafafa,
+    base: rgba(#dddddd, 1),
+    highlight: rgba(#fafafa, 1),
 
-    background: #444444bb,
-    backgroundOpaque: #444444
+    background: rgba(#444444, 0.75),
+    backgroundOpaque: rgba(#444444, 1)
 );
 
 /**
@@ -71,7 +71,12 @@ $layers: (
      * The menu for configuring the background scene.
      * Opens on top of everything else in the page.
      */
-    settings
+    settings,
+
+    /*
+     * The notifications should appear on top of everything as they block interaction until closed.
+     */
+     notifications
 );
 
 /**
