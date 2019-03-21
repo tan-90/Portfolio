@@ -10,6 +10,16 @@ var copyPlugin = new CopyWebpackPlugin([
     }
 ]);
 
+var syncShellPlugin = new WebpackSynchronizableShellPlugin({
+    onBuildStart: {
+        scripts: [
+            'echo "Generating scss typings."',
+            'atsm -p src/**/*.scss'
+        ],
+        blocking: true
+    }
+});
+
 module.exports = {
     entry: './src/index.tsx',
     output: {
@@ -64,15 +74,7 @@ module.exports = {
         'react-dom': 'ReactDOM'
     },
     plugins: [
-        new WebpackSynchronizableShellPlugin({
-            onBuildStart: {
-                scripts: [
-                    'echo "Generating scss typings."',
-                    'atsm -p src/**/*.scss'
-                ],
-                blocking: true
-            }
-        }),
+        syncShellPlugin,
         copyPlugin
     ]
 };
