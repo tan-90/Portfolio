@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "jsx": "react",
+    "sourceMap": true,
+    "outDir": "./dist/",
+
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+
+    "esModuleInterop": true,
+
+    "experimentalDecorators": true,
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

@@ -1,12 +1,8 @@
-# I use custom icons because I'm like that.
-desktop.ini
-18899390202186173462191608910551171232198635.ico
-
-# No relevant vscode settings at the moment.
-.vscode/
-
 # Ignore node_modules
 node_modules/
 
-# Ignore mailer authentication keys.
-server/auth.js
+# Ignore build output
+dist/
+
+# Ignore scss typings as they are automagically generated
+*.scss.d.ts

@@ -1,11 +1,10 @@
 {
-  "name": "tan90",
+  "name": "portfolio",
   "version": "0.1.0",
   "description": "Personal website to work as code portfolio (and possibly as a blog in the future).",
-  "main": "index.js",
+  "main": "index.tsx",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "webpack -p"
+    "start": "webpack-dev-server --mode development"
   },
   "repository": {
     "type": "git",
@@ -21,26 +20,29 @@
   "bugs": {
     "url": "https://gitlab.com/tan90/Portfolio/issues"
   },
-  "homepage": "https://gitlab.com/tan90/Portfolio#README",
-  "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "copy-webpack-plugin": "^4.5.2",
-    "css-loader": "^1.0.0",
-    "node-sass": "^4.9.3",
-    "resolve-url-loader": "^3.0.0",
-    "sass-loader": "^7.1.0",
-    "style-loader": "^0.22.1",
-    "webpack": "^4.16.5",
-    "webpack-cli": "^3.1.0",
-    "webpack-dev-server": "^3.1.5"
-  },
+  "homepage": "https://gitlab.com/tan90/Portfolio#readme",
   "dependencies": {
-    "npm": "^6.4.1",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2",
-    "react-markdown": "^4.0.3"
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "^16.8.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
+  },
+  "devDependencies": {
+    "awesome-typed-sass-modules": "^1.1.6",
+    "awesome-typescript-loader": "^5.2.1",
+    "copy-webpack-plugin": "^5.0.1",
+    "css-loader": "^2.1.1",
+    "node-sass": "^4.11.0",
+    "resolve-url-loader": "^3.0.1",
+    "sass-loader": "^7.1.0",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^0.23.1",
+    "tslint": "^5.14.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.3.3333",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1",
+    "webpack-synchronizable-shell-plugin": "0.0.7"
   }
 }

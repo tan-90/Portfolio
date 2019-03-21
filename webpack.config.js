@@ -1,39 +1,39 @@
-var path = require('path');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const WebpackSynchronizableShellPlugin = require('webpack-synchronizable-shell-plugin');
 
 var copyPlugin = new CopyWebpackPlugin([
     './src/index.html',
-    {from: './src/assets', to: 'assets'}
+    {
+        from: './assets',
+        to: 'assets'
+    }
 ]);
 
 module.exports = {
-    entry: './src/index.jsx',
+    entry: './src/index.tsx',
     output: {
-        path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        publicPath: '/'
+        path: path.resolve(__dirname, 'dist'),
     },
     resolve: {
         extensions: [
+            '.ts',
+            '.tsx',
             '.js',
-            '.jsx'
+            '.json'
         ]
     },
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                use: [
-                    {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                'env',
-                                'react'
-                            ]
-                        }
-                    }
-                ]
+                test: /\.tsx?$/,
+                loader: 'awesome-typescript-loader',
+            },
+            {
+                enforce: 'pre',
+                test: /\.js$/,
+                loader: 'source-map-loader'
             },
             {
                 test: /\.s?css$/,
@@ -59,7 +59,20 @@ module.exports = {
             }
         ]
     },
+    externals: {
+        'react': 'React',
+        'react-dom': 'ReactDOM'
+    },
     plugins: [
+        new WebpackSynchronizableShellPlugin({
+            onBuildStart: {
+                scripts: [
+                    'echo "Generating scss typings."',
+                    'atsm -p src/**/*.scss'
+                ],
+                blocking: true
+            }
+        }),
         copyPlugin
     ]
 };
