@@ -13,7 +13,7 @@ var copyPlugin = new CopyWebpackPlugin([
 var syncShellPlugin = new WebpackSynchronizableShellPlugin({
     onBuildStart: {
         scripts: [
-            'echo "Generating scss typings."',
+            'echo Generating scss typings.',
             'atsm -p src/**/*.scss'
         ],
         blocking: true

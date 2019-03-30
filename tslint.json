@@ -1,15 +1,32 @@
 {
-    "extends": "tslint-config-airbnb",
-    "rules": {
-        "ter-indent": [
-            true,
-            4
-        ],
-        "no-duplicate-imports": false,
-        "import-name": false,
-        "brace-style": [
-            true,
-            "allman"
-        ]
-    }
+  "extends": "tslint-config-airbnb",
+  "defaultSeverity": "warning",
+  "rules": {
+    "ter-indent": [
+      true,
+      4
+    ],
+    "no-duplicate-imports": false,
+    "import-name": false,
+    "brace-style": [
+      true,
+      "allman"
+    ],
+    "function-name": false,
+    "variable-name": false,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": {
+          "objects": "never",
+          "arrays": "always",
+          "functions": "never",
+          "typeLiterals": "ignore"
+        },
+        "esSpecCompliant": true
+      }
+    ],
+    "ter-arrow-parens": false,
+    "max-line-length": false
+  }
 }
