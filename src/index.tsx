@@ -16,10 +16,17 @@ import './layout/Elements';
 const theme: LayoutTheme = LayoutTheme.default;
 const manager: LayoutManager = new LayoutManager(theme);
 
-// Simple test for changing the background component with a set timer.
 let themeTracker: boolean = false;
+
+// Simple test for changing the background component with a set timer.
+// setInterval(() => {
+//     theme.changeElementComponent('Background', themeTracker ? 'AnimatedBackground' : 'PlainBackground');
+//     themeTracker = !themeTracker;
+// }, 2000);
+
+// Simple test for changing the background class with a set timer.
 setInterval(() => {
-    theme.changeElementComponent('Background', themeTracker ? 'AnimatedBackground' : 'PlainBackground');
+    theme.changeComponentStyle('PlainBackground', themeTracker ? 'neon' : 'background');
     themeTracker = !themeTracker;
 }, 2000);
 

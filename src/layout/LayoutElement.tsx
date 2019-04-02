@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Component } from 'react';
+import { Fragment } from 'react';
 import { ReactNode } from 'react';
 
 import { IThemeListener } from './LayoutTheme';
@@ -15,7 +16,7 @@ export interface IPropsLayoutElement
 
 export interface IStateLayoutElement
 {
-    activeComponent: String;
+    activeComponent: string;
 }
 
 export abstract class LayoutElement<P extends IPropsLayoutElement, S extends IStateLayoutElement> extends Component<P, S> implements IThemeListener
@@ -29,11 +30,12 @@ export abstract class LayoutElement<P extends IPropsLayoutElement, S extends ISt
 
     public render(): ReactNode
     {
+        const { manager } = this.props;
         const ComponentName: Function = LayoutRegistry.INSTANCE.getComponent(this, this.state.activeComponent);
         return (
-            <div>
-                <ComponentName/>
-            </div>
+            <Fragment>
+                <ComponentName manager={manager}/>
+            </Fragment>
         );
     }
 
@@ -53,7 +55,7 @@ export abstract class LayoutElement<P extends IPropsLayoutElement, S extends ISt
 
     public onThemeChange(theme: LayoutTheme): void
     {
-        const currentThemeComponent: String = theme.getElementComponent(this.constructor.name);
+        const currentThemeComponent: string = theme.getElementComponent(this.constructor.name);
 
         if (this.state.activeComponent !== currentThemeComponent)
         {

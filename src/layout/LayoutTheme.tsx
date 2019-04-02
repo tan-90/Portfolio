@@ -9,32 +9,40 @@ export class LayoutTheme
 {
     private listeners: IThemeListener[];
 
-    private elementComponents: Map<String, String>;
+    private elementComponents: Map<string, string>;
+    private componentStyles: Map<string, string>;
 
     public constructor()
     {
         this.listeners = [];
 
-        this.elementComponents = new Map<String, String>();
+        this.elementComponents = new Map<string, string>();
+        this.componentStyles = new Map<string, string>();
     }
 
     public static get default(): LayoutTheme
     {
         const defaultTheme: LayoutTheme = new LayoutTheme();
 
-        const elements: String[] = LayoutRegistry.INSTANCE.getElements();
+        const elements: string[] = LayoutRegistry.INSTANCE.getElements();
+        const components: string[] = LayoutRegistry.INSTANCE.getComponents();
 
         elements.forEach(element => {
-            const currentDefaultComponent: String = LayoutRegistry.INSTANCE.getDefaultComponent(element);
+            const currentDefaultComponent: string = LayoutRegistry.INSTANCE.getDefaultComponent(element);
             defaultTheme.elementComponents.set(element, currentDefaultComponent);
+        });
+
+        components.forEach(component => {
+            const currentDefaultStyle: string = LayoutRegistry.INSTANCE.getDefaultStyle(component);
+            defaultTheme.componentStyles.set(component, currentDefaultStyle);
         });
 
         return defaultTheme;
     }
 
-    public getElementComponent(element: String): String
+    public getElementComponent(element: string): string
     {
-        const elementComponent: String | undefined = this.elementComponents.get(element);
+        const elementComponent: string | undefined = this.elementComponents.get(element);
 
         if (!elementComponent)
         {
@@ -44,9 +52,26 @@ export class LayoutTheme
         return elementComponent;
     }
 
-    public changeElementComponent(element: String, component: String)
+    public changeElementComponent(element: string, component: string): void
     {
         this.elementComponents.set(element, component);
+
+        this.notifyListeners();
+    }
+
+    public getComponentStyle(component: string): string
+    {
+        const componentStyle: string | undefined = this.componentStyles.get(component);
+        if (!componentStyle)
+        {
+            throw new Error(`Attempt to get style for unregistered component ${component}.`);
+        }
+        return componentStyle;
+    }
+
+    public changeComponentStyle(component: string, style: string): void
+    {
+        this.componentStyles.set(component, style);
 
         this.notifyListeners();
     }
@@ -60,9 +85,9 @@ export class LayoutTheme
     {
         const unregisterIndex: number = this.listeners.indexOf(listener);
 
-        if (!unregisterIndex)
+        if (unregisterIndex < 0)
         {
-            throw new Error(`Attempt to unregister non-registered theme listener ${listener}`);
+            throw new Error(`Attempt to unregister non-registered theme listener ${listener.constructor.name}`);
         }
 
         this.listeners.splice(unregisterIndex, 1);
