@@ -1,1 +1,1 @@
-import '../component/Background';
+import '../element/Background';

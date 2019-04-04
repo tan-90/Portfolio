@@ -14,7 +14,7 @@ export interface IStateLayoutComponent
     activeStyle: string;
 }
 
-export abstract class LayoutComponent<P extends IPropsLayoutComponent, S extends IStateLayoutComponent> extends Component<P, S> implements IThemeListener
+export abstract class LayoutComponent<P extends IPropsLayoutComponent = IPropsLayoutComponent, S extends IStateLayoutComponent = IStateLayoutComponent> extends Component<P, S> implements IThemeListener
 {
     public componentDidMount()
     {

@@ -19,7 +19,7 @@ export interface IStateLayoutElement
     activeComponent: string;
 }
 
-export abstract class LayoutElement<P extends IPropsLayoutElement, S extends IStateLayoutElement> extends Component<P, S> implements IThemeListener
+export abstract class LayoutElement<P extends IPropsLayoutElement = IPropsLayoutElement, S extends IStateLayoutElement = IStateLayoutElement> extends Component<P, S> implements IThemeListener
 {
     public constructor(props: P)
     {
@@ -48,6 +48,7 @@ export abstract class LayoutElement<P extends IPropsLayoutElement, S extends ISt
 
     public componentWillUnmount()
     {
+        console.log(this.props);
         const { manager } = this.props;
 
         manager.unregisterThemeListener(this);

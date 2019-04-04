@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 
 import { Component } from 'react';
 
-import { Background } from './component/Background';
+import { Background } from './element/Background';
 import { LayoutManager } from './layout/LayoutManager';
 import { LayoutTheme } from './layout/LayoutTheme';
 

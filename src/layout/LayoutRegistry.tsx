@@ -1,11 +1,14 @@
+import { Class } from './Types';
+import { LayoutElement } from './LayoutElement';
+import { LayoutComponent } from './LayoutComponent';
 import { LayoutStyle } from './LayoutStyle';
 
 export class LayoutRegistry
 {
     private static M_INSTANCE: LayoutRegistry;
 
-    private elementRegistry: Map<string, Function>;
-    private componentRegistry: Map<string, Map<string, any>>;
+    private elementRegistry: Map<string, Class<LayoutElement>>;
+    private componentRegistry: Map<string, Map<string, Class<LayoutComponent>>>;
     private styleRegistry: Map<string, Map<string, LayoutStyle>>;
 
     private defaultComponentRegistry: Map<string, string>;
@@ -13,8 +16,8 @@ export class LayoutRegistry
 
     constructor()
     {
-        this.elementRegistry = new Map<string, Function>();
-        this.componentRegistry = new Map<string, Map<string, any>>();
+        this.elementRegistry = new Map<string, Class<LayoutElement>>();
+        this.componentRegistry = new Map<string, Map<string, Class<LayoutComponent>>>();
         this.styleRegistry = new Map<string, Map<string, LayoutStyle>>();
 
         this.defaultComponentRegistry = new Map<string, string>();
@@ -41,7 +44,7 @@ export class LayoutRegistry
         const components: string[] = [];
 
         elements.forEach(element => {
-            const elementComponents: Map<string, any> | undefined = this.componentRegistry.get(element);
+            const elementComponents: Map<string, Class<LayoutComponent>> | undefined = this.componentRegistry.get(element);
 
             if (!elementComponents)
             {
@@ -54,9 +57,9 @@ export class LayoutRegistry
         return components;
     }
 
-    public getElementComponents(element: any): string[]
+    public getElementComponents(element: Class<LayoutElement>): string[]
     {
-        const elementComponents: Map<string, any> | undefined = this.componentRegistry.get(element.constructor.name);
+        const elementComponents: Map<string, Class<LayoutComponent>> | undefined = this.componentRegistry.get(element.constructor.name);
 
         if (!elementComponents)
         {
@@ -85,7 +88,7 @@ export class LayoutRegistry
         return styles;
     }
 
-    public getComponentStyles(component: any): string[]
+    public getComponentStyles(component: Class<LayoutComponent>): string[]
     {
         const componentStyles: Map<string, LayoutStyle> | undefined = this.styleRegistry.get(component.constructor.name);
 
@@ -97,17 +100,17 @@ export class LayoutRegistry
         return [...componentStyles.keys()];
     }
 
-    public registerElement(element: Function): void
+    public registerElement(element: Class<LayoutElement>): void
     {
         this.elementRegistry.set(element.name, element);
-        this.componentRegistry.set(element.name, new Map<string, any>());
+        this.componentRegistry.set(element.name, new Map<string, Class<LayoutComponent>>());
     }
 
-    public registerComponent(component: Function, element: Function): void
+    public registerComponent(component: Class<LayoutComponent>, element: Function): void
     {
         const elementName: string = element.name;
 
-        const elementComponents: Map<string, any> | undefined = this.componentRegistry.get(elementName);
+        const elementComponents: Map<string, Class<LayoutComponent>> | undefined = this.componentRegistry.get(elementName);
 
         if (!elementComponents)
         {
@@ -168,16 +171,16 @@ export class LayoutRegistry
         this.defaultStyleRegistry.set(component.name, style.name);
     }
 
-    public getComponent(element: any, name: string): Function
+    public getComponent(element: any, name: string): Class<LayoutComponent>
     {
-        const elementComponents: Map<string, any> | undefined = this.componentRegistry.get(element.constructor.name);
+        const elementComponents: Map<string, Class<LayoutComponent>> | undefined = this.componentRegistry.get(element.constructor.name);
 
         if (!elementComponents)
         {
             throw new Error(`Atempt to get component for unregistered element ${element.constructor.name}`);
         }
 
-        const component: any | undefined = elementComponents.get(name);
+        const component: Class<LayoutComponent> | undefined = elementComponents.get(name);
 
         if (!component)
         {
@@ -199,7 +202,7 @@ export class LayoutRegistry
         return defaultComponent;
     }
 
-    public setDefaultComponent(component: any, element: any): void
+    public setDefaultComponent(component: Class<LayoutComponent>, element: Class<LayoutElement>): void
     {
         this.defaultComponentRegistry.set(element.name, component.name);
     }

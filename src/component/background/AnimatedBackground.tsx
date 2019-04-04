@@ -2,7 +2,7 @@ import React from 'react';
 
 import { ReactNode } from 'react';
 
-import { Background } from '../Background';
+import { Background } from '../../element/Background';
 import { ComponentProvider } from '../../layout/ComponentProvider';
 import { IPropsLayoutComponent } from '../../layout/LayoutComponent';
 import { IStateLayoutComponent } from '../../layout/LayoutComponent';
