@@ -1,7 +1,7 @@
 import { Class } from './Types';
 import { LayoutElement } from './LayoutElement';
 import { LayoutComponent } from './LayoutComponent';
-import { LayoutStyle } from './LayoutStyle';
+import { ILayoutStyle } from './LayoutStyle';
 
 export class LayoutRegistry
 {
@@ -9,7 +9,7 @@ export class LayoutRegistry
 
     private elementRegistry: Map<string, Class<LayoutElement>>;
     private componentRegistry: Map<string, Map<string, Class<LayoutComponent>>>;
-    private styleRegistry: Map<string, Map<string, LayoutStyle>>;
+    private styleRegistry: Map<string, Map<string, ILayoutStyle>>;
 
     private defaultComponentRegistry: Map<string, string>;
     private defaultStyleRegistry: Map<string, string>;
@@ -18,7 +18,7 @@ export class LayoutRegistry
     {
         this.elementRegistry = new Map<string, Class<LayoutElement>>();
         this.componentRegistry = new Map<string, Map<string, Class<LayoutComponent>>>();
-        this.styleRegistry = new Map<string, Map<string, LayoutStyle>>();
+        this.styleRegistry = new Map<string, Map<string, ILayoutStyle>>();
 
         this.defaultComponentRegistry = new Map<string, string>();
         this.defaultStyleRegistry = new Map<string, string>();
@@ -75,7 +75,7 @@ export class LayoutRegistry
         const styles: string[] = [];
 
         components.forEach(component => {
-            const componentStyles: Map<string, LayoutStyle> | undefined = this.styleRegistry.get(component);
+            const componentStyles: Map<string, ILayoutStyle> | undefined = this.styleRegistry.get(component);
 
             if (!componentStyles)
             {
@@ -90,7 +90,7 @@ export class LayoutRegistry
 
     public getComponentStyles(component: Class<LayoutComponent>): string[]
     {
-        const componentStyles: Map<string, LayoutStyle> | undefined = this.styleRegistry.get(component.constructor.name);
+        const componentStyles: Map<string, ILayoutStyle> | undefined = this.styleRegistry.get(component.constructor.name);
 
         if (!componentStyles)
         {
@@ -118,40 +118,38 @@ export class LayoutRegistry
         }
 
         elementComponents.set(component.name, component);
-        this.styleRegistry.set(component.name, new Map<string, LayoutStyle>());
+        this.styleRegistry.set(component.name, new Map<string, ILayoutStyle>());
     }
 
-    public registerStyles(component: Function, styles: LayoutStyle[])
+    public registerStyle(component: Class<LayoutComponent>, name: string, data: ILayoutStyle)
     {
-        const componentStyles: Map<string, LayoutStyle> | undefined = this.styleRegistry.get(component.name);
+        const componentStyles: Map<string, ILayoutStyle> | undefined = this.styleRegistry.get(component.name);
 
         if (!componentStyles)
         {
             throw new Error(`Attempted to register style for unregistered component ${component.name}`);
         }
 
-        styles.forEach(style => {
-            componentStyles.set(style.name, style);
-        });
+        componentStyles.set(name, data);
     }
 
-    public getStyle(component: any, name: string): LayoutStyle
+    public getStyle<T extends ILayoutStyle>(component: any, name: string): T
     {
-        const componentStyles: Map<string, LayoutStyle> | undefined = this.styleRegistry.get(component.constructor.name);
+        const componentStyles: Map<string, ILayoutStyle> | undefined = this.styleRegistry.get(component.constructor.name);
 
         if (!componentStyles)
         {
             throw new Error(`Attempt to get style for unregistered component ${component.constructor.name}`);
         }
 
-        const style: LayoutStyle | undefined = componentStyles.get(name);
+        const style: ILayoutStyle | undefined = componentStyles.get(name);
 
         if (!style)
         {
             throw new Error(`Attempt to get unregiestered style ${name}`);
         }
 
-        return style;
+        return style as T;
     }
 
     public getDefaultStyle(component: string): string
@@ -166,9 +164,9 @@ export class LayoutRegistry
         return componentStyle;
     }
 
-    public setDefaultStyle(component: Function, style: LayoutStyle): void
+    public setDefaultStyle(component: Function, style: string): void
     {
-        this.defaultStyleRegistry.set(component.name, style.name);
+        this.defaultStyleRegistry.set(component.name, style);
     }
 
     public getComponent(element: any, name: string): Class<LayoutComponent>

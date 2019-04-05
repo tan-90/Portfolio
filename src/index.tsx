@@ -26,7 +26,7 @@ let themeTracker: boolean = false;
 
 // Simple test for changing the background class with a set timer.
 setInterval(() => {
-    theme.changeComponentStyle('PlainBackground', themeTracker ? 'neon' : 'background');
+    theme.changeComponentStyle('PlainBackground', themeTracker ? 'Plain' : 'Neon');
     themeTracker = !themeTracker;
 }, 2000);
 

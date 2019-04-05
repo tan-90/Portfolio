@@ -1,13 +1,16 @@
-import { ComponentClass } from 'react';
-
+import { Class } from './Types';
+import { ILayoutStyle } from './LayoutStyle';
+import { LayoutComponent } from './LayoutComponent';
 import { LayoutRegistry } from './LayoutRegistry';
-import { LayoutStyle } from './LayoutStyle';
 
-export function Styles(...styles: LayoutStyle[]): Function
+export function Styles<T extends ILayoutStyle>(...styleList: { name: string, data: T }[]): Function
 {
-    return function provider(target: ComponentClass)
+    return function provider(target: Class<LayoutComponent>)
     {
-        LayoutRegistry.INSTANCE.registerStyles(target, styles);
-        LayoutRegistry.INSTANCE.setDefaultStyle(target, styles[0]);
+        styleList.forEach(style => {
+            LayoutRegistry.INSTANCE.registerStyle(target, style.name, style.data);
+        });
+
+        LayoutRegistry.INSTANCE.setDefaultStyle(target, styleList[0].name);
     };
 }
