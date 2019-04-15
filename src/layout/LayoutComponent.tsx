@@ -30,7 +30,7 @@ export abstract class LayoutComponent<P extends IPropsLayoutComponent = IPropsLa
         manager.unregisterThemeListener(this);
     }
 
-    public onThemeChange(theme: LayoutTheme): void
+    public onThemeChange(theme: LayoutTheme): boolean
     {
         const currentThemeStyle: string = theme.getComponentStyle(this.constructor.name);
 
@@ -39,6 +39,10 @@ export abstract class LayoutComponent<P extends IPropsLayoutComponent = IPropsLa
             this.setState({
                 activeStyle: currentThemeStyle
             });
+
+            return true;
         }
+
+        return false;
     }
 }

@@ -1,7 +1,6 @@
 import { ElementProvider } from '../layout/ElementProvider';
 import { IPropsLayoutElement } from '../layout/LayoutElement';
 import { LayoutElement } from '../layout/LayoutElement';
-import { LayoutRegistry } from '../layout/LayoutRegistry';
 
 @ElementProvider()
 export class Background extends LayoutElement
@@ -10,8 +9,17 @@ export class Background extends LayoutElement
     {
         super(props);
 
+        const { manager } = this.props;
+
         this.state = {
-            activeComponent: LayoutRegistry.INSTANCE.getDefaultComponent(Background.name)
+            activeComponent: manager.getActiveComponent(Background.name)
+        };
+    }
+
+    public getComponentProps(): any
+    {
+        return {
+            manager: this.props.manager
         };
     }
 }

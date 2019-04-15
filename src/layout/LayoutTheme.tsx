@@ -2,7 +2,7 @@ import { LayoutRegistry } from './LayoutRegistry';
 
 export interface IThemeListener
 {
-    onThemeChange(theme: LayoutTheme): void;
+    onThemeChange(theme: LayoutTheme): boolean;
 }
 
 export class LayoutTheme
@@ -38,6 +38,16 @@ export class LayoutTheme
         });
 
         return defaultTheme;
+    }
+
+    public getActiveComponents(): Map<string, string>
+    {
+        return this.elementComponents;
+    }
+
+    public getActiveStyles(): Map<string, string>
+    {
+        return this.componentStyles;
     }
 
     public getElementComponent(element: string): string

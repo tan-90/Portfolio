@@ -57,13 +57,13 @@ export class LayoutRegistry
         return components;
     }
 
-    public getElementComponents(element: Class<LayoutElement>): string[]
+    public getElementComponents(element: string): string[]
     {
-        const elementComponents: Map<string, Class<LayoutComponent>> | undefined = this.componentRegistry.get(element.constructor.name);
+        const elementComponents: Map<string, Class<LayoutComponent>> | undefined = this.componentRegistry.get(element);
 
         if (!elementComponents)
         {
-            throw new Error(`Attempted to get components for unregistered element ${element.constructor.name}`);
+            throw new Error(`Attempted to get components for unregistered element ${element}`);
         }
 
         return [...elementComponents.keys()];
@@ -88,13 +88,13 @@ export class LayoutRegistry
         return styles;
     }
 
-    public getComponentStyles(component: Class<LayoutComponent>): string[]
+    public getComponentStyles(component: string): string[]
     {
-        const componentStyles: Map<string, ILayoutStyle> | undefined = this.styleRegistry.get(component.constructor.name);
+        const componentStyles: Map<string, ILayoutStyle> | undefined = this.styleRegistry.get(component);
 
         if (!componentStyles)
         {
-            throw new Error(`Attempted to get styles for unregistered component ${component.constructor.name}`);
+            throw new Error(`Attempted to get styles for unregistered component ${component}`);
         }
 
         return [...componentStyles.keys()];

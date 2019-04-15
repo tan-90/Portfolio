@@ -4,6 +4,7 @@ import ReactDom from 'react-dom';
 import { Component } from 'react';
 
 import { Background } from './element/Background';
+import { Configuration } from './element/Configuration';
 import { LayoutManager } from './layout/LayoutManager';
 import { LayoutTheme } from './layout/LayoutTheme';
 
@@ -13,30 +14,31 @@ import Style from './index.scss';
 import './layout/Components';
 import './layout/Elements';
 
-const theme: LayoutTheme = LayoutTheme.default;
-const manager: LayoutManager = new LayoutManager(theme);
-
-let themeTracker: boolean = false;
-
-// Simple test for changing the background component with a set timer.
-// setInterval(() => {
-//     theme.changeElementComponent('Background', themeTracker ? 'AnimatedBackground' : 'PlainBackground');
-//     themeTracker = !themeTracker;
-// }, 2000);
-
-// Simple test for changing the background class with a set timer.
-setInterval(() => {
-    theme.changeComponentStyle('PlainBackground', themeTracker ? 'Plain' : 'Neon');
-    themeTracker = !themeTracker;
-}, 2000);
-
-export class App extends Component
+interface IAppState
 {
+    manager: LayoutManager;
+}
+
+export class App extends Component<{}, IAppState>
+{
+    constructor(props: {})
+    {
+        super(props);
+
+        const theme: LayoutTheme = LayoutTheme.default;
+        const manager: LayoutManager = new LayoutManager(theme);
+
+        this.state = {
+            manager
+        };
+    }
+
     public render()
     {
         return (
             <div className={Style.heeyItWorks}>
-                <Background manager={manager}/>
+                <Background manager={this.state.manager}/>
+                <Configuration manager={this.state.manager}/>
             </div>
         );
     }

@@ -29,8 +29,10 @@ export class PlainBackground extends LayoutComponent<IPropsLayoutComponent>
     {
         super(props);
 
+        const { manager } = this.props;
+
         this.state = {
-            activeStyle: 'Plain'
+            activeStyle: manager.getActiveStyle(PlainBackground.name)
         };
     }
 

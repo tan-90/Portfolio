@@ -24,17 +24,20 @@ export abstract class LayoutElement<P extends IPropsLayoutElement = IPropsLayout
     public constructor(props: P)
     {
         super(props);
-
-        this.onThemeChange = this.onThemeChange.bind(this);
     }
+
+    /*
+     *   TypeScript is being bitchy about making this generic.
+     *   So I'll type it later when I figure out what's happening.
+     */
+    public abstract getComponentProps(): any;
 
     public render(): ReactNode
     {
-        const { manager } = this.props;
         const ComponentName: Function = LayoutRegistry.INSTANCE.getComponent(this, this.state.activeComponent);
         return (
             <Fragment>
-                <ComponentName manager={manager}/>
+                <ComponentName {...this.getComponentProps()}/>
             </Fragment>
         );
     }
@@ -54,7 +57,7 @@ export abstract class LayoutElement<P extends IPropsLayoutElement = IPropsLayout
         manager.unregisterThemeListener(this);
     }
 
-    public onThemeChange(theme: LayoutTheme): void
+    public onThemeChange(theme: LayoutTheme): boolean
     {
         const currentThemeComponent: string = theme.getElementComponent(this.constructor.name);
 
@@ -63,6 +66,10 @@ export abstract class LayoutElement<P extends IPropsLayoutElement = IPropsLayout
             this.setState({
                 activeComponent: currentThemeComponent
             });
+
+            return true;
         }
+
+        return false;
     }
 }

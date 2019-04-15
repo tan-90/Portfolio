@@ -27,8 +27,10 @@ export class AnimatedBackground extends LayoutComponent<IPropsLayoutComponent>
     {
         super(props);
 
+        const { manager } = this.props;
+
         this.state = {
-            activeStyle: 'Plain'
+            activeStyle: manager.getActiveStyle(AnimatedBackground.name)
         };
     }
 
@@ -39,6 +41,12 @@ export class AnimatedBackground extends LayoutComponent<IPropsLayoutComponent>
         return (
             <div className={style.background}>
                 I'm an animated background!
+
+                <ul>
+                    <li>Since it's not really animated</li>
+                    <li>Here's an incorrect list</li>
+                    <li>OR IS IT ANIMATED?</li>
+                </ul>
             </div>
         );
     }
