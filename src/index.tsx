@@ -5,6 +5,7 @@ import { Component } from 'react';
 
 import { Background } from './element/Background';
 import { Configuration } from './element/Configuration';
+import { GitViewer } from './element/GitViewer';
 import { LayoutManager } from './layout/LayoutManager';
 import { LayoutTheme } from './layout/LayoutTheme';
 
@@ -39,6 +40,7 @@ export class App extends Component<{}, IAppState>
             <div className={Style.heeyItWorks}>
                 <Background manager={this.state.manager}/>
                 <Configuration manager={this.state.manager}/>
+                <GitViewer manager={this.state.manager} user={'tan-90'}/>
             </div>
         );
     }

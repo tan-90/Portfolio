@@ -1,4 +1,4 @@
-import { Class } from './Types';
+import { Class } from '../Types';
 import { LayoutElement } from './LayoutElement';
 import { LayoutComponent } from './LayoutComponent';
 import { ILayoutStyle } from './LayoutStyle';
