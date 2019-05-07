@@ -10,17 +10,22 @@ import { LayoutComponent } from '../../layout/LayoutComponent';
 import { LayoutRegistry } from '../../layout/LayoutRegistry';
 import { Styles } from '../../layout/Styles';
 
-import Style from '../../style/background/PlainBackground.scss';
-import Neon from '../../style/background/PlainBackgroundNeon.scss';
+/*
+ * Maybe this shows that a new class isn't always required.
+ * I should have an annotation that allows setting custom properties for each element/component.
+ * That would make it cleaner than having different styles that differ only by a single value for example.
+ */
+import GrayColorBackground from '../../style/background/GrayColorBackground.scss';
+import BlueColorBackground from '../../style/background/BlueColorBackground.scss';
 
-interface IPlainBackgroundStyle extends ILayoutStyle
+interface IColorBackgroundStyle extends ILayoutStyle
 {
     background: string;
 }
 
-@Styles<IPlainBackgroundStyle>(
-    { name: 'Plain', data: Style },
-    { name: 'Neon', data: Neon }
+@Styles<IColorBackgroundStyle>(
+    { name: 'Gray', data: GrayColorBackground },
+    { name: 'Blue', data: BlueColorBackground }
 )
 @ComponentProvider(Background, true)
 export class PlainBackground extends LayoutComponent<IPropsLayoutComponent>
@@ -38,12 +43,10 @@ export class PlainBackground extends LayoutComponent<IPropsLayoutComponent>
 
     public render(): ReactNode
     {
-        const style: IPlainBackgroundStyle = LayoutRegistry.INSTANCE.getStyle<IPlainBackgroundStyle>(this, this.state.activeStyle);
+        const style: IColorBackgroundStyle = LayoutRegistry.INSTANCE.getStyle<IColorBackgroundStyle>(this, this.state.activeStyle);
 
         return (
-            <div className={style.background}>
-                I'm a plain background!
-            </div>
+            <div className={style.background}/>
         );
     }
 }

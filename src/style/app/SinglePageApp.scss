@@ -1,0 +1,21 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+.singlePageApp {
+    position: absolute;
+    overflow: hidden;
+    
+    width: 100vw;
+    height: 100vh;
+
+    top: 0;
+    left: 0;
+
+    background-color: #1D2027;
+
+    .pageHolder {
+        height: 100%;
+    }
+}

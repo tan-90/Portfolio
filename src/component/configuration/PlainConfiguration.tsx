@@ -1,29 +1,39 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { ReactNode } from 'react';
 
-import { Configuration } from '../../element/Configuration';
-import { IPropsConfigurationComponent } from '../../element/Configuration';
 import { ComponentProvider } from '../../layout/ComponentProvider';
+import { Configuration } from '../../element/Configuration';
 import { ILayoutStyle } from '../../layout/LayoutStyle';
+import { IPropsConfigurationComponent } from '../../element/Configuration';
+import { IStateLayoutComponent } from '../../layout/LayoutComponent';
 import { LayoutComponent } from '../../layout/LayoutComponent';
 import { LayoutRegistry  } from '../../layout/LayoutRegistry';
 import { Styles } from '../../layout/Styles';
 
-import Style from '../../style/configuration/PlainConfiguration.scss';
-import Neon from '../../style/configuration/NeonConfiguration.scss';
+import Style from '../../style/configuration/SidePanelPlainConfiguration.scss';
 
 interface IPlainConfigurationStyle extends ILayoutStyle
 {
+    configurationPanel: string;
+    button: string;
+
     configuration: string;
+
+    closed: string;
+}
+
+interface IStatePlainConfiguration extends IStateLayoutComponent
+{
+    isOpen: boolean;
 }
 
 @Styles<IPlainConfigurationStyle>(
-    { name: 'Plain', data: Style },
-    { name: 'Neon', data: Neon }
+    { name: 'SidePanel', data: Style }
 )
 @ComponentProvider(Configuration, true)
-export class PlainConfiguration extends LayoutComponent<IPropsConfigurationComponent>
+export class PlainConfiguration extends LayoutComponent<IPropsConfigurationComponent, IStatePlainConfiguration>
 {
     public constructor(props: IPropsConfigurationComponent)
     {
@@ -32,8 +42,19 @@ export class PlainConfiguration extends LayoutComponent<IPropsConfigurationCompo
         const { manager } = this.props;
 
         this.state = {
-            activeStyle: manager.getActiveStyle(PlainConfiguration.name)
+            activeStyle: manager.getActiveStyle(PlainConfiguration.name),
+
+            isOpen: false
         };
+
+        this.onOpen = this.onOpen.bind(this);
+    }
+
+    private onOpen(): void
+    {
+        this.setState(state => ({
+            isOpen: !state.isOpen
+        }));
     }
 
     protected getComponentOptions(element: string): ReactNode
@@ -112,34 +133,61 @@ export class PlainConfiguration extends LayoutComponent<IPropsConfigurationCompo
         const style: IPlainConfigurationStyle = LayoutRegistry.INSTANCE.getStyle<IPlainConfigurationStyle>(this, this.state.activeStyle);
 
         return (
-            <div className={style.configuration}>
-                <form>
-                    {
-                        this.props.elements.map(element => {
-                            return (
-                                <fieldset key={element}>
-                                    <h1>
-                                        {
-                                            element
-                                        }
-                                    </h1>
+            <div
+                className={classNames({
+                    [style.configurationPanel]: true,
+                    [style.closed]: !this.state.isOpen
+                })}
+            >
+                {/* The icon used on the button that shows the configuration. */}
+                <span
+                    onClick={() => this.onOpen()}
 
-                                    <select value={this.getActiveComponent(element)} onChange={event => this.props.onComponentChange(manager, element, event.target.value)}>
-                                        {
-                                            this.getComponentOptions(element)
-                                        }
-                                    </select>
+                    className={style.button}
+                >
+                    <i className={'material-icons'}>settings</i>
+                </span>
+                <div className={style.configuration}>
 
-                                    <select value={this.getActiveStyle(element)} onChange={event => this.props.onStyleChange(manager, element, event.target.value)}>
-                                        {
-                                            this.getStyleOptions(element)
-                                        }
-                                    </select>
-                                </fieldset>
-                            );
-                        })
-                    }
-                </form>
+                    <form>
+                        <h1>Themes!</h1>
+                        <p>
+                            Actually, it's much more than that, but I still need to come up with a better name.
+                            Now go wild! there's a lot of dropdowns.
+                        </p>
+                        {
+                            this.props.elements.map(element => {
+                                return (
+                                    <fieldset key={element}>
+                                        <h1>
+                                            {
+                                                element
+                                            }
+                                        </h1>
+
+                                        <label>
+                                            Component
+                                            <select value={this.getActiveComponent(element)} onChange={event => this.props.onComponentChange(manager, element, event.target.value)}>
+                                                {
+                                                    this.getComponentOptions(element)
+                                                }
+                                            </select>
+                                        </label>
+
+                                        <label>
+                                            Style
+                                            <select value={this.getActiveStyle(element)} onChange={event => this.props.onStyleChange(manager, element, event.target.value)}>
+                                                {
+                                                    this.getStyleOptions(element)
+                                                }
+                                            </select>
+                                        </label>
+                                    </fieldset>
+                                );
+                            })
+                        }
+                    </form>
+                </div>
             </div>
         );
     }

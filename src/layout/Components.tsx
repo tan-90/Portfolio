@@ -1,7 +1,19 @@
-import '../component/background/AnimatedBackground';
-import '../component/background/PlainBackground';
+import '../component/background/ColorBackground';
 
 import '../component/configuration/PlainConfiguration';
-import '../component/configuration/RoundConfiguration';
 
-import '../component/gitviewer/PlainGitViewer';
+import '../component/githubviewer/ListGitHubViewer';
+
+import '../component/menu/PlainMenu';
+
+import '../component/page/PlainPage';
+
+import '../component/app/SinglePageApp';
+
+import '../component/pages/about/TextAbout';
+
+import '../component/pages/projects/TextProjects';
+
+import '../component/pages/contact/TextContact';
+
+import '../component/pages/home/LaTeXHome';

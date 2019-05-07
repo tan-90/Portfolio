@@ -1,6 +1,5 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WebpackSynchronizableShellPlugin = require('webpack-synchronizable-shell-plugin');
 
 var copyPlugin = new CopyWebpackPlugin([
     './src/index.html',
@@ -9,16 +8,6 @@ var copyPlugin = new CopyWebpackPlugin([
         to: 'assets'
     }
 ]);
-
-var syncShellPlugin = new WebpackSynchronizableShellPlugin({
-    onBuildStart: {
-        scripts: [
-            'echo Generating scss typings.',
-            'atsm -p src/**/*.scss'
-        ],
-        blocking: true
-    }
-});
 
 module.exports = {
     entry: './src/index.tsx',
@@ -74,7 +63,6 @@ module.exports = {
         'react-dom': 'ReactDOM'
     },
     plugins: [
-        syncShellPlugin,
         copyPlugin
     ]
 };

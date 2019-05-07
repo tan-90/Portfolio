@@ -51,7 +51,6 @@ export abstract class LayoutElement<P extends IPropsLayoutElement = IPropsLayout
 
     public componentWillUnmount()
     {
-        console.log(this.props);
         const { manager } = this.props;
 
         manager.unregisterThemeListener(this);

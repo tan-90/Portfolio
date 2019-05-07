@@ -2,25 +2,24 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 import { Component } from 'react';
+import { BrowserRouter as Router, RouteComponentProps } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
-import { Background } from './element/Background';
-import { Configuration } from './element/Configuration';
-import { GitViewer } from './element/GitViewer';
+import { App } from './element/App';
 import { LayoutManager } from './layout/LayoutManager';
 import { LayoutTheme } from './layout/LayoutTheme';
-
-import Style from './index.scss';
 
 // Import all the components and elements so the decorators can do their thing.
 import './layout/Components';
 import './layout/Elements';
+import { StaticContext } from 'react-router';
 
 interface IAppState
 {
     manager: LayoutManager;
 }
 
-export class App extends Component<{}, IAppState>
+export class Root extends Component<{}, IAppState>
 {
     constructor(props: {})
     {
@@ -37,16 +36,21 @@ export class App extends Component<{}, IAppState>
     public render()
     {
         return (
-            <div className={Style.heeyItWorks}>
-                <Background manager={this.state.manager}/>
-                <Configuration manager={this.state.manager}/>
-                <GitViewer manager={this.state.manager} user={'tan-90'}/>
-            </div>
+            <Router>
+                <Route
+                    path={'/'}
+                    render={
+                        (routerProps: RouteComponentProps<any, StaticContext, any>) => (
+                            <App manager={this.state.manager} routerProps={routerProps}/>
+                        )
+                    }
+                />
+            </Router>
         );
     }
 }
 
 ReactDom.render(
-    <App/>,
+    <Root/>,
     document.getElementById('root')
 );

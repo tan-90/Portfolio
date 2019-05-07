@@ -1,6 +1,6 @@
 import { ElementProvider } from '../layout/ElementProvider';
-import { IGithubRepo } from '../Types';
 import { IGithubReadme } from '../Types';
+import { IGithubRepo } from '../Types';
 import { IPropsLayoutComponent } from '../layout/LayoutComponent';
 import { IPropsLayoutElement } from '../layout/LayoutElement';
 import { IStateLayoutElement } from '../layout/LayoutElement';
@@ -23,7 +23,7 @@ interface IRepositoryInfo
 
 type IRepository = IRepositoryInfo & IRepositoryReadme;
 
-export interface IPropsGitViewerComponent extends IPropsLayoutComponent
+export interface IPropsGitHubViewerComponent extends IPropsLayoutComponent
 {
     manager: LayoutManager;
 
@@ -31,30 +31,30 @@ export interface IPropsGitViewerComponent extends IPropsLayoutComponent
     error?: Error;
 }
 
-interface IPropsGitViewerElement extends IPropsLayoutElement
+interface IPropsGitHubViewerElement extends IPropsLayoutElement
 {
     user: string;
 }
 
-interface IStateGitViewerElement extends IStateLayoutElement
+interface IStateGitHubViewerElement extends IStateLayoutElement
 {
     error?: Error;
     repositories?: IRepository[];
 }
 
 @ElementProvider()
-export class GitViewer extends LayoutElement<IPropsGitViewerElement, IStateGitViewerElement>
+export class GitHubViewer extends LayoutElement<IPropsGitHubViewerElement, IStateGitHubViewerElement>
 {
     private githubApi: string = 'https://api.github.com';
 
-    public constructor(props: IPropsGitViewerElement)
+    public constructor(props: IPropsGitHubViewerElement)
     {
         super(props);
 
         const { manager } = this.props;
 
         this.state = {
-            activeComponent: manager.getActiveComponent(GitViewer.name)
+            activeComponent: manager.getActiveComponent(GitHubViewer.name)
         };
     }
 
@@ -128,10 +128,15 @@ export class GitViewer extends LayoutElement<IPropsGitViewerElement, IStateGitVi
 
     public componentDidMount()
     {
-        this.fetchRepositories();
+        super.componentDidMount();
+
+        if (!this.state.repositories || this.state.error)
+        {
+            this.fetchRepositories();
+        }
     }
 
-    public getComponentProps(): IPropsGitViewerComponent
+    public getComponentProps(): IPropsGitHubViewerComponent
     {
         return {
             manager: this.props.manager,

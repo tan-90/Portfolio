@@ -4,46 +4,43 @@ import ReactMarkdown  from 'react-markdown';
 import { ReactNode } from 'react';
 
 import { ComponentProvider } from '../../layout/ComponentProvider';
-import { GitViewer } from '../../element/GitViewer';
-import { IPropsGitViewerComponent } from '../../element/GitViewer';
+import { GitHubViewer } from '../../element/GitHubViewer';
+import { IPropsGitHubViewerComponent } from '../../element/GitHubViewer';
 import { ILayoutStyle } from '../../layout/LayoutStyle';
 import { LayoutComponent } from '../../layout/LayoutComponent';
 import { LayoutRegistry } from '../../layout/LayoutRegistry';
 import { Styles } from '../../layout/Styles';
 
-import Style from '../../style/background/PlainBackground.scss';
-import Neon from '../../style/background/PlainBackgroundNeon.scss';
+import DefaultListGitHubViewer from '../../style/githubviewer/DefaultListGitHubViewer.scss';
 
-interface IPlainBackgroundStyle extends ILayoutStyle
+interface IListGitHubViewerStyle extends ILayoutStyle
 {
-    background: string;
+    gitHubViewer: string;
 }
 
-@Styles<IPlainBackgroundStyle>(
-    { name: 'Plain', data: Style },
-    { name: 'Neon', data: Neon }
+@Styles<IListGitHubViewerStyle>(
+    { name: 'Default', data: DefaultListGitHubViewer }
 )
-@ComponentProvider(GitViewer, true)
-export class PlainGitViewer extends LayoutComponent<IPropsGitViewerComponent>
+@ComponentProvider(GitHubViewer, true)
+export class ListGitHubViewer extends LayoutComponent<IPropsGitHubViewerComponent>
 {
-    public constructor(props: IPropsGitViewerComponent)
+    public constructor(props: IPropsGitHubViewerComponent)
     {
         super(props);
 
         const { manager } = this.props;
 
         this.state = {
-            activeStyle: manager.getActiveStyle(PlainGitViewer.name)
+            activeStyle: manager.getActiveStyle(ListGitHubViewer.name)
         };
     }
 
     public render(): ReactNode
     {
-        console.log('Did you just @render me');
-        const style: IPlainBackgroundStyle = LayoutRegistry.INSTANCE.getStyle<IPlainBackgroundStyle>(this, this.state.activeStyle);
+        const style: IListGitHubViewerStyle = LayoutRegistry.INSTANCE.getStyle<IListGitHubViewerStyle>(this, this.state.activeStyle);
 
         return (
-            <div className={style.background}>
+            <div className={style.gitHubViewer}>
                 {
                     (!this.props.error && !this.props.repositories) &&
                     <span>Loading...</span>

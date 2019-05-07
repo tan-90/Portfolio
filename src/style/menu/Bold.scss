@@ -1,0 +1,32 @@
+.menu {
+    color: whitesmoke;
+    text-align: right;
+    
+    position: absolute;
+
+    bottom: 1em;
+    right: 1em;
+
+    
+    .link {
+        cursor: pointer;
+        
+        list-style: none;
+        font-size: 2em;
+        font-family: 'Courier New', Courier, monospace;
+        
+        transition: font-size 0.2s;
+
+        &:hover {
+            font-size: 3em;
+        }
+    }
+
+    .active {
+        font-size: 8em;
+
+        &:hover {
+            font-size: 8em;            
+        }
+    }
+}
