@@ -25,9 +25,19 @@ interface ILaTeXHomeStyle extends ILayoutStyle
 @ComponentProvider(Home, true)
 export class LaTeXHome extends LayoutComponent
 {
+    equations: string[];
+
     public constructor(props: IPropsLayoutComponent)
     {
         super(props);
+        this.equations = [];
+        this.equations.push('tan(90)');
+        this.equations.push('\\dfrac{sin(90)}{cos(90)}');
+        this.equations.push('\\dfrac{sin(90)}{\\sqrt{1 - sin^2(90)}}');
+        this.equations.push('\\dfrac{\\sqrt{1 - cos^2(90)}}{cos(90)}');
+        this.equations.push('\\dfrac{1}{\\sqrt{csc^2(90) - 1}}');
+        this.equations.push('\\sqrt{sec^2(90) - 1}');
+        this.equations.push('\\dfrac{1}{cot(90)}');
 
         const { manager } = this.props;
 
@@ -44,7 +54,9 @@ export class LaTeXHome extends LayoutComponent
             <div className={style.latexHome}>
                 <h1 className={style.title}>
                     <BlockMath>
-                        {'tan(90)'}
+                        {
+                            this.equations[Math.floor(Math.random() * this.equations.length)]
+                        }
                     </BlockMath>
                 </h1>
             </div>
