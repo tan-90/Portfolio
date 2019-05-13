@@ -1,4 +1,5 @@
 import '../component/background/ColorBackground';
+import '../component/background/CanvasBackground';
 
 import '../component/configuration/PlainConfiguration';
 

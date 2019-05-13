@@ -108,9 +108,13 @@ export class SinglePageApp extends LayoutComponent<IPropsAppComponent, IStateSin
                                         exact
                                         path={page.route}
                                         render={_ =>
-                                            <Page manager={manager} name={page.name}>
+                                            page.useContainer ? (
+                                                <Page manager={manager} name={page.name}>
+                                                    <PageElement manager={manager}/>
+                                                </Page>
+                                            ) : (
                                                 <PageElement manager={manager}/>
-                                            </Page>
+                                            )
                                         }
                                     />
                                 );

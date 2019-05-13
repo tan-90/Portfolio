@@ -27,6 +27,7 @@
       }
     ],
     "ter-arrow-parens": false,
-    "max-line-length": false
+    "max-line-length": false,
+    "no-increment-decrement": false
   }
 }

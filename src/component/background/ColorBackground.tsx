@@ -27,7 +27,7 @@ interface IColorBackgroundStyle extends ILayoutStyle
     { name: 'Gray', data: GrayColorBackground },
     { name: 'Blue', data: BlueColorBackground }
 )
-@ComponentProvider(Background, true)
+@ComponentProvider(Background)
 export class PlainBackground extends LayoutComponent<IPropsLayoutComponent>
 {
     public constructor(props: IPropsLayoutComponent)

@@ -3,6 +3,12 @@ export interface Class<T> extends Function
     new(...args: any[]): T;
 }
 
+export interface Coord
+{
+    x: number;
+    y: number;
+}
+
 export interface IGithubRepo
 {
     id: number;

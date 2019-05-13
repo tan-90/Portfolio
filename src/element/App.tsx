@@ -14,6 +14,7 @@ export interface IPageData
 {
     name: string;
     route: string;
+    useContainer: boolean;
 
     element: Class<LayoutElement>;
 }
@@ -45,24 +46,28 @@ export class App extends LayoutElement<IPropsApp, IStateApp>
             {
                 name: 'Home',
                 route: '/',
+                useContainer: false,
 
                 element: Home
             },
             {
                 name: 'About',
                 route: '/about',
+                useContainer: true,
 
                 element: About
             },
             {
                 name: 'Projects',
                 route: '/projects',
+                useContainer: true,
 
                 element: Projects
             },
             {
                 name: 'Contact',
                 route: '/contact',
+                useContainer: true,
 
                 element: Contact
             },

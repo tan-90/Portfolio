@@ -33,6 +33,11 @@ export class Root extends Component<{}, IAppState>
         };
     }
 
+    public componentDidMount()
+    {
+        this.state.manager.onRootDidMount();
+    }
+
     public render()
     {
         return (
