@@ -46,11 +46,14 @@ export class SinglePageApp extends LayoutComponent<IPropsAppComponent, IStateSin
         super(props);
 
         const { manager } = this.props;
+        const { location } = this.props.routerProps;
+
+        const route: string = location.pathname.substring(location.pathname.lastIndexOf('/') + 1, location.pathname.length);
 
         this.state = {
             activeStyle: manager.getActiveStyle(SinglePageApp.name),
 
-            currentPage: 'Home'
+            currentPage: route.length > 0 ? route : 'home'
         };
 
         this.onMenuLinkClick = this.onMenuLinkClick.bind(this);
@@ -65,7 +68,7 @@ export class SinglePageApp extends LayoutComponent<IPropsAppComponent, IStateSin
             });
 
             const { history } = this.props.routerProps;
-            history.push(link === 'Home' ? '/' : link.toLowerCase());
+            history.push(link === 'home' ? '/' : link);
 
             return true;
         }

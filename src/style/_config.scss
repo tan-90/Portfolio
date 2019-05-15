@@ -1,0 +1,68 @@
+/**
+ * Helper constant Phi used for golden ratio calculations.
+ * (It makes everything pretty.)
+ *
+ * Do I need that many digits? Absolutely not.
+ * Refer to: https://en.wikipedia.org/wiki/Golden_ratio
+ */
+$phi: 1.61803399;
+
+/**
+ * The z-index layer definitions.
+ * Allows keeping z-index consistency by setting it with names.
+ *
+ * If n is the position of the name in the array, the corresponding z-index is 3n + 1.
+ * This allows for each layer to have extra space for a background and overlay by adding or subtracting one to the index.
+ *
+ * Used with the layer function from _functions.scss (to avoid calling map-get every time).
+ */
+$layers: (
+    /*
+     * Because I want to.
+     */
+    oblivion,
+
+    /*
+     * Pretty self explanatory.
+     */
+    background,
+
+    /*
+     * The page contents.
+     */
+    content,
+    
+    /*
+     * The nav menu and menu styling.
+     */
+    nav,
+
+    /*
+     * The configuration panel.
+     * Always opens on top of everything.
+     */
+    settings
+);
+
+/**
+ * The font sizes by name.
+ *
+ * Should use a proper typography scale.
+ * Right now it's just something that looks kinda good.
+ *
+ * Refer to The Elements of Typographic Style.
+ */
+ $fontSizes: (
+    huge: 80pt,
+    large: 50pt,
+    normal: 30pt,
+    small: 20pt,
+    tiny: 10pt
+);
+
+/**
+ * The content breakpoints by name.
+ */
+$breakpoints: (
+    desktop: 1500px,
+);

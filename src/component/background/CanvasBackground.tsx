@@ -227,6 +227,7 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
 
             const context: CanvasRenderingContext2D = this.canvasContext;
             context.clearRect(0, 0, windowDimensions.x, windowDimensions.y);
+            context.lineWidth = 1;
 
             /*
              * Draw all the triangles.
@@ -236,6 +237,7 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
                 for (let j = 0; j < this.rowCount; ++j)
                 {
                     const point: Point = this.points[i][j];
+                    context.strokeStyle = point.color.lighten(0.05).alpha(0.001).hex();
 
                     if (i < this.columnCount - 1 && j < this.rowCount - 1)
                     {
@@ -249,6 +251,7 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
                         context.lineTo(point.x, point.y);
                         context.fillStyle = point.color.hex();
                         context.fill();
+                        context.stroke();
                     }
 
                     if (i > 0 && j > 0)
@@ -263,6 +266,7 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
                         context.lineTo(point.x, point.y);
                         context.fillStyle = point.color.hex();
                         context.fill();
+                        context.stroke();
                     }
                 }
             }

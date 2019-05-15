@@ -15,6 +15,9 @@ import Plain from '../../style/page/PlainPage.scss';
 interface IPlainPageStyle extends ILayoutStyle
 {
     page: string;
+    container: string;
+    title: string;
+    content: string;
 }
 
 @Styles<IPlainPageStyle>(
@@ -40,7 +43,15 @@ export class PlainPage extends LayoutComponent<IPropsPageComponent>
 
         return (
             <div className={style.page}>
-                {this.props.children}
+                <div className={style.container}>
+                    <div className={style.title}>
+                        <h1>{this.props.name}</h1>
+                    </div>
+
+                    <div className={style.content}>
+                        {this.props.children}
+                    </div>
+                </div>
             </div>
         );
     }

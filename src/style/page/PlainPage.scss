@@ -1,13 +1,79 @@
+
+@import '../config';
+@import '../functions';
+@import '../mixins';
+
 .page {
-    height: 100%;
-    width: 65vw;
+    $backgroundColor: #444444;
 
-    margin-left: 50px;
-    padding: 15px;
+    $background: rgba($backgroundColor, 0.75);
+    $backgroundOpaque: rgba($backgroundColor, 1);
 
+    $baseColor: #dddddd;
+    $highlightColor: #fafafa;
+
+    position: absolute;
+    z-index: layerMap(content);
+    
+    width: 100vw;
+    height: 100vh;
     overflow: auto;
 
-    background-color: beige;
+    .container {
+        background-color: $background;
 
-    opacity: 0.4;
+        margin-top: reverseGoldenSplit(100vh);
+        margin-bottom: em(2, normal);
+        margin-left: em(2, normal);
+        margin-right: reverseGoldenSplit(100vw);
+
+        @include media(desktop, max)
+        {
+            margin-top: em(2, normal);
+            margin-bottom: em(1, normal);
+            margin-left: em(1, normal);
+            margin-right: em(1, normal);
+        }
+
+        .title {
+            position: sticky;
+            box-sizing: border-box;
+            
+            width: 100%;
+            height: em(3, large);
+
+            top: 0;
+
+            padding-left: em($phi, normal);
+            padding-top: em(1, small);
+
+            background-color: $backgroundOpaque;
+
+            h1 {
+                color: $highlightColor;
+
+                text-transform: uppercase;
+                font-size: sizeMap(large);
+                font-weight: 100;
+            }
+        }
+
+        .content {
+            color: $baseColor;
+            padding: em($phi, normal);
+
+            font-size: sizeMap(normal);
+            font-weight: 100;
+
+            h1 {
+                text-transform: lowercase;
+                font-size: sizeMap(large);
+                font-variant: small-caps;
+                font-weight: 100;
+
+                margin-top: em(1, large);
+                margin-bottom: em(-1, small);
+            }
+        }
+    }
 }

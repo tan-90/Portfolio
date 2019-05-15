@@ -1,0 +1,84 @@
+@import './config';
+
+/**
+ * Returns a z-index for the given name.
+ *
+ * Uses the $layers from _config.scss.
+ */
+@function layerMap($name)
+{
+    @if index($layers, $name)
+    {
+        @return index($layers, $name) * 3 + 1;
+    }
+    @else
+    {
+        @warn 'Invalid layer: "#{$name}".';
+        @return null;
+    }
+}
+
+/**
+ * Returns a font-size for the given name.
+ *
+ * Uses the $fontSizes from _config.scss.
+ */
+@function sizeMap($size)
+{
+    @if map-has-key($fontSizes, $size)
+    {
+        @return map-get($fontSizes, $size);
+    }
+    @else
+    {
+        @warn 'Invalid size: "#{$name}".';
+        @return null;
+    }
+}
+
+/**
+ * Returns an em measure based on the given size.
+ */
+@function em($ems, $size: normal)
+{
+    @return sizeMap($size) * $ems;
+}
+
+/**
+ * Simple power function.
+ */
+@function pow($number, $exponent)
+{
+    $value: 1;
+
+    @if $exponent > 0
+    {
+        @for $i from 1 through $exponent
+        {
+            $value: $value * $number;
+        }
+    }
+    @return $value;
+}
+
+/**
+ * Splits a base value respecting the golden ratio.
+ * Can use a split count to split multiple times.
+ *
+ * Refer to: https://en.wikipedia.org/wiki/Golden_ratio
+ */
+@function goldenSplit($base, $splitCount:1)
+{
+    @return $base / pow($phi, $splitCount);
+}
+
+/**
+ * Splits a base value respecting the golden ratio and returns the "complement".
+ * Can use a split count to split multiple times.
+ *
+ * Refer to: https://en.wikipedia.org/wiki/Golden_ratio
+ */
+@function reverseGoldenSplit($base, $splitCount:1)
+{
+    @return $base - ($base / pow($phi, $splitCount));
+}

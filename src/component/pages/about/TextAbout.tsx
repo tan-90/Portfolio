@@ -40,11 +40,9 @@ export class TextAbout extends LayoutComponent<IPropsAboutComponent>
 
         return (
             <div className={style.textAbout}>
-                <p>
-                    {
-                        this.props.content
-                    }
-                </p>
+                {
+                    this.props.content
+                }
             </div>
         );
     }

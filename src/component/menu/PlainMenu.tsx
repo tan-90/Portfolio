@@ -50,10 +50,10 @@ export class PlainMenu extends LayoutComponent<IPropsMenuComponent>
                                 <li
                                     key={link}
 
-                                    onClick={() => this.props.onLinkClick(link)}
+                                    onClick={() => this.props.onLinkClick(link.toLowerCase())}
                                     className={classNames({
                                         [style.link]: true,
-                                        [style.active]: this.props.selectedLink === link
+                                        [style.active]: this.props.selectedLink === link.toLowerCase()
                                     })}
                                 >
                                     {

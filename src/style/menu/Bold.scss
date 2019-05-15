@@ -1,32 +1,38 @@
+@import '../functions';
+
 .menu {
-    color: whitesmoke;
-    text-align: right;
-    
     position: absolute;
+    z-index: layerMap(nav);
+
+    color: whitesmoke;
+
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+
+    text-align: right;
+    text-transform: uppercase;    
 
     bottom: 1em;
     right: 1em;
-
     
     .link {
         cursor: pointer;
         
         list-style: none;
-        font-size: 2em;
-        font-family: 'Courier New', Courier, monospace;
+        font-size: sizeMap(normal);
         
         transition: font-size 0.2s;
 
         &:hover {
-            font-size: 3em;
+            font-size: sizeMap(large);
         }
     }
 
     .active {
-        font-size: 8em;
+        font-size: sizeMap(huge);
 
         &:hover {
-            font-size: 8em;            
+            font-size: sizeMap(huge);         
         }
     }
 }

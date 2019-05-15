@@ -1,6 +1,20 @@
+@import '../functions';
+
 html, body {
     padding: 0;
     margin: 0;
+    
+    /*
+     * Scrollbars look horrible.
+     * I plan to implement some nice scroll indicator in the future.
+     */
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    font-size: sizeMap(normal);
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
 }
 
 .singlePageApp {
@@ -14,8 +28,4 @@ html, body {
     left: 0;
 
     background-color: #1D2027;
-
-    .pageHolder {
-        height: 100%;
-    }
 }
