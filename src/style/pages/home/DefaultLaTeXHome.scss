@@ -1,10 +1,12 @@
+@import '../../functions';
+
 .latexHome {
     .title {
         position: absolute;
-        bottom: 0em;
-        left: 1em;
+        bottom: 0;
+        left: em(1, large);
 
-        font-size: 6em;
+        font-size: sizeMap(huge);
         color: whitesmoke;
     }
 }

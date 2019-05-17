@@ -1,4 +1,8 @@
+import React from 'react';
+
 import { FormEvent } from 'react';
+import { Fragment } from 'react';
+import { ReactNode } from 'react';
 import { SyntheticEvent } from 'react';
 
 import { ElementProvider } from '../../layout/ElementProvider';
@@ -9,7 +13,7 @@ import { IStateLayoutElement } from '../../layout/LayoutElement';
 
 export interface IPropsContactComponent extends IPropsLayoutComponent
 {
-    content: string;
+    content: ReactNode;
     social: {icon: string, link: string}[];
 
     name?: string;
@@ -33,20 +37,50 @@ interface IStateContact extends IStateLayoutElement
 @ElementProvider()
 export class Contact extends LayoutElement<IPropsLayoutElement, IStateContact>
 {
-    content: string;
+    content: ReactNode;
     social: {icon: string, link: string}[];
 
     public constructor(props: IPropsLayoutElement)
     {
         super(props);
 
-        this.content = 'Here are the buttons you have to press if you want to talk to me.';
+        this.content =
+            <Fragment>
+                <p>
+                    Messages and clicky stuffs.
+                </p>
+            </Fragment>;
         this.social = [
+            {
+                icon: 'gitlab',
+                link: 'https://gitlab.com/tan90'
+            },
             {
                 icon: 'github',
                 link: 'https://github.com/tan-90'
             },
+            {
+                icon: 'facebook',
+                link: '/#'
+            },
+            {
+                icon: 'twitter',
+                link: '/#'
+            },
+            {
+                icon: 'instagram',
+                link: '/#'
+            },
+            {
+                icon: 'youtube',
+                link: '/#'
+            },
+            {
+                icon: 'twitch',
+                link: '/#'
+            },
         ];
+
         const { manager } = this.props;
 
         this.state = {

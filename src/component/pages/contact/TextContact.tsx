@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import { ReactNode } from 'react';
@@ -12,9 +13,20 @@ import { Styles } from '../../../layout/Styles';
 
 import DefaultTextContactStyle from '../../../style/pages/contact/DefaultTextContact.scss';
 
+/*
+ * This has a lot of classes that could be replaced by using CSS selectors on the form.
+ * Using named classes just makes things clearer.
+ */
 interface ITextContactStyle extends ILayoutStyle
 {
     textContact: string;
+
+    formGroup: string;
+    name: string;
+    email: string;
+    message: string;
+    button: string;
+
     icons: string;
 }
 
@@ -41,14 +53,12 @@ export class TextContact extends LayoutComponent<IPropsContactComponent>
 
         return (
             <div className={style.textContact}>
-                <p>
-                    {
-                        this.props.content
-                    }
-                </p>
+                {
+                    this.props.content
+                }
 
                 <form onSubmit={this.props.onFormSubmit}>
-                    <label>
+                    <label className={classNames([style.formGroup, style.name])}>
                         NAME
                         <input
                             type={'text'}
@@ -62,7 +72,7 @@ export class TextContact extends LayoutComponent<IPropsContactComponent>
                         />
                     </label>
 
-                    <label>
+                    <label className={classNames([style.formGroup, style.email])}>
                         EMAIL
                         <input
                             type={'email'}
@@ -76,7 +86,7 @@ export class TextContact extends LayoutComponent<IPropsContactComponent>
                         />
                     </label>
 
-                    <label>
+                    <label className={classNames([style.formGroup, style.message])}>
                         MESSAGE
                         <textarea
                             name={'message'}
@@ -89,6 +99,7 @@ export class TextContact extends LayoutComponent<IPropsContactComponent>
                     </label>
 
                     <input
+                        className={style.button}
                         type={'submit'}
                         value={'SEND MESSAGE'}
                         disabled={this.props.sending}
@@ -97,8 +108,8 @@ export class TextContact extends LayoutComponent<IPropsContactComponent>
 
                 <div className={style.icons}>
                     {
-                        this.props.social.map(s =>
-                            <a key={s.link} href={s.link} target={'_blank'}>
+                        this.props.social.map((s, index) =>
+                            <a key={index} href={s.link} target={'_blank'}>
                                 <i className={`fab fa-${s.icon}`}/>
                             </a>
                         )

@@ -1,7 +1,147 @@
+@import '../../functions';
+@import '../../mixins';
+
 .textContact {
-    // I'm too lazy to properly style this as it's just a temporary version for code cleanup.
+
+    /*
+     * These values are repeated here despite being defined in PlainPage.scss.
+     * The reason is I'm yet to decide how I'm gonna handle theming and variable switching.
+     */
+    $backgroundColor: #444444;
+
+    $background: rgba($backgroundColor, 0.75);
+    $backgroundOpaque: rgba($backgroundColor, 1);
+
+    $baseColor: #dddddd;
+    $highlightColor: #fafafa;
+
+    form {
+        display: grid;
+        justify-content: center;
+        
+        grid-template-columns: reverseGoldenSplit(100%) goldenSplit(100%);
+        grid-template-rows: auto auto auto;
+
+        grid-column-gap: em(1, small);
+        grid-row-gap: em(1, normal);
+
+        margin-top: em(1, huge);
+
+        %input {
+            color: $baseColor;
+            background-color: $background;
+
+            padding-left: em(1, tiny);
+
+            font-family: 'Abel', sans-serif;
+            font-size: sizeMap(normal);
+            font-weight: 100;
+
+            
+            border: solid 2px $baseColor;
+
+            &:focus {
+                color: $highlightColor;
+                
+                border: solid 2px $highlightColor;
+    
+                outline: none;
+            }
+        }
+
+        .formGroup {
+            display: flex;
+            flex-direction: column;
+
+            text-transform: lowercase;
+            font-size: sizeMap(small);
+            font-variant: small-caps;
+            font-weight: 100;
+            
+            input {
+                @extend %input;
+                
+                height: em($phi, normal);
+            }
+
+            textarea {
+                @extend %input;
+
+                padding-top: em(1, tiny);
+
+                height: em(7, normal);
+                resize: none;
+            }
+
+            &:focus-within {
+                color: $highlightColor;
+            }
+        }
+
+        .name {
+            grid-column: 1 / span 1;
+            @include media(desktop, max)
+        }
+
+        .email {
+            grid-column: 2 / span 1;
+        }
+
+        .message {
+            grid-column: 1 / span 2;
+        }
+
+        .button {
+            @extend %input;
+
+            cursor: pointer;
+
+            grid-column: 1 / span 2;
+            width: goldenSplit(100%);
+            height: em($phi, normal);
+
+            margin: auto;
+
+            &:hover {
+                color: $highlightColor;
+                border: solid 2px $highlightColor;
+            }
+        }
+
+    }
 
     .icons {
-        margin-top: 3em;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+        margin-top: em(2, normal);
+
+        height: em($phi, normal);
+
+        & > a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            color: $baseColor;
+            background-color: $background;
+
+            width: em($phi, normal);
+            height: em($phi, normal);
+
+            border: solid 2px $baseColor;
+
+            &:hover {
+                color: $highlightColor;
+                border: solid 2px $highlightColor;
+            }
+        }
+
+        & > a ~ a {
+            margin-left: em(1, tiny);
+        }
     }
 }
