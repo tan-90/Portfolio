@@ -66,3 +66,16 @@ $layers: (
 $breakpoints: (
     desktop: 1200px,
 );
+
+/*
+ * Temporary color scheme.
+ * I still have to decide how I'll handle color themes.
+ * For now every page can access this default values.
+ */
+$backgroundColor: #444444;
+
+$background: rgba($backgroundColor, 0.75);
+$backgroundOpaque: rgba($backgroundColor, 1);
+
+$baseColor: #dddddd;
+$highlightColor: #fafafa;

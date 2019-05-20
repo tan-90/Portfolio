@@ -1,19 +1,9 @@
+@import '../../config';
 @import '../../functions';
 @import '../../mixins';
 
 .textContact {
-
-    /*
-     * These values are repeated here despite being defined in PlainPage.scss.
-     * The reason is I'm yet to decide how I'm gonna handle theming and variable switching.
-     */
-    $backgroundColor: #444444;
-
-    $background: rgba($backgroundColor, 0.75);
-    $backgroundOpaque: rgba($backgroundColor, 1);
-
-    $baseColor: #dddddd;
-    $highlightColor: #fafafa;
+    color: $baseColor;
 
     form {
         display: grid;

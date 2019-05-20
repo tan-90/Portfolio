@@ -1,3 +1,26 @@
+@import '../../config';
+@import '../../functions';
+
 .textAbout {
+    color: $baseColor;
+    font-size: sizeMap(normal);
+    font-weight: 100;
+
+    h1 {
+        text-transform: lowercase;
+        font-size: sizeMap(large);
+        font-variant: small-caps;
+        font-weight: 100;
+
+        margin-top: em(1, large);
+        margin-bottom: em(-1, small);
+    }
+
+    p {
+        text-indent: em($phi, normal);
+    }
     
+    p:first-of-type {
+        text-indent: 0;
+    }
 }

@@ -4,14 +4,6 @@
 @import '../mixins';
 
 .page {
-    $backgroundColor: #444444;
-
-    $background: rgba($backgroundColor, 0.75);
-    $backgroundOpaque: rgba($backgroundColor, 1);
-
-    $baseColor: #dddddd;
-    $highlightColor: #fafafa;
-
     position: absolute;
     z-index: layerMap(content);
     
@@ -59,21 +51,7 @@
         }
 
         .content {
-            color: $baseColor;
             padding: em($phi, normal);
-
-            font-size: sizeMap(normal);
-            font-weight: 100;
-
-            h1 {
-                text-transform: lowercase;
-                font-size: sizeMap(large);
-                font-variant: small-caps;
-                font-weight: 100;
-
-                margin-top: em(1, large);
-                margin-bottom: em(-1, small);
-            }
         }
     }
 }
