@@ -20,7 +20,7 @@
         text-indent: em($phi, normal);
     }
     
-    p:first-of-type {
+    p:first-child, :not(p) + p {
         text-indent: 0;
     }
 }

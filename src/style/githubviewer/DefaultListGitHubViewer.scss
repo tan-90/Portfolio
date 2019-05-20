@@ -1,7 +1,171 @@
-.gitHubViewer {
-    font-weight: bold;
+@import '../config';
+@import '../functions';
 
-    img {
-        width: 100%;
+.gitHubViewer {
+    .repository {
+        .header {
+            cursor: pointer;
+            box-sizing: border-box;
+    
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-end;
+    
+            height: em(1, huge);
+    
+            padding: 0 em(1, small);
+    
+            color: $baseColor;
+            background-color: $background;
+    
+            border-bottom: 2px solid $baseColor;
+    
+            i {
+                flex-shrink: 1;
+
+                font-size: sizeMap(normal);
+
+                margin-right: em(1, small);
+                margin-bottom: em(1, tiny);
+            }
+
+            h1, h2 {
+                margin-bottom: em(1, tiny);
+            }
+    
+            h1 {
+                font-size: sizeMap(normal);
+                font-weight: 100;
+            }
+    
+            h2 {
+                flex-grow: 1;
+
+                font-size: sizeMap(small);
+                font-weight: 100;
+    
+                font-variant: small-caps;
+                text-transform: lowercase;
+
+                text-align: right;
+            }
+    
+            &:hover {
+                color: $highlightColor;
+                background-color: $backgroundOpaque;
+    
+                border-bottom: 2px solid $highlightColor;
+            }
+        }
+    
+        .content {
+            /*
+             * All my github repo readmes start with an h1 with the project name.
+             * The github viewer already renders the repo name on the header.
+             * The first h1 of the readme is hidden so the name is not repeated.
+             */
+            h1:first-of-type {
+                display: none;
+            }
+
+            color: $baseColor;
+            font-size: sizeMap(normal);
+            font-weight: 100;
+            
+            p {
+                text-indent: em($phi, normal);
+            }
+            
+            p:first-child, :not(p) + p {
+                text-indent: 0;
+            }
+
+            /*
+             * As far as I'm aware, there's no better way of doing this.
+             * The images will always be inside a p tag, but they don't need the indent.
+             * I'm looking for a way of removing the indent instead of just pushing the image back.
+             */
+            p > img {
+                margin-left: em(-$phi, normal);
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-weight: 100;                
+                text-transform: uppercase;
+            }
+            
+            h1 {
+                text-transform: lowercase;
+                font-variant: small-caps;
+
+                // margin-top: em(1, huge);
+                margin-bottom: em(-1, small);
+            }
+
+            h2 {
+                text-transform: lowercase;
+                font-variant: small-caps;
+
+                font-size: sizeMap(large);
+
+                // margin-top: em(1, normal);
+                margin-bottom: em(-1, tiny);
+            }
+
+            h3, h4, h5, h6 {
+                font-size: sizeMap(normal);
+            }
+
+            img {
+                width: 100%;
+            }
+
+            a {
+                color: $highlightColor;
+            }
+
+            table {
+                font-size: sizeMap(small);
+                border-spacing: 0 0;
+
+                th {
+                    border-bottom: 1px solid $baseColor;
+
+                    padding: em(1, tiny) em(1, small);
+                }
+
+                td {
+                    padding: em(1, tiny) em(1, small);
+                }
+
+                tr:hover {
+                    :not(th) {
+                        background-color: $background;
+                    }
+                }
+            }
+
+            code {
+                font-family: 'Fira Mono', monospace;
+                font-size: sizeMap(small);
+            }
+        }
+    }
+
+    .hidden {
+        .content {
+            display: none;
+        }
+    }
+
+    :not(.hidden) {
+        .header {
+            background-color: $backgroundOpaque;
+
+            &:hover {
+                background-color: $backgroundOpaque;
+            }
+        }
     }
 }
