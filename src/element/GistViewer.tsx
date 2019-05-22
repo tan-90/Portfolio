@@ -66,9 +66,9 @@ export class GistViewer extends LayoutElement<IPropsGistViewerElement, IStateGis
         try
         {
             const response: Response  = await fetch(`${this.githubApi}/users/${this.props.user}/gists`);
-            const data: any = await response.json();
+            let data: IGithubGist[] = await response.json();
 
-            const gistsData: IGithubGist[] = data.filter((fetchInfo: IGithubGist) => {
+            data = data.filter((fetchInfo: IGithubGist) => {
 
                 /*
                  * Why is this an object instead of an array GitHub???
@@ -94,12 +94,12 @@ export class GistViewer extends LayoutElement<IPropsGistViewerElement, IStateGis
 
             const gists: IGist[] = [];
 
-            for (let i = 0; i < gistsData.length; ++i)
+            for (let i = 0; i < data.length; ++i)
             {
                 /*
                  * I can't loop by type and this looks better than a cast.
                  */
-                const currentGist: IGithubGist = gistsData[i];
+                const currentGist: IGithubGist = data[i];
 
                 const gistFileNames: string[] = Object.keys(currentGist.files);
                 const gistFile: IGithubGistFile = currentGist.files[gistFileNames[0]];
@@ -139,7 +139,7 @@ export class GistViewer extends LayoutElement<IPropsGistViewerElement, IStateGis
         try
         {
             const response: Response = await fetch(url);
-            const data: any = await response.text();
+            const data: string = await response.text();
 
             readmeInfo.readme = data;
         }

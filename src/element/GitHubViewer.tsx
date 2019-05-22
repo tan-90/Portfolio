@@ -63,24 +63,31 @@ export class GitHubViewer extends LayoutElement<IPropsGitHubViewerElement, IStat
         try
         {
             const response: Response  = await fetch(`${this.githubApi}/users/${this.props.user}/repos`);
-            const data: any = await response.json();
+            const data: IGithubRepo[] = await response.json();
 
             /*
              * I don't really like how I have to use index iteration here.
              * But as far as I'm aware, this is the only thing to have async behavior inside a loop.
              * It's not bad, it just doesn't look JavaScripty enough.
              */
-            const repositories: IRepository[] = data.map((fetchInfo: IGithubRepo) => {
+            const repositories: IRepository[] = [];
+
+            for (let i = 0; i < data.length; ++i)
+            {
+                const currentRepo: IGithubRepo = data[i];
+
                 const currentRepoInfo: IRepository = {
-                    name: fetchInfo.name,
-                    url: fetchInfo.url,
+                    name: currentRepo.name,
+                    url: currentRepo.url,
 
-                    description: fetchInfo.description
+                    description: currentRepo.description
                 };
-                this.fetchReadme(currentRepoInfo.name);
 
-                return currentRepoInfo;
-            });
+                const currentRepoReadme: IRepositoryReadme = await this.fetchReadme(currentRepoInfo.name);
+                Object.assign(currentRepoInfo, currentRepoReadme);
+
+                repositories.push(currentRepoInfo);
+            }
 
             this.setState({
                 repositories
@@ -95,17 +102,16 @@ export class GitHubViewer extends LayoutElement<IPropsGitHubViewerElement, IStat
 
     }
 
-    private async fetchReadme(name: string): Promise<void>
+    private async fetchReadme(name: string): Promise<IRepositoryReadme>
     {
         const readmeInfo: IRepositoryReadme = {};
 
         try
         {
             const response: Response = await fetch(`${this.githubApi}/repos/${this.props.user}/${name}/readme`);
-            const data: any = await response.json();
+            const data: IGithubReadme = await response.json();
 
-            const fetchReadme: IGithubReadme = data as IGithubReadme;
-            readmeInfo.readme = atob(fetchReadme.content);
+            readmeInfo.readme = atob(data.content);
         }
         catch (error)
         {
@@ -113,16 +119,7 @@ export class GitHubViewer extends LayoutElement<IPropsGitHubViewerElement, IStat
         }
         finally
         {
-            const { repositories } = this.state;
-            if (repositories)
-            {
-                const index: number = repositories.findIndex(repository => repository.name === name);
-                Object.assign(repositories[index], readmeInfo);
-
-                this.setState({
-                    repositories
-                });
-            }
+            return readmeInfo;
         }
     }
 

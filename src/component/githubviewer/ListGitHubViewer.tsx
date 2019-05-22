@@ -94,7 +94,6 @@ export class ListGitHubViewer extends LayoutComponent<IPropsGitHubViewerComponen
                                 })}
                                 key={repository.name}
                             >
-                                {/* UNDO UNTIL THIS DISSAPEARS */}
                                 <div className={style.header} onClick={() => this.handleHeaderClick(index)}>
                                     {
                                         this.state.visible[index] ?
