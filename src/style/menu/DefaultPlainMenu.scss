@@ -1,0 +1,96 @@
+@import '../config';
+@import '../functions';
+
+.menu {
+    position: absolute;
+    z-index: layerMap(nav);
+
+    color: $baseColor;
+
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+
+    text-align: right;
+    text-transform: uppercase;    
+
+    bottom: 0;
+    right: em(1, normal);
+
+    &::before {
+        content: '';
+        display: block;
+
+        position: absolute;
+        
+        width: em(1 / $phi, tiny);
+        height: 200vh;
+
+        top: -100vh;
+        right: 0;
+
+        background-color: rgba($baseColor, 0.4);
+
+        margin-left: calc(100% - #{em(1 / $phi, tiny)});
+    }
+
+    // &::after {
+    //     content: '';
+    //     display: block;
+        
+    //     width: em(1 / $phi, tiny);
+    //     height: em(2, normal);
+
+    //     background-color: $baseColor;
+
+    //     margin-left: calc(100% - #{em(1 / $phi, tiny)});
+    // }
+    
+    .link {
+        cursor: pointer;
+        
+        margin-bottom: em(1, tiny);
+
+        list-style: none;
+        font-size: sizeMap(large);
+
+        &:hover {
+            color: $highlightColor;
+
+            &::after {
+                margin-left: em($phi, small);
+                
+                background-color: $highlightColor;
+            }
+        }
+
+        &::after {
+            content: '';
+            display: inline-block;
+
+            width: em(1 / $phi, tiny);
+            height: em(1, large);
+
+            margin-left: em(1, small);
+
+            background-color: $baseColor;
+
+            transition: margin-left .2s ease-out, width .2s ease-out;
+        }
+
+    }
+
+    .active {
+        cursor: default;
+
+        color: $highlightColor;
+
+        &::after {
+            width: em(1, tiny);
+            
+            margin-left: em($phi, small);
+            
+            background-color: $highlightColor;
+        }
+    }
+
+}

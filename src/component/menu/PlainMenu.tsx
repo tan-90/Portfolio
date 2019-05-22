@@ -11,7 +11,7 @@ import { LayoutComponent } from '../../layout/LayoutComponent';
 import { LayoutRegistry } from '../../layout/LayoutRegistry';
 import { Styles } from '../../layout/Styles';
 
-import Bold from '../../style/menu/Bold.scss';
+import DefaultPlainMenu from '../../style/menu/DefaultPlainMenu.scss';
 
 interface IPlainMenuStyle extends ILayoutStyle
 {
@@ -21,7 +21,7 @@ interface IPlainMenuStyle extends ILayoutStyle
 }
 
 @Styles<IPlainMenuStyle>(
-    { name: 'Bold', data: Bold }
+    { name: 'Default', data: DefaultPlainMenu }
 )
 @ComponentProvider(Menu, true)
 export class PlainMenu extends LayoutComponent<IPropsMenuComponent>
