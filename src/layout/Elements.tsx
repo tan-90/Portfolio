@@ -8,3 +8,4 @@ import '../element/pages/About';
 import '../element/pages/Projects';
 import '../element/pages/Contact';
 import '../element/pages/Home';
+import '../element/GistViewer';

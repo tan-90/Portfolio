@@ -18,3 +18,5 @@ import '../component/pages/projects/TextProjects';
 import '../component/pages/contact/TextContact';
 
 import '../component/pages/home/LaTeXHome';
+
+import '../component/gistviewer/ListGistViewer';

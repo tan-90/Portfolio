@@ -3,6 +3,7 @@ import React from 'react';
 import { ReactNode } from 'react';
 
 import { ComponentProvider } from '../../../layout/ComponentProvider';
+import { GistViewer } from '../../../element/GistViewer';
 import { GitHubViewer } from '../../../element/GitHubViewer';
 import { ILayoutStyle } from '../../../layout/LayoutStyle';
 import { IPropsProjectsComponent } from '../../../element/pages/Projects';
@@ -49,6 +50,11 @@ export class TextProjects extends LayoutComponent<IPropsProjectsComponent>
                 </p>
 
                 <GitHubViewer manager={manager} user={'tan-90'}/>
+
+                <p>
+                    These are projects that aren't on GitHub for whatever reason (for example one of them is a Jupyter Notebook), smaller projects that didn't need a repo, simple sandbox code and things like that.
+                </p>
+                <GistViewer manager={manager} user={'tan-90'} filePrefix={'portfolio.'}/>
             </div>
         );
     }
