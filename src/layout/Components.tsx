@@ -20,3 +20,5 @@ import '../component/pages/contact/TextContact';
 import '../component/pages/home/LaTeXHome';
 
 import '../component/gistviewer/ListGistViewer';
+
+import '../component/pages/blog/GridBlog';

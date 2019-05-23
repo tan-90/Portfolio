@@ -9,3 +9,4 @@ import '../element/pages/Projects';
 import '../element/pages/Contact';
 import '../element/pages/Home';
 import '../element/GistViewer';
+import '../element/pages/Blog';

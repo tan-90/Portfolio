@@ -1,0 +1,98 @@
+@import '../../config';
+@import '../../functions';
+
+.gridBlog {
+    display: flex;
+    flex-wrap: wrap;
+
+    justify-content: space-between;
+    
+    .card {
+        display: flex;
+        flex-direction: column;
+        
+        cursor: pointer;
+        
+        margin-bottom: em(1, normal);
+        width: 49%;
+        
+        color: $baseColor;
+        background-color: $background;
+        
+        text-decoration: none;
+        font-family: 'Abel' sans-serif;
+
+        &:hover {
+            color: $highlightColor;
+            background-color: $backgroundOpaque;
+        }
+        
+        h1, h2 {
+            font-weight: 100;
+            padding: 0 em(1, small);
+        }
+
+        h1 {
+            font-size: sizeMap(normal);
+        }
+
+        h2 {
+            flex-grow: 1;
+
+            font-size: sizeMap(small);
+            text-transform: lowercase;
+            font-variant: small-caps;
+        }
+        
+        img {
+            width: 100%;
+        }
+
+        ul {
+            list-style: none;
+
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: flex-start;
+
+            padding: 0 em(1, small);
+
+            li {
+                height: em(1, small);
+
+                font-size: sizeMap(tiny);
+                font-weight: 100;
+                text-transform: uppercase;
+                
+                /*
+                 * I want the tags to be very small.
+                 * That means their height is smaller than the height of the text.
+                 * Reason being CSS adds spacing on top and below text.
+                 * I could use some font metric trickery to remove the space and the text would align properly.
+                 * But I can just push it down a little bit. Removing the space would be way too overkill.
+                 *
+                 * If you want, you can read more about it here https://medium.com/eightshapes-llc/cropping-away-negative-impacts-of-line-height-84d744e016ce
+                 * Also, before the `last-refactor` branch, I was using this technique, so you can find the code here https://github.com/tan-90/Portfolio/blob/82689a090d861d0c24f7b74a48359b49679f588a/src/_mixins.scss
+                 */
+                padding-top: em(0.2, tiny);
+
+                padding-left: em(1, small);
+                padding-right: em(1, tiny);
+
+                box-sizing: border-box;
+
+                border-bottom: solid 1px $baseColor;
+
+                margin-top: em(1, tiny);
+                & :not(&:last-child) {
+                    margin-right: em(1, tiny);
+                }
+
+                &:hover {
+                    border-bottom: solid 1px $highlightColor;
+                }
+            }
+        }
+    }
+}

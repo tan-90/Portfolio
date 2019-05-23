@@ -9,6 +9,7 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Projects } from './pages/Projects';
 import { Contact } from './pages/Contact';
+import { Blog } from './pages/Blog';
 
 export interface IPageData
 {
@@ -70,6 +71,13 @@ export class App extends LayoutElement<IPropsApp, IStateApp>
                 useContainer: true,
 
                 element: Contact
+            },
+            {
+                name: 'blog',
+                route: '/blog',
+                useContainer: true,
+
+                element: Blog
             },
         ];
 

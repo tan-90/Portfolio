@@ -1,0 +1,17 @@
+$pallete: (
+    one: #570724,
+    two: #171427,
+    three: #1E2059,
+    four: #335940,
+    five: #8C8279
+);
+
+@each $name, $color in $pallete {
+    .#{$name} {
+        background-color: rgba($color, 0.55);
+
+        &:hover {
+            background-color: rgba($color, 0.75);
+        }
+    }
+}
