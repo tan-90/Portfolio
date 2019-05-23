@@ -14,7 +14,6 @@ import { Styles } from '../../layout/Styles';
 
 import { Configuration } from '../../element/Configuration';
 import { Menu } from '../../element/Menu';
-// import { Page } from '../../element/Page';
 
 import Style from '../../style/app/SinglePageApp.scss';
 import { App } from '../../element/App';
@@ -68,7 +67,7 @@ export class SinglePageApp extends LayoutComponent<IPropsAppComponent, IStateSin
             });
 
             const { history } = this.props.routerProps;
-            history.push(link === 'home' ? '/' : link);
+            history.push(link === 'home' ? '/' : `/${link}`);
 
             return true;
         }
