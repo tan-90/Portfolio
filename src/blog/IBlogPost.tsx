@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { Tag } from './Tags';
 
 export interface IBlogPost
@@ -7,4 +9,6 @@ export interface IBlogPost
     image: string;
     url: string;
     tags: Tag[];
+
+    post?: ReactNode;
 }

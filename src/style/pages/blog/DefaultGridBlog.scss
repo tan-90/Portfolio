@@ -59,6 +59,8 @@
             padding: 0 em(1, small);
 
             li {
+                cursor: pointer;
+
                 height: em(1, small);
 
                 font-size: sizeMap(tiny);
@@ -94,5 +96,12 @@
                 }
             }
         }
+    }
+
+    .soon {
+        cursor: not-allowed;
+
+        opacity: 0.5;
+        z-index: layerMap(content);
     }
 }

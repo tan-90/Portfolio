@@ -4,6 +4,7 @@ import ReactDom from 'react-dom';
 import { Component } from 'react';
 import { BrowserRouter as Router, RouteComponentProps } from 'react-router-dom';
 import { Route } from 'react-router-dom';
+import { StaticContext } from 'react-router';
 
 import { App } from './element/App';
 import { LayoutManager } from './layout/LayoutManager';
@@ -12,7 +13,9 @@ import { LayoutTheme } from './layout/LayoutTheme';
 // Import all the components and elements so the decorators can do their thing.
 import './layout/Components';
 import './layout/Elements';
-import { StaticContext } from 'react-router';
+
+// Import all the posts so the "decorators" can do their thing.
+import './blog/Posts';
 
 interface IAppState
 {

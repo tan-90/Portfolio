@@ -5,13 +5,14 @@
 
 .page {
     position: absolute;
-    z-index: layerMap(content);
     
     width: 100vw;
     height: 100vh;
     overflow: auto;
 
     .container {
+        z-index: layerMap(content) - 1;
+
         background-color: $background;
 
         margin-top: reverseGoldenSplit(100vh);
@@ -28,6 +29,8 @@
         }
 
         .title {
+            z-index: layerMap(content) + 1;
+
             position: sticky;
             box-sizing: border-box;
             

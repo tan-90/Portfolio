@@ -1,35 +1,39 @@
-import { BlogRegistry } from '../../blog/BlogRegistry';
 import { ElementProvider } from '../../layout/ElementProvider';
 import { LayoutElement } from '../../layout/LayoutElement';
 import { IBlogPost } from '../../blog/IBlogPost';
 import { IPropsLayoutElement } from '../../layout/LayoutElement';
 import { IPropsLayoutComponent } from '../../layout/LayoutComponent';
 
-export interface IPropsBlogComponent extends IPropsLayoutComponent
+interface IPropsPostElement extends IPropsLayoutElement
 {
-    posts: IBlogPost[];
+    post: IBlogPost;
+}
+
+export interface IPropsPostComponent extends IPropsLayoutComponent
+{
+    post: IBlogPost;
 }
 
 @ElementProvider()
-export class Blog extends LayoutElement
+export class Post extends LayoutElement<IPropsPostElement>
 {
-    public constructor(props: IPropsLayoutElement)
+    public constructor(props: IPropsPostElement)
     {
         super(props);
 
         const { manager } = this.props;
 
         this.state = {
-            activeComponent: manager.getActiveComponent(Blog.name)
+            activeComponent: manager.getActiveComponent(Post.name)
         };
     }
 
-    public getComponentProps(): IPropsBlogComponent
+    public getComponentProps(): IPropsPostComponent
     {
         return {
             manager: this.props.manager,
 
-            posts: BlogRegistry.INSTANCE.posts
+            post: this.props.post
         };
     }
 }

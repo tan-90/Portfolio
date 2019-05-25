@@ -17,11 +17,13 @@ import { Menu } from '../../element/Menu';
 
 import Style from '../../style/app/SinglePageApp.scss';
 import { App } from '../../element/App';
+import { BlogRegistry } from '../../blog/BlogRegistry';
 import { IPropsAppComponent } from '../../element/App';
 import { Page } from '../../element/Page';
 import { LayoutElement } from '../../layout/LayoutElement';
 import { Class } from '../../Types';
 import { Background } from '../../element/Background';
+import { Post } from '../../element/pages/Post';
 
 interface IStateSinglePageApp extends IStateLayoutComponent
 {
@@ -117,6 +119,25 @@ export class SinglePageApp extends LayoutComponent<IPropsAppComponent, IStateSin
                                             ) : (
                                                 <PageElement manager={manager}/>
                                             )
+                                        }
+                                    />
+                                );
+                            })
+                        }
+                        {
+                            BlogRegistry.INSTANCE.posts
+                            .filter(post => post.post)
+                            .map(post => {
+                                return (
+                                    <Route
+                                        key={post.url}
+
+                                        exact
+                                        path={`/blog/${post.url}`}
+                                        render={_ =>
+                                            <Page manager={manager} name={'Blog'}>
+                                                <Post manager={manager} post={post}/>
+                                            </Page>
                                         }
                                     />
                                 );

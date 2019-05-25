@@ -1,5 +1,7 @@
 import React from 'react';
 
+import classNames from 'classnames';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactNode } from 'react';
 
@@ -12,11 +14,13 @@ import { LayoutRegistry } from '../../../layout/LayoutRegistry';
 import { Styles } from '../../../layout/Styles';
 
 import DefaultGridBlog from '../../../style/pages/blog/DefaultGridBlog.scss';
+import { IBlogPost } from '../../../blog/IBlogPost';
 
 interface IGridBlogStyle extends ILayoutStyle
 {
     gridBlog: string;
     card: string;
+    soon: string;
 }
 
 @Styles<IGridBlogStyle>(
@@ -36,6 +40,32 @@ export class GridBlog extends LayoutComponent<IPropsBlogComponent>
         };
     }
 
+    private makeCard(post: IBlogPost): ReactNode
+    {
+        return (
+            <Fragment>
+                <img src={post.image}/>
+                <h1>{post.name}</h1>
+                <h2>{post.description}</h2>
+                <ul>
+                    {
+                        post.tags.map(tag => {
+                            return (
+                                <li
+                                    className={tag.color}
+
+                                    key={tag.name}
+                                >
+                                    {tag.name}
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+            </Fragment>
+        );
+    }
+
     public render(): ReactNode
     {
         const style: IGridBlogStyle = LayoutRegistry.INSTANCE.getStyle<IGridBlogStyle>(this, this.state.activeStyle);
@@ -44,34 +74,28 @@ export class GridBlog extends LayoutComponent<IPropsBlogComponent>
             <div className={style.gridBlog}>
                 {
                     this.props.posts.map(post => {
+                        if (post.post)
+                        {
+                            return (
+                                <Link
+                                    key={post.name}
+                                    className={style.card}
+
+                                    to={`/blog/${post.url}`}
+                                >
+                                    {this.makeCard(post)}
+                                </Link>
+                            );
+                        }
+
                         return (
-                            <Link
+                            <div
                                 key={post.name}
-                                className={style.card}
-
-                                to={`/blog/${post.url}`}
+                                className={classNames([style.card, style.soon])}
                             >
-                                <img src={post.image}/>
-                                <h1>{post.name}</h1>
-                                <h2>{post.description}</h2>
-                                <ul>
-                                    {
-                                        post.tags.map(tag => {
-                                            return (
-                                                <li
-                                                    className={tag.color}
-
-                                                    key={tag.name}
-                                                >
-                                                    {tag.name}
-                                                </li>
-                                            );
-                                        })
-                                    }
-                                </ul>
-                            </Link>
+                                {this.makeCard(post)}
+                            </div>
                         );
-
                     })
                 }
             </div>

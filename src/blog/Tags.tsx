@@ -21,6 +21,10 @@ const Tags: TagList = {
     cpp: new Tag('C++', TagColors.two, 'cpp'),
     art: new Tag('Art', TagColors.three),
     visualization: new Tag('Visualization', TagColors.four),
+    comingSoon: new Tag('Coming soon', TagColors.five),
+    web: new Tag('Web', TagColors.one),
+    typeScript: new Tag('TypeScript', TagColors.two),
+    tools: new Tag('Tools', TagColors.three),
 };
 
 export { Tags };
