@@ -1,5 +1,7 @@
 # Portfolio
 
+> I'm currently working with TypeScript on the `last-refactor` branch.
+
 ## About
 This is my future website. It's meant to be a place where I give an overview of projects I created or contributed to, personal and contact information and maybe a blog for things I learn here and there.
 It's created with React and SCSS using webpack.
