@@ -5,6 +5,7 @@ import { Component } from 'react';
 import { BrowserRouter as Router, RouteComponentProps } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { StaticContext } from 'react-router';
+import { Fragment } from 'react';
 
 import { App } from './element/App';
 import { LayoutManager } from './layout/LayoutManager';
@@ -16,6 +17,7 @@ import './layout/Elements';
 
 // Import all the posts so the "decorators" can do their thing.
 import './blog/Posts';
+import { CommonUtils } from './util/CommonUtils';
 
 interface IAppState
 {
@@ -38,7 +40,31 @@ export class Root extends Component<{}, IAppState>
 
     public componentDidMount()
     {
-        this.state.manager.onRootDidMount();
+        const { manager } = this.state;
+
+        manager.onRootDidMount();
+
+        if (!CommonUtils.firstVisitFinished)
+        {
+            manager.notify({
+                id: `wip_${Date.now()}`,
+
+                time: 15,
+
+                icon: 'warning',
+                body: <Fragment>
+                    <p>
+                        Please keep in mind that this website is a work in progress.
+                        While I did try to make sure the basics were in place, you might find some errors or feel like something is missing.
+                        <br/>
+                        <br/>
+                        Feel free to talk to me about those and maybe take some time to read about the website on the About page.
+                    </p>
+                </Fragment>
+            });
+
+            CommonUtils.finishFirstVisit();
+        }
     }
 
     public render()
