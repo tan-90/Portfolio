@@ -112,7 +112,7 @@ export class Contact extends LayoutElement<IPropsLayoutElement, IStateContact>
         console.debug(this.state);
     }
 
-    public onFormSubmit(event: SyntheticEvent): void
+    public async onFormSubmit(event: SyntheticEvent)
     {
         /*
          * The submission handling happens withoug chaging the route.
@@ -120,21 +120,29 @@ export class Contact extends LayoutElement<IPropsLayoutElement, IStateContact>
          */
         event.preventDefault();
 
-        const { name, email, message } = this.state;
+        const { name, message, email } = this.state;
 
-        if (name && email && message)
+        if (name && message && email)
         {
             this.setState({
                 sending: true
             });
 
-            /*
-             * Placeholder (obviously).
-             * The idea is having a REST server controlling an email account and exposing a `/sendMessage` endpoint.
-             * It's actually done, but I need to get new oauth keys.
-             */
-            setTimeout(() => {
-                alert('Yaaay! Mail sent.');
+            const response: Response = await fetch('http://localhost:3000/mail', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    message,
+                    email
+                })
+            });
+
+            if (response.status === 200)
+            {
+                alert('Message sent.\nI\'ll get back to you soon.');
                 this.setState({
                     name: '',
                     email: '',
@@ -142,7 +150,14 @@ export class Contact extends LayoutElement<IPropsLayoutElement, IStateContact>
 
                     sending: false
                 });
-            }, 5000);
+            }
+            else
+            {
+                alert('There was an error.\nIf this keeps happening, mail me at tan-90@outlook.com.');
+                this.setState({
+                    sending: false
+                });
+            }
         }
     }
 
