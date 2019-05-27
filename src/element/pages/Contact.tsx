@@ -108,8 +108,6 @@ export class Contact extends LayoutElement<IPropsLayoutElement, IStateContact>
         this.setState({
             [field]: newValue
         } as unknown as IStateContact);
-
-        console.debug(this.state);
     }
 
     public async onFormSubmit(event: SyntheticEvent)
@@ -120,6 +118,7 @@ export class Contact extends LayoutElement<IPropsLayoutElement, IStateContact>
          */
         event.preventDefault();
 
+        const { manager } = this.props;
         const { name, message, email } = this.state;
 
         if (name && message && email)
@@ -128,32 +127,56 @@ export class Contact extends LayoutElement<IPropsLayoutElement, IStateContact>
                 sending: true
             });
 
-            const response: Response = await fetch('http://localhost:3000/mail', {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name,
-                    message,
-                    email
-                })
-            });
-
-            if (response.status === 200)
+            try
             {
-                alert('Message sent.\nI\'ll get back to you soon.');
-                this.setState({
-                    name: '',
-                    email: '',
-                    message: '',
-
-                    sending: false
+                const response: Response = await fetch('http://localhost:3000/mail', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name,
+                        message,
+                        email
+                    })
                 });
+
+                if (response.status === 200)
+                {
+                    manager.notify({
+                        id: `messageSent_${Date.now()}`,
+
+                        time: 5,
+
+                        icon: 'done',
+                        body: <p>Your message was sent! I will get back to you soon.</p>
+                    });
+                    this.setState({
+                        name: '',
+                        email: '',
+                        message: '',
+
+                        sending: false
+                    });
+                }
+                else
+                {
+                    throw new Error(`POST failed with response: ${response.status}`);
+                }
             }
-            else
+            catch (error)
             {
-                alert('There was an error.\nIf this keeps happening, mail me at tan-90@outlook.com.');
+                console.error(error.message);
+
+                manager.notify({
+                    id: `messageFailed_${Date.now()}`,
+
+                    time: 5,
+
+                    icon: 'error',
+                    body: <p>Oh no! There was an error sending your message. You can try again later, or use the social media icons.</p>
+                });
+
                 this.setState({
                     sending: false
                 });

@@ -24,6 +24,7 @@ import { LayoutElement } from '../../layout/LayoutElement';
 import { Class } from '../../Types';
 import { Background } from '../../element/Background';
 import { Post } from '../../element/pages/Post';
+import { Notifications } from '../../element/Notifications';
 
 interface IStateSinglePageApp extends IStateLayoutComponent
 {
@@ -148,6 +149,7 @@ export class SinglePageApp extends LayoutComponent<IPropsAppComponent, IStateSin
                         />
                     </Switch>
                 </div>
+                <Notifications manager={manager}/>
             </div>
         );
     }

@@ -11,3 +11,4 @@ import '../element/pages/Home';
 import '../element/GistViewer';
 import '../element/pages/Blog';
 import '../element/pages/Post';
+import '../element/Notifications'

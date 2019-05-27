@@ -1,6 +1,7 @@
 import { IThemeListener } from './LayoutTheme';
 import { LayoutTheme } from './LayoutTheme';
 import { Coord } from '../Types';
+import { INotification } from '../element/Notifications';
 
 export class LayoutManager
 {
@@ -8,6 +9,8 @@ export class LayoutManager
 
     private mousePosition: Coord;
     private windowDimensions: Coord;
+
+    private sendNotification?: (notification: INotification) => void;
 
     public constructor(theme: LayoutTheme)
     {
@@ -79,6 +82,21 @@ export class LayoutManager
             x: window.innerWidth,
             y: window.innerHeight
         };
+    }
+
+    public registerNotifier(notifier: (notification: INotification) => void)
+    {
+        this.sendNotification = notifier;
+    }
+
+    public notify(notification: INotification)
+    {
+        if (!this.sendNotification)
+        {
+            throw new Error(`Notification sent before the notifier was registered: ${notification.body}`);
+        }
+
+        this.sendNotification(notification);
     }
 
     public get mouse(): Coord

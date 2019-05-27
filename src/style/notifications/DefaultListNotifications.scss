@@ -1,0 +1,45 @@
+@import '../config';
+@import '../functions';
+
+.listNotifications {
+    position: absolute;
+    z-index: layerMap(notifications);
+    
+    box-sizing: border-box;
+
+    width: reverseGoldenSplit(100vw);
+
+    top: 0;
+    right: 0;
+
+    padding-top: em(1, normal);
+    padding-left: em(1, normal);
+    padding-right: em(1, large);
+    
+    list-style: none;
+
+    .notification {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        color: $baseColor;
+        font-size: em(1, small);
+        font-weight: 100;
+
+        padding: em(1, small) em(1, tiny);
+        margin-bottom: em(1, small);
+
+        background-color: $background;
+
+        i {
+            flex-grow: 0;
+            font-size: em(1, normal);
+            margin-right: em(1, small);
+        }
+
+        a {
+            color: $baseColor;
+        }
+    }
+}
