@@ -92,8 +92,8 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
 
         this.columnCount = 12;
         this.rowCount = 10;
-        this.patternPaddingX = 100;
-        this.patternPaddingY = 80;
+        this.patternPaddingX = 0.1;
+        this.patternPaddingY = 0.1;
         this.positionRandomDampening = 0.6;
         this.colorRandomDampening = 0.125;
 
@@ -124,21 +124,6 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
 
                 this.points = this.getPoints();
                 this.renderCanvas();
-
-                /*
-                 * This just makes it so the generated image covers the whole window on resize.
-                 * It shouldn't be done this way, instead it should regenerate only when certain breakpoints are hit.
-                 * It will be fixed in the future.
-                 */
-                window.addEventListener('resize', event => {
-                    if (this.animationHandle)
-                    {
-                        window.cancelAnimationFrame(this.animationHandle);
-                    }
-
-                    this.points = this.getPoints();
-                    this.renderCanvas();
-                });
             }
         }
     }
@@ -173,13 +158,8 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
             easing: 'cubicBezier(0.55, 0.1, 0.25, 0.99)'
         });
 
-        const windowDimensions = {
-            x: window.innerWidth,
-            y: window.innerHeight
-        };
-
-        const stepSizeX: number = (windowDimensions.x + this.patternPaddingX * 2) / (this.columnCount - 1);
-        const stepSizeY: number = (windowDimensions.y + this.patternPaddingY * 2) / (this.rowCount - 1);
+        const stepSizeX: number = (1 + this.patternPaddingX * 2) / (this.columnCount - 1);
+        const stepSizeY: number = (1 + this.patternPaddingY * 2) / (this.rowCount - 1);
 
         for (let i = 0; i < this.columnCount; ++i)
         {
@@ -203,7 +183,6 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
 
             }
         }
-
         return points;
     }
 
@@ -221,11 +200,29 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
             y: window.innerHeight
         };
 
+        const toViewSpace: (point: Point) => Point = (point: Point) => {
+            /*
+             * I'm consciously making this depend on the scope because I know this is the only place it's gonna be used.
+             * The windows dimensions could be passed in as a parameter but that just clutters up the code as this will be called a lot.
+             * Another good point is that I'm multiplying values everytime I want to redraw the canvas and this is not ThreeJS.
+             * While that is not optimal, it avoids having to regenerate the points array, making the real "error" here being the use of canvas and not WebGL.
+             * As I don't have time to implement WebGL components before this goes live, the canvas is a temporary solution.
+             */
+            return {
+                x: point.x * windowDimensions.x,
+                y: point.y * windowDimensions.y,
+                color: point.color
+            };
+        };
+
         if (this.canvasContext && this.points)
         {
             const { manager } = this.props;
 
             const context: CanvasRenderingContext2D = this.canvasContext;
+
+            context.canvas.width = windowDimensions.x;
+            context.canvas.height = windowDimensions.y;
             context.clearRect(0, 0, windowDimensions.x, windowDimensions.y);
             context.lineWidth = 1;
 
@@ -236,13 +233,13 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
             {
                 for (let j = 0; j < this.rowCount; ++j)
                 {
-                    const point: Point = this.points[i][j];
+                    const point: Point = toViewSpace(this.points[i][j]);
                     context.strokeStyle = point.color.lighten(0.05).alpha(0.001).hex();
 
                     if (i < this.columnCount - 1 && j < this.rowCount - 1)
                     {
-                        const nextForward: Point = this.points[i + 1][j];
-                        const nextDown: Point = this.points[i][j + 1];
+                        const nextForward: Point = toViewSpace(this.points[i + 1][j]);
+                        const nextDown: Point = toViewSpace(this.points[i][j + 1]);
 
                         context.beginPath();
                         context.moveTo(point.x, point.y);
@@ -256,8 +253,8 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
 
                     if (i > 0 && j > 0)
                     {
-                        const nextBackward: Point = this.points[i - 1][j];
-                        const nextUp: Point = this.points[i][j - 1];
+                        const nextBackward: Point = toViewSpace(this.points[i - 1][j]);
+                        const nextUp: Point = toViewSpace(this.points[i][j - 1]);
 
                         context.beginPath();
                         context.moveTo(point.x, point.y);
@@ -277,22 +274,26 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
              * There is no need for precise point matching, so it sufices to use the step size.
              * This allows for an error that equals the ammount of random movement added to the points.
              */
-            const stepSizeX: number = (windowDimensions.x + this.patternPaddingX * 2) / (this.columnCount - 1);
-            const stepSizeY: number = (windowDimensions.y + this.patternPaddingY * 2) / (this.rowCount - 1);
+            const stepSizeX: number = (windowDimensions.x + windowDimensions.x * this.patternPaddingX) / this.columnCount;
+            const stepSizeY: number = (windowDimensions.y + windowDimensions.y * this.patternPaddingY) / this.rowCount;
             const mouseCoord: Coord = {
-                x: Math.floor(manager.mouse.x / stepSizeX) + 1,
-                y: Math.floor(manager.mouse.y / stepSizeY) + 1
+                x: Math.floor((manager.mouse.x + windowDimensions.x * this.patternPaddingX / 2) / stepSizeX),
+                y: Math.floor((manager.mouse.y + windowDimensions.y * this.patternPaddingY / 2) / stepSizeY)
             };
+
+            mouseCoord.x = Math.min(mouseCoord.x, this.columnCount - 1);
+            mouseCoord.y = Math.min(mouseCoord.y, this.rowCount - 1);
+
             const { x, y } = mouseCoord;
-            const point: Point = this.points[x][y];
+            const point: Point = toViewSpace(this.points[x][y]);
 
             context.lineWidth = 2;
             context.strokeStyle = point.color.lighten(0.15).alpha(0.001).hex();
 
             if (x < this.columnCount - 1 && y < this.rowCount - 1)
             {
-                const nextForward: Point = this.points[x + 1][y];
-                const nextDown: Point = this.points[x][y + 1];
+                const nextForward: Point = toViewSpace(this.points[x + 1][y]);
+                const nextDown: Point = toViewSpace(this.points[x][y + 1]);
 
                 context.beginPath();
 
@@ -301,7 +302,7 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
 
                 if (y > 0)
                 {
-                    const nextDiagonal: Point = this.points[x + 1][y - 1];
+                    const nextDiagonal: Point = toViewSpace(this.points[x + 1][y - 1]);
                     context.moveTo(point.x, point.y);
                     context.lineTo(nextDiagonal.x, nextDiagonal.y);
                 }
@@ -314,8 +315,8 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
 
             if (x > 0 && y > 0)
             {
-                const nextBackward: Point = this.points[x - 1][y];
-                const nextUp: Point = this.points[x][y - 1];
+                const nextBackward: Point = toViewSpace(this.points[x - 1][y]);
+                const nextUp: Point = toViewSpace(this.points[x][y - 1]);
 
                 context.beginPath();
 
@@ -324,7 +325,7 @@ export class CanvasBackground extends LayoutComponent<IPropsLayoutComponent>
 
                 if (y < this.rowCount - 1)
                 {
-                    const nextDiagonal: Point = this.points[x - 1][y + 1];
+                    const nextDiagonal: Point = toViewSpace(this.points[x - 1][y + 1]);
 
                     context.moveTo(point.x, point.y);
                     context.lineTo(nextDiagonal.x, nextDiagonal.y);
