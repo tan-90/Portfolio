@@ -1,3 +1,6 @@
+@import '../config';
+@import '../functions';
+
 $buttonHeight: 75px;
 
 .configurationPanel {
@@ -7,9 +10,12 @@ $buttonHeight: 75px;
     width: 25vw;
     height: 100%;
     
-    background: whitesmoke;
-    color: #1D2027;
+    background: $baseColor;
+    color: $backgroundOpaque;
       
+    font-family: 'Abel', sans-serif;
+    font-weight: 100;
+
     transition: transform .2s ease-out;
 
     .configuration {
@@ -17,22 +23,43 @@ $buttonHeight: 75px;
       overflow-y: auto;
 
       form {
-        padding: 1em;
+        padding: em(1, small);
         
         h1 {
-  
+          text-transform: uppercase;
+
+          font-size: sizeMap(large);
         }
   
         p {
-  
+          font-size: sizeMap(normal);
         }
 
         fieldset {
+          border: 0;
+          padding: 0;
+
+          h1 {
+            text-transform: lowercase;
+            font-variant: small-caps;
+            font-size: sizeMap(large);
+
+            border-bottom: solid 2px $backgroundOpaque;
+          }
+
           label {
+            font-size: sizeMap(small);
+
             display: flex;
             flex-direction: column;
 
             margin-bottom: 1em;
+
+            select {
+              font-size: sizeMap(normal);
+              font-family: 'Abel', sans-serif;
+              padding: em(1 / $phi, tiny);
+            }
           }
         }
       }
@@ -53,13 +80,13 @@ $buttonHeight: 75px;
       
       // Some trickery to make a diagonal corner.
       // You can google "CSS triangles" for details.
-      border-left: 30px solid whitesmoke;
+      border-left: 30px solid $baseColor;
       border-bottom: 30px solid transparent;
       
       i {
         position: absolute;
         
-        color: #1D2027;
+        color: $backgroundOpaque;
   
         left: -1.15em;
         top: 0.4em;
@@ -70,7 +97,7 @@ $buttonHeight: 75px;
       
       &:hover {
         i {
-          color: #1C1926;
+          color: $background;
         }
       }
     }
