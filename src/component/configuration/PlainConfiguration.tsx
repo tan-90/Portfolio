@@ -57,12 +57,12 @@ export class PlainConfiguration extends LayoutComponent<IPropsConfigurationCompo
         }));
     }
 
-    protected getComponentOptions(element: string): ReactNode
+    protected getComponentOptions(element: string): ReactNode | undefined
     {
         const components = this.props.components.get(element);
         if (!components)
         {
-            throw new Error(`Component list for element ${element} should not be undefined, but was.`);
+            return undefined;
         }
 
         return (
@@ -78,7 +78,7 @@ export class PlainConfiguration extends LayoutComponent<IPropsConfigurationCompo
         );
     }
 
-    protected getStyleOptions(element: string): ReactNode
+    protected getStyleOptions(element: string): ReactNode | undefined
     {
         const { manager } = this.props;
         const component: string = manager.getActiveComponent(element);
@@ -86,7 +86,7 @@ export class PlainConfiguration extends LayoutComponent<IPropsConfigurationCompo
         const styles: string[] | undefined = this.props.styles.get(component);
         if (!styles)
         {
-            throw new Error(`Style list for component ${component} should not be undefined, but was.`);
+            return undefined;
         }
 
         return (
@@ -165,23 +165,28 @@ export class PlainConfiguration extends LayoutComponent<IPropsConfigurationCompo
                                             }
                                         </h1>
 
-                                        <label>
-                                            Component
-                                            <select value={this.getActiveComponent(element)} onChange={event => this.props.onComponentChange(manager, element, event.target.value)}>
-                                                {
-                                                    this.getComponentOptions(element)
-                                                }
-                                            </select>
-                                        </label>
-
-                                        <label>
-                                            Style
-                                            <select value={this.getActiveStyle(element)} onChange={event => this.props.onStyleChange(manager, element, event.target.value)}>
-                                                {
-                                                    this.getStyleOptions(element)
-                                                }
-                                            </select>
-                                        </label>
+                                        {
+                                            this.getComponentOptions(element) &&
+                                            <label>
+                                                Component
+                                                <select value={this.getActiveComponent(element)} onChange={event => this.props.onComponentChange(manager, element, event.target.value)}>
+                                                    {
+                                                        this.getComponentOptions(element)
+                                                    }
+                                                </select>
+                                            </label>
+                                        }
+                                        {
+                                            this.getStyleOptions(element) &&
+                                            <label>
+                                                Style
+                                                <select value={this.getActiveStyle(element)} onChange={event => this.props.onStyleChange(manager, element, event.target.value)}>
+                                                    {
+                                                        this.getStyleOptions(element)
+                                                    }
+                                                </select>
+                                            </label>
+                                        }
                                     </fieldset>
                                 );
                             })

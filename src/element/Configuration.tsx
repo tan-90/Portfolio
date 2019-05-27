@@ -55,13 +55,41 @@ export class Configuration extends LayoutElement<IPropsLayoutElement, IStateConf
         this.elements.forEach(element => {
             const elementComponents: string[] = LayoutRegistry.INSTANCE.getElementComponents(element);
 
-            this.components.set(element, elementComponents);
+            /*
+             * Elements that only have one component don't need a component selector.
+             */
+            if (elementComponents.length > 1)
+            {
+                this.components.set(element, elementComponents);
+            }
 
             elementComponents.forEach(component => {
                 const componentStyles: string[] = LayoutRegistry.INSTANCE.getComponentStyles(component);
-                this.styles.set(component, componentStyles);
+
+                /*
+                 * Components that only have one style don't need a style selector.
+                 */
+                if (componentStyles.length > 1)
+                {
+                    this.styles.set(component, componentStyles);
+                }
             });
         });
+
+        /*
+         * An element needs a configuration entry if:
+         * It has more than one component
+         * OR
+         * It has only one component but that component has more than one style
+         * Despite only having one component, using a .map followed by a .every looks cleaner.
+         */
+        this.elements = this.elements.filter(e => (
+            this.components.get(e) ||
+
+            LayoutRegistry.INSTANCE.getElementComponents(e)
+            .map(c => this.styles.get(c))
+            .every(s => s !== undefined && s.length > 1)
+        ));
     }
 
     private static onComponentChange(manager: LayoutManager, element: string, component: string): void
